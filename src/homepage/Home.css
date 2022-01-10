@@ -1,0 +1,116 @@
+.home-main {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  max-width: 150rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-main__section {
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+
+.main__section {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main__section li {
+  margin: 1rem;
+}
+
+.main__section a {
+  border: 1px solid transparent;
+  color: #292929;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.main__section a:hover,
+.main__section a:active,
+.main__section a.active {
+  background: #f8df00;
+  border-color: #292929;
+  color: #292929;
+}
+
+.main__section button {
+  cursor: pointer;
+  border: 1px solid #292929;
+  color: #292929;
+  background: transparent;
+  padding: 0.5rem;
+  font: inherit;
+}
+
+.main__section button:focus {
+  outline: none;
+}
+
+.main__section button:hover,
+.main__section button:active {
+  background: #292929;
+  color: white;
+}
+
+@media (min-width: 1287px) {
+  .main__section {
+    flex-direction: row;
+  }
+
+  .main__section a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .main__section button {
+    border: 1px solid white;
+    color: white;
+    background: transparent;
+  }
+
+  .main__section button:hover,
+  .main__section button:active {
+    background: #f8df00;
+    color: #292929;
+  }
+}
+
+.section {
+  width: 100%;
+  min-height: 300px;
+  max-width: 100rem;
+  display: -webkit-flex; /* Safari */
+  display: table-cell;
+  padding: 1rem;
+  margin: 1rem 4rem;
+}
+
+.section img {
+  width: 30%;
+  height: 50%;
+  object-fit: fill;
+}
+
+.section div {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.section div > p {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}

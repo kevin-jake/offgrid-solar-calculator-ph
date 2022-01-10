@@ -6,13 +6,13 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Users from "./users/pages/Users";
 import NewPlaces from "./places/pages/NewPlaces";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import UserPlaces from "./places/pages/UserPlaces";
 import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./users/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
+import Home from "./homepage/Home";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,7 +30,7 @@ const App = () => {
     routes = (
       <Switch>
         <Route path="/" exact>
-          <Users />
+          <Home />
         </Route>
         <Route path="/:userId/places">
           <UserPlaces />
@@ -48,7 +48,7 @@ const App = () => {
     routes = (
       <Switch>
         <Route path="/" exact>
-          <Users />
+          <Home />
         </Route>
         <Route path="/:userId/places">
           <UserPlaces />
