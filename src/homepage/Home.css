@@ -1,7 +1,7 @@
 .home-main {
   list-style: none;
-  margin: 0 auto;
-  padding: 0;
+  margin: 20px auto;
+  padding: 1rem;
   width: 90%;
   max-width: 150rem;
   display: flex;
@@ -113,4 +113,35 @@
   margin: 5px;
   display: flex;
   flex-direction: column;
+}
+
+.fill-section {
+  width: 100%;
+}
+
+.tab-list {
+  border-bottom: 1px solid #ffb100;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.tab--selected {
+  background: #fff;
+  border-color: #ffb100 !important;
+  color: black;
+  border-radius: 5px 5px 0 0;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.tab-style {
+  display: inline-block;
+  border: 1px solid #b6b6b6;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
 }
