@@ -1,6 +1,8 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import DynamicTable from "./DynamicTable";
+// import LoadForm from "./LoadForm";
 
 const TabCalc = () => {
   return (
@@ -14,6 +16,7 @@ const TabCalc = () => {
 
       <TabPanel>
         <h2>Load</h2>
+        <DynamicTable />
       </TabPanel>
       <TabPanel>
         <h2>Inverter</h2>
