@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const DynamicTable = (props) => {
+const LoadTab = (props) => {
   const [itemState, setItemState] = useState({
     message: "",
     items: [
@@ -15,10 +15,6 @@ const DynamicTable = (props) => {
     ],
   });
 
-  const updateMessage = (event) => {
-    setItemState({ items: itemState.items, message: event.target.value });
-  };
-
   const handleClick = () => {
     // var items = itemState.items;
 
@@ -32,17 +28,9 @@ const DynamicTable = (props) => {
     });
   };
 
-  //   useEffect(
-  //     (i, event) => {
-  //       handleItemChanged(i, event);
-  //     },
-  //     [handleItemChanged]
-  //   );
-
-  const handleItemChanged = (i, event) => {
+  const handleItemChanged = (event, i, id) => {
     let items_var = itemState.items;
-    // items_var[i] = event.target.value;
-    console.log(event);
+    items_var[i][id] = event.target.value;
 
     setItemState({
       items: items_var,
@@ -51,8 +39,9 @@ const DynamicTable = (props) => {
   };
 
   const handleItemDeleted = (i) => {
+    itemState.items.splice(i, 1);
     setItemState({
-      items: itemState.items.splice(i, 1),
+      items: itemState.items,
       message: itemState.message,
     });
   };
@@ -80,7 +69,9 @@ const DynamicTable = (props) => {
                     id="loadname"
                     type="text"
                     value={o.loadname}
-                    onChange={handleItemChanged}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "loadname")
+                    }
                   />
                 </td>
                 <td>
@@ -88,7 +79,9 @@ const DynamicTable = (props) => {
                     id="userqty"
                     type="text"
                     value={o.userqty}
-                    onChange={handleItemChanged}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "userqty")
+                    }
                   />
                 </td>
                 <td>
@@ -96,15 +89,19 @@ const DynamicTable = (props) => {
                     id="wattage"
                     type="text"
                     value={o.wattage}
-                    onChange={handleItemChanged}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "wattage")
+                    }
                   />
                 </td>
                 <td>
                   <input
-                    id="totalwatt"
+                    id="totalwatts"
                     type="text"
-                    value={o.totalwatt}
-                    onChange={handleItemChanged}
+                    value={o.totalwatts}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "totalwatts")
+                    }
                   />
                 </td>
                 <td>
@@ -112,7 +109,9 @@ const DynamicTable = (props) => {
                     id="ophours"
                     type="text"
                     value={o.ophours}
-                    onChange={handleItemChanged}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "ophours")
+                    }
                   />
                 </td>
                 <td>
@@ -120,11 +119,18 @@ const DynamicTable = (props) => {
                     id="watthours"
                     type="text"
                     value={o.watthours}
-                    onChange={handleItemChanged}
+                    onChange={(e, index, id) =>
+                      handleItemChanged(e, i, "watthours")
+                    }
                   />
                 </td>
                 <td>
-                  <button onClick={handleItemDeleted}>Delete</button>
+                  <button
+                    onClick={(index) => handleItemDeleted(i)}
+                    disabled={i === 0}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
@@ -132,10 +138,9 @@ const DynamicTable = (props) => {
         </tbody>
       </table>
       <hr />
-      <input type="text" value={itemState.message} onChange={updateMessage} />
       <button onClick={handleClick}>Add Item</button>
     </div>
   );
 };
 
-export default DynamicTable;
+export default LoadTab;

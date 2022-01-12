@@ -31,42 +31,9 @@
   margin: 1rem;
 }
 
-.main__section a {
-  border: 1px solid transparent;
-  color: #292929;
-  text-decoration: none;
-  padding: 0.5rem;
-}
-
-.main__section a:hover,
-.main__section a:active,
-.main__section a.active {
-  background: #f8df00;
-  border-color: #292929;
-  color: #292929;
-}
-
-.main__section button {
-  cursor: pointer;
-  border: 1px solid #292929;
-  color: #292929;
-  background: transparent;
-  padding: 0.5rem;
-  font: inherit;
-}
-
-.main__section button:focus {
-  outline: none;
-}
-
-.main__section button:hover,
-.main__section button:active {
-  background: #292929;
-  color: white;
-}
-
 @media (min-width: 1287px) {
-  .main__section {
+  .main__section,
+  .tab__section {
     flex-direction: row;
   }
 
@@ -116,6 +83,7 @@
 }
 
 .fill-section {
+  overflow: overlay;
   width: 100%;
 }
 
