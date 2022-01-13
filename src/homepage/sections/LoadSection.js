@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import load from "../resources/load.png";
+import { HomeContext } from "../tabs/context/home-context";
 
 const LoadSection = () => {
+  const { loadtab } = useContext(HomeContext);
   return (
     <>
       <div>
@@ -9,7 +11,7 @@ const LoadSection = () => {
         <img src={load} alt="Load" />
       </div>
       <div>
-        <p>Total kWh Load:</p>
+        <p>Total kWh Load: {loadtab.overalls.watthours}</p>
         <p>Battery Size needed (Ah):</p>
         <p>Total Current Load (A):</p>
         <p>Total DC Power Input to Inverter (W):</p>

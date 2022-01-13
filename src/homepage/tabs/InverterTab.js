@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { HomeContext } from "./context/home-context";
 
 const InverterTab = (props) => {
+  // const {loadtab, setLoad} = useContext(HomeContext)
   const [itemState, setItemState] = useState({
     message: "",
     items: [

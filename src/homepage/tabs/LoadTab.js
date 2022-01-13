@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react/cjs/react.development";
+import { HomeContext } from "./context/home-context";
 
 const LoadTab = (props) => {
-  const [itemState, setItemState] = useState({
-    message: "",
-    items: [
-      {
-        loadname: "",
-        userqty: "",
-        wattage: "",
-        totalwatts: "",
-        ophours: "",
-        watthours: "",
-      },
-    ],
-  });
+  const { loadtab, setLoad } = useContext(HomeContext);
+  console.log(loadtab);
+  const [itemState, setItemState] = useState(loadtab.itemState);
+
+  const [overalls, setOveralls] = useState(loadtab.overalls);
+
+  useEffect(() => {
+    setItemState(itemState);
+    setOveralls(overalls);
+    setLoad({ itemState, overalls });
+  }, [itemState, overalls]);
 
   const handleClick = () => {
-    // var items = itemState.items;
-
-    // itemState.items.push(itemState.message);
-
-    itemState.items.push(itemState.message);
-    console.log(itemState);
+    itemState.items.push({
+      loadname: "",
+      userqty: "",
+      wattage: "",
+      totalwatts: "",
+      ophours: "",
+      watthours: "",
+    });
     setItemState({
       items: itemState.items,
-      message: "",
     });
   };
 
@@ -34,21 +35,73 @@ const LoadTab = (props) => {
 
     setItemState({
       items: items_var,
-      message: itemState.message,
     });
+
+    if (id === "userqty" || id === "wattage" || id === "ophours") {
+      computeTotalWatts(
+        i,
+        itemState.items[i].userqty,
+        itemState.items[i].wattage
+      );
+    }
   };
 
   const handleItemDeleted = (i) => {
     itemState.items.splice(i, 1);
     setItemState({
       items: itemState.items,
-      message: itemState.message,
     });
+
+    computeTotals();
   };
 
+  const computeTotalWatts = (i, users, watts) => {
+    let totalWatts = users * watts;
+    let items_var = itemState.items;
+    items_var[i].totalwatts = totalWatts;
+    setItemState({
+      items: items_var,
+    });
+
+    computeWatthours(i, totalWatts, itemState.items[i].ophours);
+  };
+
+  const computeWatthours = (i, totalwatts, hours) => {
+    let watthours = totalwatts * hours;
+    let items_var = itemState.items;
+    items_var[i].watthours = watthours;
+    setItemState({
+      items: items_var,
+    });
+    computeTotals();
+  };
+
+  const computeTotals = () => {
+    let items_var = itemState.items;
+    let overallscomp = {};
+    const reducer = (a, b) => {
+      return {
+        totalwatts: a.totalwatts + b.totalwatts,
+        watthours: a.watthours + b.watthours,
+      };
+    };
+    if (items_var.length > 1) {
+      overallscomp = items_var.reduce(reducer);
+      console.log(overallscomp);
+    } else {
+      overallscomp = {
+        totalwatts: itemState.items[0].totalwatts,
+        watthours: itemState.items[0].watthours,
+      };
+    }
+    setOveralls(overallscomp);
+  };
+
+  // console.log(itemState);
+  // console.log(overalls);
   return (
     <div>
-      <table className="">
+      <table>
         <thead>
           <tr>
             <th>Load Name</th>
@@ -77,7 +130,7 @@ const LoadTab = (props) => {
                 <td>
                   <input
                     id="userqty"
-                    type="text"
+                    type="number"
                     value={o.userqty}
                     onChange={(e, index, id) =>
                       handleItemChanged(e, i, "userqty")
@@ -87,7 +140,7 @@ const LoadTab = (props) => {
                 <td>
                   <input
                     id="wattage"
-                    type="text"
+                    type="number"
                     value={o.wattage}
                     onChange={(e, index, id) =>
                       handleItemChanged(e, i, "wattage")
@@ -98,6 +151,7 @@ const LoadTab = (props) => {
                   <input
                     id="totalwatts"
                     type="text"
+                    readOnly
                     value={o.totalwatts}
                     onChange={(e, index, id) =>
                       handleItemChanged(e, i, "totalwatts")
@@ -107,7 +161,7 @@ const LoadTab = (props) => {
                 <td>
                   <input
                     id="ophours"
-                    type="text"
+                    type="number"
                     value={o.ophours}
                     onChange={(e, index, id) =>
                       handleItemChanged(e, i, "ophours")
@@ -118,6 +172,7 @@ const LoadTab = (props) => {
                   <input
                     id="watthours"
                     type="text"
+                    readOnly
                     value={o.watthours}
                     onChange={(e, index, id) =>
                       handleItemChanged(e, i, "watthours")
@@ -135,6 +190,30 @@ const LoadTab = (props) => {
               </tr>
             );
           })}
+          <tr>
+            <td colSpan="3" className="foot">
+              <h3>TOTAL</h3>
+            </td>
+            <td>
+              <input
+                id="overalls"
+                type="text"
+                readOnly
+                value={overalls.totalwatts}
+              />
+            </td>
+            <td>
+              <div></div>
+            </td>
+            <td>
+              <input
+                id="overalls"
+                type="text"
+                readOnly
+                value={overalls.watthours}
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
       <hr />
