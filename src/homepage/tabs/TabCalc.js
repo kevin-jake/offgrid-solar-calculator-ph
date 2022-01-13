@@ -4,6 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import BatteryTab from "./BatteryTab";
 import InverterTab from "./InverterTab";
 import LoadTab from "./LoadTab";
+import SolarPanelSCCTab from "./SolarPanelSCCTab";
 
 const TabCalc = () => {
   return (
@@ -29,6 +30,7 @@ const TabCalc = () => {
       </TabPanel>
       <TabPanel>
         <h2>Solar Panel and SCC</h2>
+        <SolarPanelSCCTab />
       </TabPanel>
     </Tabs>
   );
