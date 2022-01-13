@@ -48,9 +48,9 @@ const SolarPanelSCCTab = () => {
 
   return (
     <>
-      <div class="square">
-        <div class="content">
-          <div class="table">
+      <div className="square">
+        <div className="content">
+          <div className="table">
             <div>
               <table className="">
                 <thead>
@@ -107,9 +107,9 @@ const SolarPanelSCCTab = () => {
           </div>
         </div>
       </div>
-      <div class="square">
-        <div class="content">
-          <div class="table">
+      <div className="square">
+        <div className="content">
+          <div className="table">
             <div>
               <table className="">
                 <thead>

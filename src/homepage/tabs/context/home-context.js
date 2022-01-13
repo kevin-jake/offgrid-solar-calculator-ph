@@ -19,6 +19,26 @@ const initialState = {
       watthours: 0,
     },
   },
+  batterytab: {
+    itemState: {
+      batteryname: "",
+      leadAcidDOD: 0,
+      lionDOD: 0,
+      lifepoDOD: 0,
+      totalCurrentLoad: 0,
+      totalDCWattsInverter: 0,
+    },
+  },
+  invertertab: {
+    id: "",
+    inverterName: "",
+    type: "",
+    inputVoltage: 0,
+    efficiency: 0,
+    wattage: 0,
+    price: 0,
+    link: "",
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -27,6 +47,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         loadtab: action.loadtab,
+      };
+    case "INV":
+      return {
+        ...state,
+        invertertab: action.invertertab,
       };
     default:
       return state;
@@ -45,9 +70,26 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setBattery = (battinfo) => {
+    dispatch({
+      type: "BATT",
+      batterytab: battinfo,
+    });
+  };
+
+  const setInverter = (inverterinfo) => {
+    dispatch({
+      type: "INV",
+      invertertab: inverterinfo,
+    });
+  };
   const value = {
     loadtab: state.loadtab,
+    batterytab: state.batterytab,
+    invertertab: state.invertertab,
     setLoad,
+    setBattery,
+    setInverter,
   };
   console.log(state);
   return (

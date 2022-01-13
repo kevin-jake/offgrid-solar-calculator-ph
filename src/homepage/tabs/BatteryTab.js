@@ -1,59 +1,23 @@
-import React, { useState } from "react";
-import Card from "../../shared/components/UIElements/Card";
+import React, { useContext, useState } from "react";
 import "./BatteryTab.css";
+import { HomeContext } from "./context/home-context";
 
 const BatteryTab = (props) => {
-  const [itemState, setItemState] = useState({
-    message: "",
-    items: [
-      {
-        loadname: "",
-        userqty: "",
-        wattage: "",
-        totalwatts: "",
-        ophours: "",
-        watthours: "",
-      },
-    ],
-  });
+  const { batterytab, setLoad } = useContext(HomeContext);
+  const [itemState, setItemState] = useState(batterytab.itemState);
 
-  const handleClick = () => {
-    // var items = itemState.items;
-
-    // itemState.items.push(itemState.message);
-
-    itemState.items.push(itemState.message);
-    console.log(itemState);
-    setItemState({
-      items: itemState.items,
-      message: "",
-    });
+  const dodTable = {
+    twelveV: {},
   };
 
-  const handleItemChanged = (event, i, id) => {
-    let items_var = itemState.items;
-    items_var[i][id] = event.target.value;
-
-    setItemState({
-      items: items_var,
-      message: itemState.message,
-    });
-  };
-
-  const handleItemDeleted = (i) => {
-    itemState.items.splice(i, 1);
-    setItemState({
-      items: itemState.items,
-      message: itemState.message,
-    });
-  };
+  const handleDropDownChange = (event) => {};
 
   return (
     <>
-      <div class="square">
-        <div class="content">
-          <div class="table">
-            <div class="table-cell">
+      <div className="square">
+        <div className="content">
+          <div className="table">
+            <div className="table-cell">
               <table className="">
                 <thead>
                   <tr>
@@ -61,24 +25,18 @@ const BatteryTab = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemState.items.map((o, i) => {
-                    return (
-                      <tr key={"item-" + i}>
-                        <td>
-                          <select
-                            id="loadname"
-                            value={o.loadname}
-                            onChange={(e, index, id) =>
-                              handleItemChanged(e, i, "loadname")
-                            }
-                          >
-                            <option>EVE 18650 3.2V 50AH</option>
-                            <option>32650 6ah</option>
-                          </select>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <tr>
+                    <td>
+                      <select
+                        id="batteryname"
+                        value={itemState.batteryname}
+                        onChange={(e) => handleDropDownChange(e)}
+                      >
+                        <option>EVE 18650 3.2V 50AH</option>
+                        <option>32650 6ah</option>
+                      </select>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
               <hr />
@@ -97,9 +55,9 @@ const BatteryTab = (props) => {
           </div>
         </div>
       </div>
-      <div class="square">
-        <div class="content">
-          <div class="table">
+      <div className="square">
+        <div className="content">
+          <div className="table">
             <div>
               <p>Battery Size (Ah):</p>
               <p>Battery Model / Name:</p>
@@ -114,9 +72,9 @@ const BatteryTab = (props) => {
           </div>
         </div>
       </div>
-      <div class="square">
-        <div class="content">
-          <div class="table">
+      <div className="square">
+        <div className="content">
+          <div className="table">
             <div>
               <h2>Battery Depth of Discharge (DOD)</h2>
               <table className="">
@@ -124,9 +82,17 @@ const BatteryTab = (props) => {
                   <tr>
                     <th>Battery Type</th>
                     <th>Suggested DOD</th>
+                    <th>12V system</th>
+                    <th>24V system</th>
+                    <th>48V system</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td colSpan={2}>
+                      <h4>Battery Size (Ah)</h4>
+                    </td>
+                  </tr>
                   <tr>
                     <td>Lead Acid</td>
                     <td>50%</td>
@@ -139,17 +105,15 @@ const BatteryTab = (props) => {
                     <td>LiFePo4</td>
                     <td>90%</td>
                   </tr>
+                  <tr>
+                    <td colSpan={2}>Total Current Load (A)</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>Total DC Watts Input to Inverter (W)</td>
+                  </tr>
                 </tbody>
               </table>
               <hr />
-              <h3>True Battery Size Needed considering DOD</h3>
-              <div>
-                <p>Lead Acid: </p>
-                <p>Lithium Ion: </p>
-                <p>LiFePo4: </p>
-                <p>Total Current Load (A): </p>
-                <p>Total DC Watts Input to Inverter (W): </p>
-              </div>
             </div>
           </div>
         </div>
