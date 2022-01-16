@@ -1,15 +1,15 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer } from "react";
 
 const initialState = {
   loadtab: {
     itemState: {
       items: [
         {
-          loadname: "",
-          userqty: "",
-          wattage: "",
+          loadname: "TV",
+          userqty: "2",
+          wattage: "10",
           totalwatts: "",
-          ophours: "",
+          ophours: "4",
           watthours: "",
         },
       ],
@@ -20,14 +20,15 @@ const initialState = {
     },
   },
   batterytab: {
-    itemState: {
-      batteryname: "",
-      leadAcidDOD: 0,
-      lionDOD: 0,
-      lifepoDOD: 0,
-      totalCurrentLoad: 0,
-      totalDCWattsInverter: 0,
-    },
+    id: "",
+    battname: "",
+    batttype: "",
+    battmodel: "",
+    voltage: 0,
+    battcapacity: 0,
+    priceperpc: 0,
+    img: "",
+    link: "",
   },
   invertertab: {
     id: "",
@@ -52,6 +53,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         invertertab: action.invertertab,
+      };
+    case "BATT":
+      return {
+        ...state,
+        batterytab: action.batterytab,
       };
     default:
       return state;
