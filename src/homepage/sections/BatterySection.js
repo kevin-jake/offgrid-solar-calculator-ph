@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import bat from "../resources/bat.png";
+import { HomeContext } from "../tabs/context/home-context";
 
 const BatterySection = () => {
+  const { batterytab } = useContext(HomeContext);
   return (
     <>
       <div>
@@ -9,15 +11,14 @@ const BatterySection = () => {
         <img src={bat} alt="Battery" />
       </div>
       <div>
-        <p>Battery Type:</p>
-        <p>Battery Model / Name:</p>
-        <p>Battery Voltage:</p>
-        <p>Battery Capacity:</p>
-        <p>Price per pc.:</p>
-        <p>No. of Battery in Series:</p>
-        <p>No. of Battery in Parallel:</p>
-        <p>Total No. of Battery:</p>
-        <p>Total Price:</p>
+        <p>Battery Type: {batterytab.batttype}</p>
+        <p>Battery Model / Name: {batterytab.battname}</p>
+        <p>Battery Voltage: {batterytab.voltage}</p>
+        <p>Battery Capacity: {batterytab.battcapacity}</p>
+        <p>Price per pc.: {batterytab.priceperpc}</p>
+        <p>Total Number of Battery: {batterytab.totalqty}</p>
+        <p>Battery Total Capacity: {batterytab.totalcapacity} Ah</p>
+        <p>Total Price: {batterytab.totalprice}</p>
       </div>
     </>
   );

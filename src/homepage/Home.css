@@ -90,6 +90,12 @@ th {
   flex-direction: column;
 }
 
+.head {
+  display: block;
+  width: 100%;
+  flex-direction: column;
+}
+
 .fill-section {
   overflow: overlay;
   width: 100%;

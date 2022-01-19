@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import "./BatteryTab.css";
+import { GlobalContext } from "./context/global-context";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
 
-const BatteryTab = (props) => {
+const BatteryTab = () => {
   const { loadtab, invertertab, batterytab, setBattery } =
     useContext(HomeContext);
+  const { voltage, setBatteryCap } = useContext(GlobalContext);
   const [itemState, setItemState] = useState(batterytab);
 
   const { batterylist } = useContext(LOVContext);
@@ -31,7 +33,16 @@ const BatteryTab = (props) => {
       });
     }
     setOptions(arrvar);
-  }, [optionState]);
+  }, [optionState, batterylist]);
+
+  useEffect(() => {
+    setBatteryCap(seriesParallelTable.totalcapacity);
+    const batterytoSet = batterytab;
+    batterytoSet.totalqty = seriesParallelTable.totalnumber;
+    batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
+    batterytoSet.totalprice = seriesParallelTable.totalprice;
+    setBattery(batterytoSet);
+  }, [itemState]);
 
   const batteryComputation = (
     totalkwh,
@@ -85,101 +96,52 @@ const BatteryTab = (props) => {
 
   const seriesParallelCompute = (
     voltage,
-    totalcapacity,
+    totalcapacity_needed,
     battcapacity,
     battvoltage,
     price
   ) => {
     const series = Math.ceil(voltage / battvoltage);
-    const parallel = Math.ceil(totalcapacity / battcapacity);
+    const parallel = Math.ceil(totalcapacity_needed / battcapacity);
     const totalnumber = series * parallel;
     const totalprice = totalnumber * price;
+    const totalcapacity = Math.round(parallel * battcapacity);
     return {
       series: series,
       parallel: parallel,
       totalnumber: totalnumber,
       totalprice: totalprice,
+      totalcapacity: totalcapacity,
     };
   };
 
-  const dodTable = {
-    twelveV: dodComputation(12, loadtab.overalls, invertertab),
-    twentyfourV: dodComputation(24, loadtab.overalls, invertertab),
-    fortyeightV: dodComputation(48, loadtab.overalls, invertertab),
-  };
+  const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
+
   let seriesParallelTable = {};
   if (itemState.batttype === "LiFePo4") {
-    seriesParallelTable = {
-      twelveV: seriesParallelCompute(
-        12,
-        dodTable.twelveV.lifepo.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      twentyfourV: seriesParallelCompute(
-        24,
-        dodTable.twentyfourV.lifepo.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      fortyeightV: seriesParallelCompute(
-        48,
-        dodTable.fortyeightV.lifepo.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-    };
+    seriesParallelTable = seriesParallelCompute(
+      voltage,
+      dodTable.lifepo.dodbattcap,
+      itemState.battcapacity,
+      itemState.voltage,
+      itemState.priceperpc
+    );
   } else if (itemState.batttype === "Lithium Ion") {
-    seriesParallelTable = {
-      twelveV: seriesParallelCompute(
-        12,
-        dodTable.twelveV.lion.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      twentyfourV: seriesParallelCompute(
-        24,
-        dodTable.twentyfourV.lion.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      fortyeightV: seriesParallelCompute(
-        48,
-        dodTable.fortyeightV.lion.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-    };
+    seriesParallelTable = seriesParallelCompute(
+      voltage,
+      dodTable.lion.dodbattcap,
+      itemState.battcapacity,
+      itemState.voltage,
+      itemState.priceperpc
+    );
   } else if (itemState.batttype === "Lead Acid") {
-    seriesParallelTable = {
-      twelveV: seriesParallelCompute(
-        12,
-        dodTable.twelveV.leadacid.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      twentyfourV: seriesParallelCompute(
-        24,
-        dodTable.twentyfourV.leadacid.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-      fortyeightV: seriesParallelCompute(
-        48,
-        dodTable.fortyeightV.leadacid.dodbattcap,
-        itemState.battcapacity,
-        itemState.voltage,
-        itemState.priceperpc
-      ),
-    };
+    seriesParallelTable = seriesParallelCompute(
+      voltage,
+      dodTable.leadacid.dodbattcap,
+      itemState.battcapacity,
+      itemState.voltage,
+      itemState.priceperpc
+    );
   }
 
   console.log(seriesParallelTable);
@@ -223,68 +185,14 @@ const BatteryTab = (props) => {
                 <p>Battery Voltage: {itemState.voltage}</p>
                 <p>Battery Capacity: {itemState.battcapacity}</p>
                 <p>Price per pc.: {itemState.priceperpc}</p>
+                <p>No. of Battery in Series: {seriesParallelTable.series} </p>
+                <p>
+                  No. of Battery in Parallel: {seriesParallelTable.parallel}{" "}
+                </p>
+                <p>Total No. of Battery: {seriesParallelTable.totalnumber}</p>
+                <p>Total Capacity: {seriesParallelTable.totalcapacity}</p>
+                <p>Total Price: {seriesParallelTable.totalprice}</p>
               </div>
-              <table className="">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                    <th>12V system</th>
-                    <th>24V system</th>
-                    <th>48V system</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colSpan={2}>
-                      <h4>No. of Battery in Series:</h4>
-                    </td>
-                    {seriesParallelTable.twelveV && (
-                      <>
-                        <td>{seriesParallelTable.twelveV.series}</td>
-                        <td>{seriesParallelTable.twentyfourV.series}</td>
-                        <td>{seriesParallelTable.fortyeightV.series}</td>
-                      </>
-                    )}
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <h4>No. of Battery in Parallel:</h4>
-                    </td>
-                    {seriesParallelTable.twelveV && (
-                      <>
-                        <td>{seriesParallelTable.twelveV.parallel}</td>
-                        <td>{seriesParallelTable.twentyfourV.parallel}</td>
-                        <td>{seriesParallelTable.fortyeightV.parallel}</td>
-                      </>
-                    )}
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <h4>Total No. of Battery:</h4>
-                    </td>
-                    {seriesParallelTable.twelveV && (
-                      <>
-                        <td>{seriesParallelTable.twelveV.totalnumber}</td>
-                        <td>{seriesParallelTable.twentyfourV.totalnumber}</td>
-                        <td>{seriesParallelTable.fortyeightV.totalnumber}</td>
-                      </>
-                    )}
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      <h4>Total Price:</h4>
-                    </td>
-                    {seriesParallelTable.twelveV && (
-                      <>
-                        <td>{seriesParallelTable.twelveV.totalprice}</td>
-                        <td>{seriesParallelTable.twentyfourV.totalprice}</td>
-                        <td>{seriesParallelTable.fortyeightV.totalprice}</td>
-                      </>
-                    )}
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
@@ -299,9 +207,6 @@ const BatteryTab = (props) => {
                   <tr>
                     <th>Battery Type</th>
                     <th>Suggested DOD</th>
-                    <th>12V system</th>
-                    <th>24V system</th>
-                    <th>48V system</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -309,42 +214,30 @@ const BatteryTab = (props) => {
                     <td colSpan={2}>
                       <h4>Battery Size (Ah)</h4>
                     </td>
-                    <td>{dodTable.twelveV.leadacid.battcapacity}</td>
-                    <td>{dodTable.twentyfourV.leadacid.battcapacity}</td>
-                    <td>{dodTable.fortyeightV.leadacid.battcapacity}</td>
+                    <td>{dodTable.leadacid.battcapacity}</td>
                   </tr>
                   <tr>
                     <td>Lead Acid</td>
                     <td>50%</td>
-                    <td>{dodTable.twelveV.leadacid.dodbattcap}</td>
-                    <td>{dodTable.twentyfourV.leadacid.dodbattcap}</td>
-                    <td>{dodTable.fortyeightV.leadacid.dodbattcap}</td>
+                    <td>{dodTable.leadacid.dodbattcap}</td>
                   </tr>
                   <tr>
                     <td>Lithium Ion</td>
                     <td>88%</td>
-                    <td>{dodTable.twelveV.lion.dodbattcap}</td>
-                    <td>{dodTable.twentyfourV.lion.dodbattcap}</td>
-                    <td>{dodTable.fortyeightV.lion.dodbattcap}</td>
+                    <td>{dodTable.lion.dodbattcap}</td>
                   </tr>
                   <tr>
                     <td>LiFePo4</td>
                     <td>90%</td>
-                    <td>{dodTable.twelveV.lifepo.dodbattcap}</td>
-                    <td>{dodTable.twentyfourV.lifepo.dodbattcap}</td>
-                    <td>{dodTable.fortyeightV.lifepo.dodbattcap}</td>
+                    <td>{dodTable.lifepo.dodbattcap}</td>
                   </tr>
                   <tr>
                     <td colSpan={2}>Total Current Load (A)</td>
-                    <td>{dodTable.twelveV.lifepo.totalCurrentLoad}</td>
-                    <td>{dodTable.twentyfourV.lifepo.totalCurrentLoad}</td>
-                    <td>{dodTable.fortyeightV.lifepo.totalCurrentLoad}</td>
+                    <td>{dodTable.lifepo.totalCurrentLoad}</td>
                   </tr>
                   <tr>
                     <td colSpan={2}>Total DC Watts Input to Inverter (W)</td>
-                    <td>{dodTable.twelveV.lifepo.totalDCPower}</td>
-                    <td>{dodTable.twentyfourV.lifepo.totalDCPower}</td>
-                    <td>{dodTable.fortyeightV.lifepo.totalDCPower}</td>
+                    <td>{dodTable.lifepo.totalDCPower}</td>
                   </tr>
                 </tbody>
               </table>

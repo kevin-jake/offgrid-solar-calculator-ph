@@ -29,7 +29,7 @@ const InverterTab = (props) => {
       });
     }
     setOptions(arrvar);
-  }, [optionState]);
+  }, [optionState, inverters]);
 
   const handleItemChanged = (event) => {
     console.log(event);
