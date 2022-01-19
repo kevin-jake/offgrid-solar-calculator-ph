@@ -48,12 +48,48 @@ const batterylist = [
   },
 ];
 
-export const LOVContext = createContext(inverterlist, batterylist);
+const solarpanellist = [
+  {
+    id: "s1",
+    pvname: "100W Solar Mono Crystalline PV Panel - SUNMagnet",
+    wattage: 100,
+    brand: "Sunmagnet",
+    supplier: "Sunmagnet",
+    voc: 22.6,
+    imp: 5.43,
+    vmp: 18.4,
+    isc: 5.87,
+    price: 2492,
+    img: "",
+    link: "https://shopee.ph/100W-Solar-Mono-Crystalline-PV-Panel-SUNMagnet-i.311714929.3087822980?sp_atk=79d1a35b-235c-46ea-93d4-8c93b874b966",
+  },
+  {
+    id: "s2",
+    pvname: "Ian solar 450w ",
+    wattage: 450,
+    brand: "IAN Solar",
+    supplier: "Ian Solar",
+    voc: 49.3,
+    imp: 10.85,
+    vmp: 41.5,
+    isc: 11.6,
+    price: 7200,
+    img: "",
+    link: "https://www.facebook.com/energysolarian",
+  },
+];
+
+export const LOVContext = createContext(
+  inverterlist,
+  batterylist,
+  solarpanellist
+);
 
 export const LOVProvider = (props) => {
   const value = {
     inverters: inverterlist,
     batterylist: batterylist,
+    pvlist: solarpanellist,
   };
 
   return (

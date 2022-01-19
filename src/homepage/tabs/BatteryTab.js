@@ -36,7 +36,14 @@ const BatteryTab = () => {
   }, [optionState, batterylist]);
 
   useEffect(() => {
-    setBatteryCap(seriesParallelTable.totalcapacity);
+    const batcap = {
+      totalcapacity: seriesParallelTable.totalcapacity,
+      battinseries: seriesParallelTable.series,
+      battinparallel: seriesParallelTable.parallel,
+      battvoltage: itemState.voltage,
+      battcapacity: itemState.battcapacity,
+    };
+    setBatteryCap(batcap);
     const batterytoSet = batterytab;
     batterytoSet.totalqty = seriesParallelTable.totalnumber;
     batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
@@ -147,8 +154,8 @@ const BatteryTab = () => {
   console.log(seriesParallelTable);
   const handleItemChanged = (event) => {
     console.log(event);
-    let selectedInverterId = event.value;
-    let index = batterylist.findIndex((x) => x.id === selectedInverterId);
+    let selectedId = event.value;
+    let index = batterylist.findIndex((x) => x.id === selectedId);
     console.log(batterylist[index]);
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);

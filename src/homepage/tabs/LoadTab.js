@@ -4,7 +4,6 @@ import { HomeContext } from "./context/home-context";
 
 const LoadTab = (props) => {
   const { loadtab, setLoad } = useContext(HomeContext);
-  console.log(loadtab);
   const [itemState, setItemState] = useState(loadtab.itemState);
 
   const [overalls, setOveralls] = useState(loadtab.overalls);

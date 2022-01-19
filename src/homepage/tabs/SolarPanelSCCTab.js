@@ -7,6 +7,7 @@ import { LOVContext } from "./context/lov-context";
 const SolarPanelSCCTab = () => {
   const { solarpanelstab, setPV } = useContext(HomeContext);
   const [itemState, setItemState] = useState(solarpanelstab);
+  const [sunhourstate, setshState] = useState(solarpanelstab.sunhours);
   const { totalbattcapacity } = useContext(GlobalContext);
   const { pvlist } = useContext(LOVContext);
   const [optionState, setOptions] = useState([
@@ -20,7 +21,6 @@ const SolarPanelSCCTab = () => {
     label: itemState.pvname,
   });
 
-  console.log(itemState);
   useEffect(() => {
     let i = 0;
     let arrvar = optionState;
@@ -81,9 +81,11 @@ const SolarPanelSCCTab = () => {
     setSelectedState(event);
   };
 
-  const handleSunhours = (value) => {
+  const handleSHChange = (value) => {
     let setstate = itemState;
-    setstate.sunhours = value;
+    setstate.sunhours = 1 * value;
+    console.log(setstate);
+    setshState(value);
     setItemState(setstate);
   };
 
@@ -115,12 +117,12 @@ const SolarPanelSCCTab = () => {
                 />
               </div>
               <div>
-                {/* <label> Sunhours: </label> */}
+                <label> Sunhours: </label>
                 <input
                   id="sunhours"
                   type="number"
-                  value={itemState.sunhours}
-                  onChange={(e) => handleSunhours(e.target.value)}
+                  value={sunhourstate}
+                  onChange={(e) => handleSHChange(e.target.value)}
                 />
               </div>
               <hr />

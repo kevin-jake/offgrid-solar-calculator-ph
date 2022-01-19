@@ -43,6 +43,17 @@ const initialState = {
     price: 0,
     link: "",
   },
+  solarpanelstab: {
+    id: "",
+    pvname: "",
+    wattage: 0,
+    brand: "",
+    voc: 0,
+    imp: 0,
+    price: 0,
+    link: "",
+    sunhours: 0,
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -61,6 +72,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         batterytab: action.batterytab,
+      };
+    case "PV":
+      return {
+        ...state,
+        solarpanelstab: action.solarpanelstab,
       };
     default:
       return state;
@@ -92,13 +108,23 @@ export const HomeProvider = (props) => {
       invertertab: inverterinfo,
     });
   };
+
+  const setPV = (pvinfo) => {
+    dispatch({
+      type: "PV",
+      solarpanelstab: pvinfo,
+    });
+  };
+
   const value = {
     loadtab: state.loadtab,
     batterytab: state.batterytab,
     invertertab: state.invertertab,
+    solarpanelstab: state.solarpanelstab,
     setLoad,
     setBattery,
     setInverter,
+    setPV,
   };
   console.log(state);
   return (

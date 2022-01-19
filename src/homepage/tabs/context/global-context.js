@@ -3,7 +3,13 @@ import React, { createContext, useReducer } from "react";
 const initState = {
   voltage: 12,
   totalprice: 0,
-  totalbattcapacity: 0,
+  totalbattcapacity: {
+    totalcapacity: 0,
+    battinseries: 0,
+    battinparallel: 0,
+    battvoltage: 0,
+    battcapacity: 0,
+  },
 };
 
 const AppReducer = (state, action) => {
