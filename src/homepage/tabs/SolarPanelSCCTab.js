@@ -1,107 +1,144 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import Select from "react-select";
+import { GlobalContext } from "./context/global-context";
+import { HomeContext } from "./context/home-context";
+import { LOVContext } from "./context/lov-context";
 
 const SolarPanelSCCTab = () => {
-  const [itemState, setItemState] = useState({
-    message: "",
-    items: [
-      {
-        loadname: "",
-        userqty: "",
-        wattage: "",
-        totalwatts: "",
-        ophours: "",
-        watthours: "",
-      },
-    ],
+  const { solarpanelstab, setPV } = useContext(HomeContext);
+  const [itemState, setItemState] = useState(solarpanelstab);
+  const { totalbattcapacity } = useContext(GlobalContext);
+  const { pvlist } = useContext(LOVContext);
+  const [optionState, setOptions] = useState([
+    {
+      value: "",
+      label: "",
+    },
+  ]);
+  const [selectedState, setSelectedState] = useState({
+    value: itemState.id,
+    label: itemState.pvname,
   });
 
-  const handleClick = () => {
-    // var items = itemState.items;
+  console.log(itemState);
+  useEffect(() => {
+    let i = 0;
+    let arrvar = optionState;
+    for (i; i < pvlist.length; i++) {
+      arrvar.push({
+        value: pvlist[i].id,
+        label: pvlist[i].pvname,
+      });
+    }
+    setOptions(arrvar);
+  }, [optionState, pvlist]);
 
-    // itemState.items.push(itemState.message);
-
-    itemState.items.push(itemState.message);
-    console.log(itemState);
-    setItemState({
-      items: itemState.items,
-      message: "",
-    });
+  const pvComputation = (
+    batteryvoltage,
+    battinseries,
+    battinparallel,
+    battcapacity,
+    sunhours,
+    voc,
+    imp,
+    wattage,
+    price
+  ) => {
+    const totalcapacity =
+      (batteryvoltage * battinseries * (battinparallel * battcapacity) * 0.8) /
+      sunhours;
+    const pvseries = Math.ceil((batteryvoltage * battinseries) / voc);
+    const pvparallel = Math.ceil(totalcapacity / voc / imp);
+    const totalpv = pvseries * pvparallel;
+    const totalwattage = wattage * totalpv;
+    const totalprice = Math.round(totalpv * price);
+    return {
+      pvseries: pvseries,
+      pvparallel: pvparallel,
+      totalpv: totalpv,
+      totalwattage: totalwattage,
+      totalprice: totalprice,
+    };
   };
 
-  const handleItemChanged = (event, i, id) => {
-    let items_var = itemState.items;
-    items_var[i][id] = event.target.value;
-
-    setItemState({
-      items: items_var,
-      message: itemState.message,
-    });
+  const handleItemChanged = (event) => {
+    console.log(event);
+    let selectedId = event.value;
+    let index = pvlist.findIndex((x) => x.id === selectedId);
+    let stateSetter = {
+      id: pvlist[index].id,
+      pvname: pvlist[index].pvname,
+      wattage: pvlist[index].wattage,
+      brand: pvlist[index].brand,
+      voc: pvlist[index].voc,
+      imp: pvlist[index].imp,
+      price: pvlist[index].price,
+      link: pvlist[index].link,
+      sunhours: 0,
+    };
+    setItemState(stateSetter);
+    setPV(stateSetter);
+    setSelectedState(event);
   };
 
-  const handleItemDeleted = (i) => {
-    itemState.items.splice(i, 1);
-    setItemState({
-      items: itemState.items,
-      message: itemState.message,
-    });
+  const handleSunhours = (value) => {
+    let setstate = itemState;
+    setstate.sunhours = value;
+    setItemState(setstate);
   };
 
+  let pvtable = pvComputation(
+    totalbattcapacity.battvoltage,
+    totalbattcapacity.battinseries,
+    totalbattcapacity.battinparallel,
+    totalbattcapacity.battcapacity,
+    itemState.sunhours,
+    itemState.voc,
+    itemState.imp,
+    itemState.wattage,
+    itemState.price
+  );
+
+  console.log(pvtable);
   return (
     <>
       <div className="square">
         <div className="content">
           <div className="table">
             <div>
-              <table className="">
-                <thead>
-                  <tr>
-                    <th>Inverter Name</th>
-                    <th>Sun hours</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {itemState.items.map((o, i) => {
-                    return (
-                      <tr key={"item-" + i}>
-                        <td>
-                          <select
-                            id="loadname"
-                            value={o.loadname}
-                            onChange={(e, index, id) =>
-                              handleItemChanged(e, i, "loadname")
-                            }
-                          >
-                            <option>
-                              500W Pure Sine Wave Car Power Inverter 12V DC
-                            </option>
-                            <option>
-                              1000W 24V To 220V Car Home Use Pure Sine Wave
-                            </option>
-                          </select>
-                        </td>
-                        <td>
-                          <input
-                            id="sunhours"
-                            value={o.sunhours}
-                            onChange={(e, index, id) =>
-                              handleItemChanged(e, i, "sunhours")
-                            }
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="content">
+                <h4>Solar Panel Name</h4>
+                <Select
+                  value={selectedState}
+                  onChange={handleItemChanged}
+                  options={optionState}
+                />
+              </div>
+              <div>
+                {/* <label> Sunhours: </label> */}
+                <input
+                  id="sunhours"
+                  type="number"
+                  value={itemState.sunhours}
+                  onChange={(e) => handleSunhours(e.target.value)}
+                />
+              </div>
               <hr />
               <div>
-                <p>Solar Panel Name:</p>
-                <p>Wattage:</p>
-                <p>PV in Series:</p>
-                <p>PV in Parallel:</p>
-                <p>Total Panels:</p>
-                <p>Price per pc.:</p>
-                <p>Total Price:</p>
+                <p>Solar Panel Name: {itemState.pvname}</p>
+                <p>Wattage: {itemState.wattage}</p>
+                <p>
+                  PV in Series: {(pvtable.pvseries = pvtable.pvseries || "")}
+                </p>
+                <p>
+                  PV in Parallel:{" "}
+                  {(pvtable.pvparallel = pvtable.pvparallel || "")}
+                </p>
+                <p>Total Panels: {(pvtable.totalpv = pvtable.totalpv || "")}</p>
+                <p>Price per pc.: {itemState.price}</p>
+                <p>
+                  Total Price: {(pvtable.totalprice = pvtable.totalprice || "")}
+                </p>
               </div>
             </div>
           </div>
@@ -117,26 +154,7 @@ const SolarPanelSCCTab = () => {
                     <th>SCC Name</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {itemState.items.map((o, i) => {
-                    return (
-                      <tr key={"item-" + i}>
-                        <td>
-                          <select
-                            id="loadname"
-                            value={o.loadname}
-                            onChange={(e, index, id) =>
-                              handleItemChanged(e, i, "loadname")
-                            }
-                          >
-                            <option>SRNE 40A MPPT</option>
-                            <option>Epever 60A MPPT</option>
-                          </select>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                <tbody></tbody>
               </table>
               <hr />
               <div>
