@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import load from "../resources/load.png";
+import { GlobalContext } from "../tabs/context/global-context";
 import { HomeContext } from "../tabs/context/home-context";
 
 const LoadSection = () => {
   const { loadtab } = useContext(HomeContext);
+  const { totalbattcapacity } = useContext(GlobalContext);
   return (
     <>
       <div>
@@ -12,9 +14,12 @@ const LoadSection = () => {
       </div>
       <div>
         <p>Total kWh Load: {loadtab.overalls.watthours}</p>
-        <p>Battery Size needed (Ah):</p>
-        <p>Total Current Load (A):</p>
-        <p>Total DC Power Input to Inverter (W):</p>
+        <p>Battery Size needed (Ah): {totalbattcapacity.battsizeneed} </p>
+        <p>Total Current Load (A): {totalbattcapacity.currentload} </p>
+        <p>
+          Total DC Power Input to Inverter (W):
+          {totalbattcapacity.powertoinverter}
+        </p>
       </div>
     </>
   );

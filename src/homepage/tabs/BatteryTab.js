@@ -42,6 +42,9 @@ const BatteryTab = () => {
       battinparallel: seriesParallelTable.parallel,
       battvoltage: itemState.voltage,
       battcapacity: itemState.battcapacity,
+      battsizeneed: dodTable.leadacid.battcapacity,
+      currentload: dodTable.leadacid.totalCurrentLoad,
+      powertoinverter: dodTable.leadacid.totalDCPower,
     };
     setBatteryCap(batcap);
     const batterytoSet = batterytab;
@@ -76,7 +79,7 @@ const BatteryTab = () => {
     };
   };
   const dodComputation = (voltage, load, inverter) => {
-    console.log(load);
+    // console.log(load);
     const leadacid = batteryComputation(
       load.watthours,
       load.totalwatts,
@@ -151,12 +154,12 @@ const BatteryTab = () => {
     );
   }
 
-  console.log(seriesParallelTable);
+  // console.log(seriesParallelTable);
   const handleItemChanged = (event) => {
-    console.log(event);
+    // console.log(event);
     let selectedId = event.value;
     let index = batterylist.findIndex((x) => x.id === selectedId);
-    console.log(batterylist[index]);
+    // console.log(batterylist[index]);
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);
     setSelectedState(event);

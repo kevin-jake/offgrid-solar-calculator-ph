@@ -54,6 +54,17 @@ const initialState = {
     link: "",
     sunhours: 0,
   },
+  scctab: {
+    id: "",
+    sccname: "",
+    type: "",
+    brand: "",
+    supplier: "",
+    amprating: 0,
+    price: 0,
+    img: "",
+    link: "",
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -77,6 +88,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         solarpanelstab: action.solarpanelstab,
+      };
+    case "SCC":
+      return {
+        ...state,
+        scctab: action.scctab,
       };
     default:
       return state;
@@ -116,11 +132,20 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setSCC = (sccinfo) => {
+    dispatch({
+      type: "SCC",
+      scctab: sccinfo,
+    });
+  };
+
   const value = {
     loadtab: state.loadtab,
     batterytab: state.batterytab,
     invertertab: state.invertertab,
     solarpanelstab: state.solarpanelstab,
+    scctab: state.scctab,
+    setSCC,
     setLoad,
     setBattery,
     setInverter,

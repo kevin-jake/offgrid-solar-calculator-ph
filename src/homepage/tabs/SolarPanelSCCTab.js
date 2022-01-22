@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Select from "react-select";
+import SCCComponent from "../SCCComponent";
 import { GlobalContext } from "./context/global-context";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
@@ -8,7 +9,7 @@ const SolarPanelSCCTab = () => {
   const { solarpanelstab, setPV } = useContext(HomeContext);
   const [itemState, setItemState] = useState(solarpanelstab);
   const [sunhourstate, setshState] = useState(solarpanelstab.sunhours);
-  const { totalbattcapacity } = useContext(GlobalContext);
+  const { totalbattcapacity, setSolarPanel } = useContext(GlobalContext);
   const { pvlist } = useContext(LOVContext);
   const [optionState, setOptions] = useState([
     {
@@ -32,6 +33,17 @@ const SolarPanelSCCTab = () => {
     }
     setOptions(arrvar);
   }, [optionState, pvlist]);
+
+  useEffect(() => {
+    const pvinfo = {
+      pvname: itemState.pvname,
+      pvparallel: pvtable.pvparallel || 0,
+      pvseries: pvtable.pvseries || 0,
+      totalnumberpv: pvtable.totalpv || 0,
+      totalprice: pvtable.totalprice || 0,
+    };
+    setSolarPanel(pvinfo);
+  }, [itemState, sunhourstate]);
 
   const pvComputation = (
     batteryvoltage,
@@ -62,7 +74,6 @@ const SolarPanelSCCTab = () => {
   };
 
   const handleItemChanged = (event) => {
-    console.log(event);
     let selectedId = event.value;
     let index = pvlist.findIndex((x) => x.id === selectedId);
     let stateSetter = {
@@ -84,7 +95,6 @@ const SolarPanelSCCTab = () => {
   const handleSHChange = (value) => {
     let setstate = itemState;
     setstate.sunhours = 1 * value;
-    console.log(setstate);
     setshState(value);
     setItemState(setstate);
   };
@@ -149,22 +159,7 @@ const SolarPanelSCCTab = () => {
       <div className="square">
         <div className="content">
           <div className="table">
-            <div>
-              <table className="">
-                <thead>
-                  <tr>
-                    <th>SCC Name</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-              <hr />
-              <div>
-                <h3>PWM or MPPT</h3>
-                <p>Ampere Rating:</p>
-                <p>Price:</p>
-              </div>
-            </div>
+            <SCCComponent />
           </div>
         </div>
       </div>

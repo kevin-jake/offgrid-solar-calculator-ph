@@ -1,18 +1,20 @@
-import React from "react";
-import scc from "../resources/scc.png";
+import React, { useContext } from "react";
+import sccimg from "../resources/scc.png";
+import { GlobalContext } from "../tabs/context/global-context";
 
 const SCCSection = () => {
+  const { scc } = useContext(GlobalContext);
   return (
     <>
       <div>
         <h3>Solar Charge Controller</h3>
-        <img src={scc} alt="SCC" />
+        <img src={sccimg} alt="SCC" />
       </div>
       <div>
-        <p>SCC Type:</p>
-        <p>SCC Name:</p>
-        <p>SCC Ampere Rating:</p>
-        <p>Price:</p>
+        <p>SCC Type: {scc.type}</p>
+        <p>SCC Name: {scc.sccname}</p>
+        <p>SCC Ampere Rating: {scc.amprating}</p>
+        <p>Price: {scc.price}</p>
       </div>
     </>
   );

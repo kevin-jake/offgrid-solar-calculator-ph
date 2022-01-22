@@ -79,10 +79,36 @@ const solarpanellist = [
   },
 ];
 
+const scclist = [
+  {
+    id: "sc1",
+    sccname: "SRNE 40A MPPT",
+    type: "MPPT",
+    brand: "SRNE",
+    supplier: "Greewatt",
+    amprating: 40,
+    price: 3600,
+    img: "",
+    link: "https://www.facebook.com/dennis.greewatt",
+  },
+  {
+    id: "sc2",
+    sccname: "PWM Solar Panel Controller 30A",
+    type: "PWM",
+    brand: "Blue Normal",
+    supplier: "Shoppee",
+    amprating: 30,
+    price: 303,
+    img: "",
+    link: "https://shopee.ph/PWM-Solar-Panel-Controller-Battery-Charger-Charge-Solar-Controller-Regulator-30A-i.278747456.7650909968?sp_atk=facd5a49-220d-4f08-ab8b-9effac424f5e",
+  },
+];
+
 export const LOVContext = createContext(
   inverterlist,
   batterylist,
-  solarpanellist
+  solarpanellist,
+  scclist
 );
 
 export const LOVProvider = (props) => {
@@ -90,6 +116,7 @@ export const LOVProvider = (props) => {
     inverters: inverterlist,
     batterylist: batterylist,
     pvlist: solarpanellist,
+    scclist: scclist,
   };
 
   return (
