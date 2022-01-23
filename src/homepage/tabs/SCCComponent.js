@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "./tabs/context/global-context";
-import { HomeContext } from "./tabs/context/home-context";
-import { LOVContext } from "./tabs/context/lov-context";
+import { GlobalContext } from "./context/global-context";
+import { HomeContext } from "./context/home-context";
+import { LOVContext } from "./context/lov-context";
 import Select from "react-select";
 
 const SCCComponent = () => {
