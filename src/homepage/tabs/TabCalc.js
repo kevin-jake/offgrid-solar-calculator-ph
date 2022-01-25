@@ -11,17 +11,38 @@ import SolarPanelSCCTab from "./SolarPanelSCCTab";
 const TabCalc = () => {
   const { loadtab, invertertab, batterytab, setBattery, solarpanelstab } =
     useContext(HomeContext);
-  const { voltage, setBatteryCap, totalbattcapacity, setSolarPanel } =
-    useContext(GlobalContext);
+  const {
+    voltage,
+    solarpanel,
+    scc,
+    setBatteryCap,
+    totalbattcapacity,
+    setSolarPanel,
+    setOverallPrice,
+  } = useContext(GlobalContext);
   const [battSPState, setBattSPState] = useState({});
   const [pvState, setPVState] = useState({});
   useEffect(() => {
     batterycomputation(batterytab, dodTable, voltage);
-  }, [batterytab, voltage]);
+  }, [batterytab, voltage, loadtab]);
 
   useEffect(() => {
     pvcomputation(totalbattcapacity, solarpanelstab);
-  }, [totalbattcapacity, solarpanelstab, solarpanelstab.sunhours]);
+  }, [totalbattcapacity, loadtab, solarpanelstab, solarpanelstab.sunhours]);
+
+  useEffect(() => {
+    totalPriceCompute(
+      solarpanel.totalprice,
+      scc.price,
+      totalbattcapacity.totalprice,
+      invertertab.price
+    );
+  }, [
+    solarpanel.totalprice,
+    scc.price,
+    totalbattcapacity.totalprice,
+    invertertab.price,
+  ]);
 
   const batteryComputation = (
     totalkwh,
@@ -160,6 +181,7 @@ const TabCalc = () => {
       battsizeneed: dodTable.leadacid.battcapacity,
       currentload: dodTable.leadacid.totalCurrentLoad,
       powertoinverter: dodTable.leadacid.totalDCPower,
+      totalprice: seriesParallelTable.totalprice,
     };
     setBatteryCap(battcap);
     const batterytoSet = batterytab;
@@ -195,7 +217,24 @@ const TabCalc = () => {
     setPVState(pvtable);
   };
 
-  console.log(solarpanelstab);
+  const totalPriceCompute = (
+    pvprice = 0,
+    sccprice = 0,
+    batteryprice = 0,
+    inverterprice = 0,
+    others = 0
+  ) => {
+    console.log("PVPrice: " + pvprice);
+    console.log("sccprice: " + sccprice);
+    console.log("batteryprice: " + batteryprice);
+    console.log("inverterprice: " + inverterprice);
+    let totalPrice = Math.round(
+      pvprice + sccprice + batteryprice + inverterprice + others
+    );
+    setOverallPrice(totalPrice);
+  };
+
+  console.log(totalbattcapacity);
   return (
     <Tabs selectedTabClassName="tab--selected">
       <TabList className="tab-list">

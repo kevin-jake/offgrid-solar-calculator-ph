@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Card from "../shared/components/UIElements/Card";
 import InverterSection from "./sections/InverterSection";
 import SCCSection from "./sections/SCCSection";
@@ -9,7 +9,11 @@ import Button from "../shared/components/FormElement/Button";
 import { GlobalContext } from "./tabs/context/global-context";
 
 const MainCalculation = () => {
-  const { voltage, setVoltage } = useContext(GlobalContext);
+  const { voltage, setVoltage, overallprice, setOverallPrice } =
+    useContext(GlobalContext);
+  useEffect(() => {
+    setOverallPrice(overallprice);
+  }, [overallprice]);
   return (
     <Card className="home-main">
       <div className="head">
@@ -20,6 +24,7 @@ const MainCalculation = () => {
         <Button onClick={() => setVoltage(24)}>24V System</Button>
         <Button onClick={() => setVoltage(48)}>48V System</Button>
         <h2>Voltage System: {voltage} V</h2>
+        <h2>Total Price: Php {overallprice} </h2>
       </div>
       <ul className="main__section">
         <li>

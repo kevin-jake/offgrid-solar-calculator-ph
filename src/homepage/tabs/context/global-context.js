@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 const initState = {
   voltage: 12,
-  totalprice: 0,
+  overallprice: 0,
   totalbattcapacity: {
     totalcapacity: 0,
     battinseries: 0,
@@ -12,6 +12,7 @@ const initState = {
     battsizeneed: 0,
     currentload: 0,
     powertoinverter: 0,
+    totalprice: 0,
   },
   solarpanel: {
     pvname: "",
@@ -49,6 +50,11 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         scc: action.scc,
+      };
+    case "SETPRICE":
+      return {
+        ...state,
+        overallprice: action.overallprice,
       };
     default:
       return state;
@@ -88,11 +94,20 @@ export const GlobalProvider = (props) => {
     });
   };
 
+  const setOverallPrice = (price) => {
+    dispatch({
+      type: "SETPRICE",
+      overallprice: price,
+    });
+  };
+
   const value = {
     voltage: state.voltage,
+    overallprice: state.overallprice,
     totalbattcapacity: state.totalbattcapacity,
     solarpanel: state.solarpanel,
     scc: state.scc,
+    setOverallPrice,
     setSCCGlobal,
     setSolarPanel,
     setVoltage,
