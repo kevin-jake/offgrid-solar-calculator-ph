@@ -3,6 +3,7 @@ import { GlobalContext } from "./context/global-context";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
 import Select from "react-select";
+import { numberWithCommas } from "../../shared/util/format";
 
 const SCCComponent = () => {
   const { scctab, setSCC } = useContext(HomeContext);
@@ -74,7 +75,7 @@ const SCCComponent = () => {
         <h4>SCC Type: {itemState.type}</h4>
         <p>Ampere Rating: {itemState.amprating}</p>
         <p>Brand: {itemState.brand}</p>
-        <p>Price: {itemState.price}</p>
+        <p>Price: Php {numberWithCommas(itemState.price.toFixed(2))}</p>
       </div>
     </div>
   );

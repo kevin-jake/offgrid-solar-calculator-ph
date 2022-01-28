@@ -7,6 +7,7 @@ import SolarPanelSection from "./sections/SolarPanelSection";
 import BatterySection from "./sections/BatterySection";
 import Button from "../shared/components/FormElement/Button";
 import { GlobalContext } from "./tabs/context/global-context";
+import { numberWithCommas } from "../shared/util/format";
 
 const MainCalculation = () => {
   const { voltage, setVoltage, overallprice, setOverallPrice } =
@@ -24,7 +25,7 @@ const MainCalculation = () => {
         <Button onClick={() => setVoltage(24)}>24V System</Button>
         <Button onClick={() => setVoltage(48)}>48V System</Button>
         <h2>Voltage System: {voltage} V</h2>
-        <h2>Total Price: Php {overallprice} </h2>
+        <h2>Total Price: Php {numberWithCommas(overallprice.toFixed(2))} </h2>
       </div>
       <ul className="main__section">
         <li>

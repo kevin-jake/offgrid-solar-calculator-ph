@@ -22,6 +22,7 @@ const TabCalc = () => {
   } = useContext(GlobalContext);
   const [battSPState, setBattSPState] = useState({});
   const [pvState, setPVState] = useState({});
+
   useEffect(() => {
     batterycomputation(batterytab, dodTable, voltage);
   }, [batterytab, voltage, loadtab]);
@@ -146,7 +147,13 @@ const TabCalc = () => {
   const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
 
   const batterycomputation = (batterytab, dodTable, voltage) => {
-    let seriesParallelTable = {};
+    let seriesParallelTable = {
+      series: 0,
+      parallel: 0,
+      totalnumber: 0,
+      totalprice: 0,
+      totalcapacity: 0,
+    };
     if (batterytab.batttype === "LiFePo4") {
       seriesParallelTable = seriesParallelCompute(
         voltage,
@@ -188,9 +195,9 @@ const TabCalc = () => {
     batterytoSet.totalqty = seriesParallelTable.totalnumber;
     batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
     batterytoSet.totalprice = seriesParallelTable.totalprice;
+    console.log(batterytoSet);
     setBattery(batterytoSet);
     setBattSPState(seriesParallelTable);
-    console.log(battSPState);
   };
 
   const pvcomputation = (totalbattcapacity, solarpanelstab) => {
@@ -224,10 +231,6 @@ const TabCalc = () => {
     inverterprice = 0,
     others = 0
   ) => {
-    console.log("PVPrice: " + pvprice);
-    console.log("sccprice: " + sccprice);
-    console.log("batteryprice: " + batteryprice);
-    console.log("inverterprice: " + inverterprice);
     let totalPrice = Math.round(
       pvprice + sccprice + batteryprice + inverterprice + others
     );

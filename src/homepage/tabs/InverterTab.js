@@ -3,6 +3,7 @@ import { HomeContext } from "./context/home-context";
 import Select from "react-select";
 import { LOVContext } from "./context/lov-context";
 import { useEffect } from "react/cjs/react.development";
+import { numberWithCommas } from "../../shared/util/format";
 
 const InverterTab = (props) => {
   const { invertertab, setInverter } = useContext(HomeContext);
@@ -67,7 +68,7 @@ const InverterTab = (props) => {
         <p>Input Voltage: {itemState.inputVoltage} V</p>
         <p>Efficiency: {itemState.efficiency}%</p>
         <p>Wattage: {itemState.wattage} W</p>
-        <p>Price: Php {itemState.price} </p>
+        <p>Price: Php {numberWithCommas(itemState.price.toFixed(2))} </p>
         <p>Supplier's Link: {itemState.link}</p>
       </div>
     </div>

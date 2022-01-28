@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
+import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
 import SCCComponent from "./SCCComponent";
@@ -94,9 +95,15 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   {(pvdata.pvparallel = pvdata.pvparallel || "")}
                 </p>
                 <p>Total Panels: {(pvdata.totalpv = pvdata.totalpv || "")}</p>
-                <p>Price per pc.: {itemState.price}</p>
                 <p>
-                  Total Price: {(pvdata.totalprice = pvdata.totalprice || "")}
+                  Price per pc.: Php{" "}
+                  {numberWithCommas(itemState.price.toFixed(2))}
+                </p>
+                <p>
+                  Total Price:
+                  {pvdata.totalprice
+                    ? numberWithCommas(pvdata.totalprice.toFixed(2))
+                    : ""}
                 </p>
               </div>
             </div>

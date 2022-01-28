@@ -144,3 +144,13 @@ th {
   overflow: hidden;
   background: white;
 }
+
+.invalid label,
+.invalid p {
+  color: red;
+}
+
+.invalid {
+  background: #ffe6e6;
+  box-shadow: 0 2px 8px rgb(239 0 0 / 26%);
+}

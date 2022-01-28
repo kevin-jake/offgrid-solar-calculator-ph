@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { numberWithCommas } from "../../shared/util/format";
 import inverter from "../resources/inverter.png";
 import { HomeContext } from "../tabs/context/home-context";
 
@@ -15,7 +16,7 @@ const InverterSection = () => {
         <p>Inverter Type: {invertertab.type}</p>
         <p>Input Voltage: {invertertab.inputVoltage}</p>
         <p>Wattage: {invertertab.wattage}</p>
-        <p>Price: {invertertab.price}</p>
+        <p>Price: Php {numberWithCommas(invertertab.price.toFixed(2))}</p>
       </div>
     </>
   );

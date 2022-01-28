@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
+import { numberWithCommas } from "../../shared/util/format";
 import "./BatteryTab.css";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
@@ -70,12 +71,18 @@ const BatteryTab = ({ battdata, doddata }) => {
                 <p>Battery Model / Name: {itemState.battmodel}</p>
                 <p>Battery Voltage: {itemState.voltage}</p>
                 <p>Battery Capacity: {itemState.battcapacity}</p>
-                <p>Price per pc.: {itemState.priceperpc}</p>
+                <p>
+                  Price per pc.: Php
+                  {numberWithCommas(itemState.priceperpc.toFixed(2))}
+                </p>
                 <p>No. of Battery in Series: {battdata.series} </p>
                 <p>No. of Battery in Parallel: {battdata.parallel} </p>
                 <p>Total No. of Battery: {battdata.totalnumber}</p>
                 <p>Total Capacity: {battdata.totalcapacity}</p>
-                <p>Total Price: {battdata.totalprice}</p>
+                <p>
+                  Total Price: Php
+                  {numberWithCommas(battdata.totalprice.toFixed(2))}
+                </p>
               </div>
             </div>
           </div>
