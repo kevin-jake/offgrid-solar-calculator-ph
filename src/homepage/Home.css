@@ -36,7 +36,7 @@ th {
 }
 
 .main__section li {
-  margin: 1rem;
+  margin: 7px;
 }
 
 @media (min-width: 1287px) {
@@ -73,7 +73,7 @@ th {
   margin: 1rem 4rem;
 }
 
-.section img {
+.price-header img {
   width: 30%;
   height: 50%;
   object-fit: fill;

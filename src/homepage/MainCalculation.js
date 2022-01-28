@@ -9,6 +9,7 @@ import Button from "../shared/components/FormElement/Button";
 import { GlobalContext } from "./tabs/context/global-context";
 import { numberWithCommas } from "../shared/util/format";
 import { HomeContext } from "./tabs/context/home-context";
+import SectionHead from "./SectionHead";
 
 const MainCalculation = () => {
   const {
@@ -56,29 +57,29 @@ const MainCalculation = () => {
       </div>
       <ul className="main__section">
         <li>
-          <Card className="section">
+          <SectionHead>
             <SolarPanelSection />
-          </Card>
+          </SectionHead>
         </li>
         <li>
-          <Card className="section">
+          <SectionHead>
             <SCCSection />
-          </Card>
+          </SectionHead>
         </li>
         <li>
-          <Card className="section">
+          <SectionHead>
             <BatterySection />
-          </Card>
+          </SectionHead>
         </li>
         <li>
-          <Card className={`section ${!validState.inverter && "invalid"}`}>
+          <SectionHead className={` ${!validState.inverter && "invalid"}`}>
             <InverterSection />
-          </Card>
+          </SectionHead>
         </li>
         <li>
-          <Card className="section">
+          <SectionHead>
             <LoadSection />
-          </Card>
+          </SectionHead>
         </li>
       </ul>
     </Card>

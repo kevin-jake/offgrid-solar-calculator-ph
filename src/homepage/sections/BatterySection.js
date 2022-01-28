@@ -8,27 +8,30 @@ const BatterySection = () => {
   console.log(batterytab);
   return (
     <>
-      <div>
-        <h3>Battery</h3>
+      <div className="price-header">
+        <h3 className="title">Battery</h3>
         <img src={bat} alt="Battery" />
       </div>
-      <div>
-        <p>Battery Type: {batterytab.batttype}</p>
-        <p>Battery Model / Name: {batterytab.battname}</p>
-        <p>Battery Voltage: {batterytab.voltage}</p>
-        <p>Battery Capacity: {batterytab.battcapacity}</p>
-        <p>
-          Price per pc.: Php{" "}
-          {batterytab.priceperpc &&
-            numberWithCommas(batterytab.priceperpc.toFixed(2))}
-        </p>
-        <p>Total Number of Battery: {batterytab.totalqty}</p>
-        <p>Battery Total Capacity: {batterytab.totalcapacity} Ah</p>
-        <p>
-          Total Price: Php{" "}
-          {batterytab.totalprice &&
-            numberWithCommas(batterytab.totalprice.toFixed(2))}
-        </p>
+      <hr />
+      <div className="price-body">
+        <ul className="features">
+          <li>Battery Type: {batterytab.batttype}</li>
+          <li>Battery Model / Name: {batterytab.battname}</li>
+          <li>Battery Voltage: {batterytab.voltage}</li>
+          <li>Battery Capacity: {batterytab.battcapacity}</li>
+          <li>
+            Price per pc.: Php{" "}
+            {batterytab.priceperpc &&
+              numberWithCommas(batterytab.priceperpc.toFixed(2))}
+          </li>
+          <li>Total Number of Battery: {batterytab.totalqty}</li>
+          <li>Battery Total Capacity: {batterytab.totalcapacity} Ah</li>
+          <li>
+            Total Price: Php{" "}
+            {batterytab.totalprice &&
+              numberWithCommas(batterytab.totalprice.toFixed(2))}
+          </li>
+        </ul>
       </div>
     </>
   );

@@ -8,18 +8,21 @@ const LoadSection = () => {
   const { totalbattcapacity } = useContext(GlobalContext);
   return (
     <>
-      <div>
-        <h3>Load</h3>
+      <div className="price-header">
+        <h3 className="title">Load</h3>
         <img src={load} alt="Load" />
       </div>
-      <div>
-        <p>Total kWh Load: {loadtab.overalls.watthours}</p>
-        <p>Battery Size needed (Ah): {totalbattcapacity.battsizeneed} </p>
-        <p>Total Current Load (A): {totalbattcapacity.currentload} </p>
-        <p>
-          Total DC Power Input to Inverter (W):
-          {totalbattcapacity.powertoinverter}
-        </p>
+      <hr />
+      <div className="price-body">
+        <ul className="features">
+          <li>Total kWh Load: {loadtab.overalls.watthours}</li>
+          <li>Battery Size needed (Ah): {totalbattcapacity.battsizeneed} </li>
+          <li>Total Current Load (A): {totalbattcapacity.currentload} </li>
+          <li>
+            Total DC Power Input to Inverter (W):
+            {totalbattcapacity.powertoinverter}
+          </li>
+        </ul>
       </div>
     </>
   );

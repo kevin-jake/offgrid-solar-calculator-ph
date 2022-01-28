@@ -7,15 +7,18 @@ const SCCSection = () => {
   const { scc } = useContext(GlobalContext);
   return (
     <>
-      <div>
-        <h3>Solar Charge Controller</h3>
+      <div className="price-header">
+        <h3 className="title">Solar Charge Controller</h3>
         <img src={sccimg} alt="SCC" />
       </div>
-      <div>
-        <p>SCC Type: {scc.type}</p>
-        <p>SCC Name: {scc.sccname}</p>
-        <p>SCC Ampere Rating: {scc.amprating}</p>
-        <p>Price: Php {numberWithCommas(scc.price.toFixed(2))}</p>
+      <hr />
+      <div className="price-body">
+        <ul className="features">
+          <li>SCC Type: {scc.type}</li>
+          <li>SCC Name: {scc.sccname}</li>
+          <li>SCC Ampere Rating: {scc.amprating}</li>
+          <li>Price: Php {numberWithCommas(scc.price.toFixed(2))}</li>
+        </ul>
       </div>
     </>
   );
