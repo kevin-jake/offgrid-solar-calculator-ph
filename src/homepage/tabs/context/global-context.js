@@ -27,6 +27,11 @@ const initState = {
     amprating: "",
     price: 0,
   },
+  isValid: {
+    inverter: true,
+    scc: true,
+    solarpanel: true,
+  },
 };
 
 const AppReducer = (state, action) => {
@@ -55,6 +60,11 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         overallprice: action.overallprice,
+      };
+    case "SETVALID":
+      return {
+        ...state,
+        isValid: action.isValid,
       };
     default:
       return state;
@@ -101,12 +111,21 @@ export const GlobalProvider = (props) => {
     });
   };
 
+  const setValid = (validity) => {
+    dispatch({
+      type: "SETVALID",
+      isValid: validity,
+    });
+  };
+
   const value = {
     voltage: state.voltage,
     overallprice: state.overallprice,
     totalbattcapacity: state.totalbattcapacity,
     solarpanel: state.solarpanel,
     scc: state.scc,
+    isValid: state.isValid,
+    setValid,
     setOverallPrice,
     setSCCGlobal,
     setSolarPanel,

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "../shared/components/UIElements/Card";
 import InverterSection from "./sections/InverterSection";
 import SCCSection from "./sections/SCCSection";
@@ -8,13 +8,40 @@ import BatterySection from "./sections/BatterySection";
 import Button from "../shared/components/FormElement/Button";
 import { GlobalContext } from "./tabs/context/global-context";
 import { numberWithCommas } from "../shared/util/format";
+import { HomeContext } from "./tabs/context/home-context";
 
 const MainCalculation = () => {
-  const { voltage, setVoltage, overallprice, setOverallPrice } =
-    useContext(GlobalContext);
+  const {
+    voltage,
+    setVoltage,
+    overallprice,
+    setOverallPrice,
+    isValid,
+    setValid,
+  } = useContext(GlobalContext);
+  const { invertertab } = useContext(HomeContext);
+  const [validState, setValidState] = useState(isValid);
   useEffect(() => {
     setOverallPrice(overallprice);
   }, [overallprice]);
+
+  useEffect(() => {
+    inverterValid(voltage, invertertab.inputVoltage);
+  }, [invertertab.inputVoltage, voltage]);
+
+  const inverterValid = (global_voltage, inverter_voltage) => {
+    let state = validState;
+    if (global_voltage === inverter_voltage || inverter_voltage === 0) {
+      state.inverter = true;
+      setValidState(state);
+      setValid(state);
+    } else {
+      state.inverter = false;
+      setValidState(state);
+      setValid(state);
+    }
+  };
+
   return (
     <Card className="home-main">
       <div className="head">
@@ -44,7 +71,7 @@ const MainCalculation = () => {
           </Card>
         </li>
         <li>
-          <Card className="section">
+          <Card className={`section ${!validState.inverter && "invalid"}`}>
             <InverterSection />
           </Card>
         </li>
