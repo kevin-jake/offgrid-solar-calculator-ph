@@ -41,6 +41,7 @@ const BatteryTab = ({ battdata, doddata }) => {
     setBattery(batterylist[index]);
     setSelectedState(event);
   };
+  console.log(battdata);
   return (
     <>
       <div className="square">

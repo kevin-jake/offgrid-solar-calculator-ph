@@ -102,14 +102,14 @@ th {
 }
 
 .tab-list {
-  border-bottom: 1px solid #ffb100;
+  border-bottom: 1px solid #60a5fa;
   margin: 0 0 10px;
   padding: 0;
 }
 
 .tab--selected {
   background: #fff;
-  border-color: #ffb100 !important;
+  border-color: #60a5fa !important;
   color: black;
   border-radius: 5px 5px 0 0;
   margin-right: 2px;

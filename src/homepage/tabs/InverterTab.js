@@ -43,33 +43,127 @@ const InverterTab = (props) => {
   };
   // console.log(selectedState);
   return (
-    <div>
-      <table className="">
-        <thead>
-          <tr>
-            <th>Inverter Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <Select
-                value={selectedState}
-                onChange={handleItemChanged}
-                options={optionState}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <hr />
-      <div>
-        <p>Inverter Type: {itemState.type}</p>
-        <p>Input Voltage: {itemState.inputVoltage} V</p>
-        <p>Efficiency: {itemState.efficiency}%</p>
-        <p>Wattage: {itemState.wattage} W</p>
-        <p>Price: Php {numberWithCommas(itemState.price.toFixed(2))} </p>
-        <p>Supplier's Link: {itemState.link}</p>
+    <div className="container-lg px-6 py-4 mx-4">
+      <div className="grid grid-cols-1 gap-8 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
+        <Select
+          value={selectedState}
+          onChange={handleItemChanged}
+          options={optionState}
+        />
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="inverterName"
+            >
+              Inverter Name
+            </label>
+            <input
+              id="inverterName"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.inverterName}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="type"
+            >
+              Inverter Type
+            </label>
+            <input
+              id="type"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.type}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="volts"
+            >
+              Input Voltage
+            </label>
+            <input
+              id="volts"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.inputVoltage + " V"}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="eff"
+            >
+              Efficiency
+            </label>
+            <input
+              id="eff"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.efficiency + " %"}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="watt"
+            >
+              Wattage
+            </label>
+            <input
+              id="watt"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.wattage + " W"}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="price"
+            >
+              Price
+            </label>
+            <input
+              id="price"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="price"
+            >
+              Supplier's Link:{" "}
+            </label>
+            {/* <input
+              id="price"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
+            > */}
+            <a
+              class=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
+              href={itemState.link}
+            >
+              {itemState.link ? "Link" : ""}
+            </a>
+            {/* </input> */}
+          </div>
+        </div>
       </div>
     </div>
   );
