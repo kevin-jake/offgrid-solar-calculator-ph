@@ -232,12 +232,6 @@ const LoadTab = (props) => {
                     {" "}
                     Load Name{" "}
                   </th>
-                  {/* //         <th>No. of Users</th>
-    //         <th>Wattage</th>
-    //         <th>Total Wattage</th>
-    //         <th>Operating Hours</th>
-    //         <th>Watt-hours</th>
-    //         <th>Actions</th> */}
                   <th
                     scope="col"
                     class="text-lg font-medium text-gray-900 px-6 py-4 text-left"

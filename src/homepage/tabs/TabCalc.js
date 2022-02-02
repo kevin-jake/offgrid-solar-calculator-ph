@@ -263,11 +263,15 @@ const TabCalc = () => {
         </div>
       </TabPanel>
       <TabPanel>
-        <h2>Battery</h2>
+        <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+          Battery
+        </h2>
         <BatteryTab battdata={battSPState} doddata={dodTable} />
       </TabPanel>
       <TabPanel>
-        <h2>Solar Panel and SCC</h2>
+        <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+          Solar Panel and SCC
+        </h2>
         <SolarPanelSCCTab pvdata={pvState} />
       </TabPanel>
     </Tabs>

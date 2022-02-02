@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { numberWithCommas } from "../../shared/util/format";
-import "./BatteryTab.css";
 import { HomeContext } from "./context/home-context";
 import { LOVContext } from "./context/lov-context";
 
@@ -44,7 +43,7 @@ const BatteryTab = ({ battdata, doddata }) => {
   console.log(battdata);
   return (
     <>
-      <div className="square">
+      {/* <div className="square">
         <div className="content">
           <div className="table">
             <div className="table-cell">
@@ -133,6 +132,283 @@ const BatteryTab = ({ battdata, doddata }) => {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      <div className="container-lg px-6 py-4 mx-4">
+        <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
+          <Select
+            value={selectedState}
+            onChange={handleItemChanged}
+            options={optionState}
+          />
+          <div className="grid grid-cols-1 gap-8  md:grid-cols-2 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battype"
+                >
+                  Battery Type:
+                </label>
+                <input
+                  id="battype"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={itemState.batttype}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battmodel"
+                >
+                  Battery Model:
+                </label>
+                <input
+                  id="battmodel"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={itemState.battmodel}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battvolts"
+                >
+                  Battery Voltage:
+                </label>
+                <input
+                  id="battvolts"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={itemState.voltage + " V"}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battcap"
+                >
+                  Battery Capacity:
+                </label>
+                <input
+                  id="battcap"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={itemState.battcapacity + " Ah"}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battcap"
+                >
+                  Price per pc.:
+                </label>
+                <input
+                  id="battcap"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={
+                    "Php " + numberWithCommas(itemState.priceperpc.toFixed(2))
+                  }
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battseries"
+                >
+                  Battery in Series:
+                </label>
+                <input
+                  id="battseries"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={battdata.series}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battparallel"
+                >
+                  Battery in Parallel:
+                </label>
+                <input
+                  id="battparallel"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={battdata.parallel}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="totalbatt"
+                >
+                  Total No. of Battery:
+                </label>
+                <input
+                  id="totalbatt"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={battdata.totalnumber}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="totalcap"
+                >
+                  Total Capacity:
+                </label>
+                <input
+                  id="totalcap"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={battdata.totalcapacity}
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="totalcap"
+                >
+                  Total Price:
+                </label>
+                <input
+                  id="totalcap"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={
+                    "Php " + numberWithCommas(battdata.totalprice.toFixed(2))
+                  }
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+              <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                      <table class="min-w-full my-5">
+                        <thead class="bg-white border-b">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                            >
+                              Battery Type
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                            >
+                              Suggested DOD
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                            >
+                              Value
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="bg-white border-b">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              Lead Acid
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              50%
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.leadacid.dodbattcap + " Ah"}
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              Lithium Ion
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              88%
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.lion.dodbattcap + " Ah"}
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              LiFePo4
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              90%
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.lifepo.dodbattcap + " Ah"}
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b">
+                            <td
+                              colSpan={2}
+                              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            >
+                              <h4 className="font-medium leading-tight text-xl mt-0 mb-2 text-blue-600">
+                                Battery Size
+                              </h4>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.leadacid.battcapacity + " Ah"}
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b">
+                            <td
+                              colSpan={2}
+                              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            >
+                              <h4 className="font-medium leading-tight text-xl mt-0 mb-2 text-blue-600">
+                                {" "}
+                                Total Current Load{" "}
+                              </h4>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.lifepo.totalCurrentLoad + " A"}
+                            </td>
+                          </tr>
+                          <tr class="bg-white border-b">
+                            <td
+                              colSpan={2}
+                              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            >
+                              <h4 className="font-medium leading-tight text-xl mt-0 mb-2 text-blue-600">
+                                {" "}
+                                Total DC Watts Input to Inverter{" "}
+                              </h4>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {doddata.lifepo.totalDCPower + " W"}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

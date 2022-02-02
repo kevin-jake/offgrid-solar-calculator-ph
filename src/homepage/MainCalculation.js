@@ -9,7 +9,6 @@ import Button from "../shared/components/FormElement/Button";
 import { GlobalContext } from "./tabs/context/global-context";
 import { numberWithCommas } from "../shared/util/format";
 import { HomeContext } from "./tabs/context/home-context";
-import SectionHead from "./SectionHead";
 
 const MainCalculation = () => {
   const {
@@ -52,7 +51,7 @@ const MainCalculation = () => {
         </h1>
         <div className="flex border-b border-gray-200 dark:border-gray-700">
           <button className="h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
-            12V ≈ Php 0.00
+            12V ≈ {"Php " + numberWithCommas(overallprice.toFixed(2))}
           </button>
 
           <button className="h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
@@ -73,7 +72,7 @@ const MainCalculation = () => {
                   </p>
                 </div>
                 <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                  Php 44,453.39
+                  {"Php " + numberWithCommas(overallprice.toFixed(2))}
                 </div>
               </div>
             </div>
@@ -81,7 +80,7 @@ const MainCalculation = () => {
         </div>
       </div>
 
-      <div className="container-lg px-6 py-10 mx-4">
+      <div className="container-lg px-6 pb-10 mx-4">
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-3 xl:grid-cols-5 ">
           <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
             <SolarPanelSection />

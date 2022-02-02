@@ -7,20 +7,6 @@ const InverterSection = () => {
   const { invertertab } = useContext(HomeContext);
   return (
     <>
-      {/* <div className="price-header">
-        <h3 className="title">Inverter</h3>
-        <img src={inverter} alt="Inverter" />
-      </div>
-      <hr />
-      <div className="price-body">
-        <ul className="features">
-          <li>Inverter Name: {invertertab.inverterName}</li>
-          <li>Inverter Type: {invertertab.type}</li>
-          <li>Input Voltage: {invertertab.inputVoltage}</li>
-          <li>Wattage: {invertertab.wattage}</li>
-          <li>Price: Php {numberWithCommas(invertertab.price.toFixed(2))}</li>
-        </ul>
-      </div> */}
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">
         <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">
           Inverter

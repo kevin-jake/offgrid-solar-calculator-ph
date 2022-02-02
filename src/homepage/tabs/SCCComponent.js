@@ -61,7 +61,8 @@ const SCCComponent = () => {
   };
 
   return (
-    <div>
+    <>
+      {/* <div>
       <div className="content">
         <h4>SCC Name</h4>
         <Select
@@ -77,7 +78,77 @@ const SCCComponent = () => {
         <p>Brand: {itemState.brand}</p>
         <p>Price: Php {numberWithCommas(itemState.price.toFixed(2))}</p>
       </div>
-    </div>
+    </div> */}
+      <div>
+        <Select
+          value={selectedState}
+          onChange={handleItemChanged}
+          options={optionState}
+        />
+        <div className="grid grid-cols-1 my-10 gap-8 md:grid-cols-2 xl:grid-cols-2">
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="scctype"
+            >
+              SCC Type:
+            </label>
+            <input
+              id="scctype"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.type}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="amprating"
+            >
+              Ampere Rating:
+            </label>
+            <input
+              id="amprating"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.amprating + " A"}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="brand"
+            >
+              Brand:
+            </label>
+            <input
+              id="brand"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={itemState.brand}
+            />
+          </div>
+          <div>
+            <label
+              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="price"
+            >
+              Price:
+            </label>
+            <input
+              id="price"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              disabled={true}
+              value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
+            />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
