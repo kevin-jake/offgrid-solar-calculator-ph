@@ -14,6 +14,8 @@ import Auth from "./users/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
 import Home from "./homepage/Home";
 
+import "./index.css";
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const login = useCallback(() => {

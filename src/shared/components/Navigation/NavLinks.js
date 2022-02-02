@@ -1,38 +1,37 @@
 import React, { useContext } from "react";
-import "./NavLinks.css";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 
 const NavLinks = (props) => {
   const { isLoggedIn, logout } = useContext(AuthContext);
   return (
-    <ul className="nav-links">
-      <li>
+    <>
+      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
         <NavLink to="/" exact>
-          ALL USERS
+          Calculation
         </NavLink>
-      </li>
+      </p>
       {isLoggedIn && (
         <>
-          <li>
+          <p>
             <NavLink to="/u1/places">MY PLACES</NavLink>
-          </li>
-          <li>
+          </p>
+          <p>
             <NavLink to="/places/new">NEW PLACES</NavLink>
-          </li>
+          </p>
         </>
       )}
       {!isLoggedIn && (
-        <li>
+        <p className="block px-5 py-2 mt-4 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto">
           <NavLink to="/auth">ATHENTICATE</NavLink>
-        </li>
+        </p>
       )}
       {isLoggedIn && (
-        <li>
+        <p>
           <button onClick={logout}>LOGOUT</button>
-        </li>
+        </p>
       )}
-    </ul>
+    </>
   );
 };
 
