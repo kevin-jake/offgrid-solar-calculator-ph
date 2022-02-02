@@ -21,6 +21,7 @@ const MainCalculation = () => {
   } = useContext(GlobalContext);
   const { invertertab } = useContext(HomeContext);
   const [validState, setValidState] = useState(isValid);
+  const [openTab, setOpenTab] = useState(1);
   useEffect(() => {
     setOverallPrice(overallprice);
   }, [overallprice]);
@@ -50,15 +51,45 @@ const MainCalculation = () => {
           Voltage System{" "}
         </h1>
         <div className="flex border-b border-gray-200 dark:border-gray-700">
-          <button className="h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
+          <button
+            onClick={() => {
+              setVoltage(12);
+              setOpenTab(1);
+            }}
+            className={
+              openTab === 1
+                ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+                : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+            }
+          >
             12V ≈ {"Php " + numberWithCommas(overallprice.toFixed(2))}
           </button>
 
-          <button className="h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+          <button
+            onClick={() => {
+              setVoltage(24);
+              setOpenTab(2);
+            }}
+            className={
+              openTab === 2
+                ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+                : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+            }
+          >
             24V ≈ Php 0.00
           </button>
 
-          <button className="h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400">
+          <button
+            onClick={() => {
+              setVoltage(24);
+              setOpenTab(3);
+            }}
+            className={
+              openTab === 3
+                ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+                : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+            }
+          >
             48V ≈ Php 0.00
           </button>
         </div>
