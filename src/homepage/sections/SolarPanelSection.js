@@ -7,23 +7,6 @@ const SolarPanelSection = () => {
   const { solarpanel } = useContext(GlobalContext);
   return (
     <>
-      {/* <div className="price-header">
-        <h3 className="title">Solar Panel </h3>
-        <img src={panel} alt="Solar Panel" />
-      </div>
-      <hr />
-      <div className="price-body">
-        <ul className="features">
-          <li>Solar Panel Name: {solarpanel.pvname}</li>
-          <li>No. of Panels in Parallel: {solarpanel.pvparallel}</li>
-          <li>No. of Panels in Series: {solarpanel.pvseries}</li>
-          <li>Total No. of Panels: {solarpanel.totalnumberpv}</li>
-          <li>
-            Total Price: Php{" "}
-            {numberWithCommas(solarpanel.totalprice.toFixed(2))}
-          </li>
-        </ul>
-      </div> */}
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">
         <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">
           Solar Panel
@@ -46,10 +29,10 @@ const SolarPanelSection = () => {
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           No. of Panels in Series: {solarpanel.pvseries}
         </li>
-        <li class="py-2 px-4 w-full rounded-b-lg">
+        <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total No. of Panels: {solarpanel.totalnumberpv}
         </li>
-        <li class="py-2 px-4 w-full rounded-b-lg">
+        <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total Price: Php {numberWithCommas(solarpanel.totalprice.toFixed(2))}
         </li>
       </ul>
