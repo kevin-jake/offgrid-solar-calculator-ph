@@ -46,7 +46,7 @@ const InverterTab = (props) => {
   return (
     <div className="container-lg px-6 py-4 mx-4">
       <div className="grid grid-cols-1 gap-4 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
-        <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+        <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
           Select Inverter:{" "}
         </label>
         <Select
@@ -54,10 +54,10 @@ const InverterTab = (props) => {
           onChange={handleItemChanged}
           options={optionState}
         />
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="inverterName"
             >
               Inverter Name
@@ -65,14 +65,14 @@ const InverterTab = (props) => {
             <input
               id="inverterName"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.inverterName}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="type"
             >
               Inverter Type
@@ -80,14 +80,14 @@ const InverterTab = (props) => {
             <input
               id="type"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.type}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="volts"
             >
               Input Voltage
@@ -95,14 +95,14 @@ const InverterTab = (props) => {
             <input
               id="volts"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.inputVoltage + " V"}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="eff"
             >
               Efficiency
@@ -110,14 +110,14 @@ const InverterTab = (props) => {
             <input
               id="eff"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.efficiency + " %"}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="watt"
             >
               Wattage
@@ -125,14 +125,14 @@ const InverterTab = (props) => {
             <input
               id="watt"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.wattage + " W"}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="price"
             >
               Price
@@ -140,14 +140,14 @@ const InverterTab = (props) => {
             <input
               id="price"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="price"
             >
               Supplier's Link:{" "}
@@ -155,12 +155,12 @@ const InverterTab = (props) => {
             {/* <input
               id="price"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
             > */}
             <a
-              class=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
+              className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
               href={itemState.link}
             >
               {itemState.link ? "Link" : ""}

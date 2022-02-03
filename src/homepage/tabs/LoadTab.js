@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import { HomeContext } from "./context/home-context";
 
-const LoadTab = (props) => {
+const LoadTab = () => {
   const { loadtab, setLoad } = useContext(HomeContext);
   const [itemState, setItemState] = useState(loadtab.itemState);
 
@@ -116,7 +116,7 @@ const LoadTab = (props) => {
     //       {itemState.items.map((o, i) => {
     //         return (
     //           <tr key={"item-" + i}>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="loadname"
     //                 type="text"
@@ -126,7 +126,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="userqty"
     //                 type="number"
@@ -136,7 +136,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="wattage"
     //                 type="number"
@@ -146,7 +146,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="totalwatts"
     //                 type="text"
@@ -157,7 +157,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="ophours"
     //                 type="number"
@@ -167,7 +167,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <input
     //                 id="watthours"
     //                 type="text"
@@ -178,7 +178,7 @@ const LoadTab = (props) => {
     //                 }
     //               />
     //             </td>
-    //             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //               <button
     //                 onClick={(index) => handleItemDeleted(i)}
     //                 disabled={i === 0}
@@ -193,7 +193,7 @@ const LoadTab = (props) => {
     //         <td colSpan="3" className="foot">
     //           <h3>TOTAL</h3>
     //         </td>
-    //         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //           <input
     //             id="overalls"
     //             type="text"
@@ -201,10 +201,10 @@ const LoadTab = (props) => {
     //             value={overalls.totalwatts}
     //           />
     //         </td>
-    //         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //           <div></div>
     //         </td>
-    //         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    //         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
     //           <input
     //             id="overalls"
     //             type="text"
@@ -218,53 +218,53 @@ const LoadTab = (props) => {
     //   <hr />
     //   <button onClick={handleClick}>Add Item</button>
     // </div>
-    <div class="flex flex-col">
-      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="overflow-hidden">
-            <table class="min-w-full my-5">
-              <thead class="bg-white border-b">
+    <div className="flex flex-col">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <table className="min-w-full my-5">
+              <thead className="bg-white border-b">
                 <tr>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     {" "}
                     Load Name{" "}
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     No. of Users
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Wattage
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Total Wattage
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Operating Hours
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Watt-hours
                   </th>
                   <th
                     scope="col"
-                    class="text-lg font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-lg font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Action
                   </th>
@@ -273,8 +273,8 @@ const LoadTab = (props) => {
               <tbody>
                 {itemState.items.map((o, i) => {
                   return (
-                    <tr key={"item-" + i} class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <tr key={"item-" + i} className="bg-white border-b">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="loadname"
                           type="text"
@@ -285,7 +285,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="userqty"
                           type="number"
@@ -296,7 +296,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="wattage"
                           type="number"
@@ -307,7 +307,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="totalwatts"
                           type="text"
@@ -319,7 +319,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="ophours"
                           type="number"
@@ -330,7 +330,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <input
                           id="watthours"
                           type="text"
@@ -342,7 +342,7 @@ const LoadTab = (props) => {
                           }
                         />
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <button
                           onClick={(index) => handleItemDeleted(i)}
                           className={
@@ -359,31 +359,33 @@ const LoadTab = (props) => {
                   );
                 })}
                 <tr className="bg-gray-100 border-b">
-                  <td colSpan="3" className="foot">
+                  <td colSpan="3" className="foot text-center">
                     <h3 className="font-medium leading-tight text-xl mt-0 mb-2 text-blue-600">
                       TOTAL
                     </h3>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <input
                       id="overalls"
                       type="text"
-                      style={{ "background-color": "inherit" }}
+                      className="bg-gray-100 focus:outline-none"
+                      readOnly
                       value={overalls.totalwatts}
                     />
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <div></div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <input
                       id="overalls"
                       type="text"
-                      style={{ "background-color": "inherit" }}
+                      className="bg-gray-100 focus:outline-none"
+                      readOnly
                       value={overalls.watthours}
                     />
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
                 </tr>
               </tbody>
             </table>

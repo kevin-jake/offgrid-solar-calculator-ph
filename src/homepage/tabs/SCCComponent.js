@@ -81,7 +81,7 @@ const SCCComponent = () => {
       </div>
     </div> */}
       <div>
-        <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+        <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
           Select SCC:
         </label>
         <Select
@@ -92,7 +92,7 @@ const SCCComponent = () => {
         <div className="grid grid-cols-1 my-10 gap-8 md:grid-cols-2 xl:grid-cols-2">
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="scctype"
             >
               SCC Type:
@@ -100,14 +100,14 @@ const SCCComponent = () => {
             <input
               id="scctype"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.type}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="amprating"
             >
               Ampere Rating:
@@ -115,14 +115,14 @@ const SCCComponent = () => {
             <input
               id="amprating"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.amprating + " A"}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="brand"
             >
               Brand:
@@ -130,14 +130,14 @@ const SCCComponent = () => {
             <input
               id="brand"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={itemState.brand}
             />
           </div>
           <div>
             <label
-              class="text-gray-700 text-lg font-medium dark:text-gray-200"
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
               htmlFor="price"
             >
               Price:
@@ -145,7 +145,7 @@ const SCCComponent = () => {
             <input
               id="price"
               type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
               disabled={true}
               value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
             />

@@ -33,16 +33,38 @@ const MainCalculation = () => {
   const inverterValid = (global_voltage, inverter_voltage) => {
     let state = validState;
     if (global_voltage === inverter_voltage || inverter_voltage === 0) {
-      state.inverter = true;
+      state.inverter.valid = true;
+      state.inverter.message = "";
       setValidState(state);
       setValid(state);
     } else {
-      state.inverter = false;
+      state.inverter.valid = false;
+      state.inverter.message =
+        "The inverter voltage is not compatible with voltage system.";
       setValidState(state);
       setValid(state);
     }
   };
 
+  const priceRender = (voltage) => {
+    switch (voltage) {
+      case 12:
+        return (
+          <>{"Php " + numberWithCommas(overallprice.twelveV.toFixed(2))}</>
+        );
+      case 24:
+        return (
+          <>{"Php " + numberWithCommas(overallprice.twentyfourV.toFixed(2))}</>
+        );
+      case 48:
+        return (
+          <>{"Php " + numberWithCommas(overallprice.fortyeightV.toFixed(2))}</>
+        );
+      default:
+        return <>{"Php 0.00"}</>;
+    }
+  };
+  console.log(validState);
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
@@ -62,7 +84,7 @@ const MainCalculation = () => {
                 : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
             }
           >
-            12V ≈ {"Php " + numberWithCommas(overallprice.toFixed(2))}
+            12V ≈ {"Php " + numberWithCommas(overallprice.twelveV.toFixed(2))}
           </button>
 
           <button
@@ -76,12 +98,13 @@ const MainCalculation = () => {
                 : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
             }
           >
-            24V ≈ Php 0.00
+            24V ≈{" "}
+            {"Php " + numberWithCommas(overallprice.twentyfourV.toFixed(2))}
           </button>
 
           <button
             onClick={() => {
-              setVoltage(24);
+              setVoltage(48);
               setOpenTab(3);
             }}
             className={
@@ -90,7 +113,8 @@ const MainCalculation = () => {
                 : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
             }
           >
-            48V ≈ Php 0.00
+            48V ≈{" "}
+            {"Php " + numberWithCommas(overallprice.fortyeightV.toFixed(2))}
           </button>
         </div>
         <div className="flex my-6 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
@@ -103,7 +127,7 @@ const MainCalculation = () => {
                   </p>
                 </div>
                 <div className="border-b border-gray-200 mt-6 md:mt-0 text-black dark:text-white font-bold text-xl">
-                  {"Php " + numberWithCommas(overallprice.toFixed(2))}
+                  {priceRender(voltage)}
                 </div>
               </div>
             </div>
@@ -125,8 +149,14 @@ const MainCalculation = () => {
             <BatterySection />
           </div>
 
-          <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-            <InverterSection />
+          <div
+            className={
+              validState.inverter.valid
+                ? "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
+                : "transition ease-in-out p-8 space-y-3 border-2 border-red-400 dark:border-red-300 bg-red-300 rounded-xl text-red-800"
+            }
+          >
+            <InverterSection errormsg={validState.inverter.message} />
           </div>
 
           <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">

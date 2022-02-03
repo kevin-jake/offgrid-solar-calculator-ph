@@ -2,7 +2,11 @@ import React, { createContext, useReducer } from "react";
 
 const initState = {
   voltage: 12,
-  overallprice: 0,
+  overallprice: {
+    twelveV: 0,
+    twentyfourV: 0,
+    fortyeightV: 0,
+  },
   totalbattcapacity: {
     totalcapacity: 0,
     battinseries: 0,
@@ -28,9 +32,18 @@ const initState = {
     price: 0,
   },
   isValid: {
-    inverter: true,
-    scc: true,
-    solarpanel: true,
+    inverter: {
+      valid: true,
+      message: "",
+    },
+    scc: {
+      valid: true,
+      message: "",
+    },
+    solarpanel: {
+      valid: true,
+      message: "",
+    },
   },
 };
 

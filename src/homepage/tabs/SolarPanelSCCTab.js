@@ -124,7 +124,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
             <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
               <div>
                 <div>
-                  <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+                  <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
                     Select Solar Panel:
                   </label>
                   <Select
@@ -135,7 +135,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                 </div>
                 <div className="mt-2.5">
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="sh"
                   >
                     Sunhours:
@@ -152,7 +152,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
               <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-2 xl:grid-cols-2">
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="pvname"
                   >
                     Solar Panel Name:
@@ -160,14 +160,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="pvname"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={itemState.pvname}
                   />
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="watts"
                   >
                     Wattage:
@@ -175,14 +175,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="watts"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={itemState.wattage + " W"}
                   />
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="pvseries"
                   >
                     PV in Series:
@@ -190,14 +190,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="pvseries"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={(pvdata.pvseries = pvdata.pvseries || "")}
                   />
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="pvparallel"
                   >
                     PV in Parallel:
@@ -205,14 +205,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="pvparallel"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={(pvdata.pvparallel = pvdata.pvparallel || "")}
                   />
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="totalpanel"
                   >
                     Total Panels:
@@ -220,14 +220,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="totalpanel"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={(pvdata.totalpv = pvdata.totalpv || "")}
                   />
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="totalpanel"
                   >
                     Price per pc.:
@@ -235,7 +235,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="totalpanel"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={
                       "Php " + numberWithCommas(itemState.price.toFixed(2))
@@ -244,7 +244,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                 </div>
                 <div>
                   <label
-                    class="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
                     htmlFor="totalprc"
                   >
                     Total Price:
@@ -252,7 +252,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <input
                     id="totalprc"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={
                       pvdata.totalprice
