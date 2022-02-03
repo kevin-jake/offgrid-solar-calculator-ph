@@ -31,7 +31,7 @@ const BatterySection = () => {
           Battery Voltage: {batterytab.voltage}
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Capacity: {batterytab.battcapacity}
+          Battery Capacity: {batterytab.battcapacity} Ah
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Price per pc.: Php{" "}

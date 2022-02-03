@@ -24,7 +24,7 @@ const initState = {
   scc: {
     sccname: "",
     type: "",
-    amprating: "",
+    amprating: 0,
     price: 0,
   },
   isValid: {

@@ -27,7 +27,7 @@ const SCCSection = () => {
           SCC Type: {scc.type}
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          SCC Ampere Rating: {scc.amprating}
+          SCC Ampere Rating: {scc.amprating} A
         </li>
         <li class="py-2 px-4 w-full rounded-b-lg">
           Price: Php {numberWithCommas(scc.price.toFixed(2))}

@@ -312,6 +312,7 @@ const LoadTab = (props) => {
                           id="totalwatts"
                           type="text"
                           readOnly
+                          className="read-only:bg-inherit focus:outline-none"
                           value={o.totalwatts}
                           onChange={(e, index, id) =>
                             handleItemChanged(e, i, "totalwatts")
@@ -334,6 +335,7 @@ const LoadTab = (props) => {
                           id="watthours"
                           type="text"
                           readOnly
+                          className="read-only:bg-inherit focus:outline-none"
                           value={o.watthours}
                           onChange={(e, index, id) =>
                             handleItemChanged(e, i, "watthours")

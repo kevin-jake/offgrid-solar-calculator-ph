@@ -22,6 +22,7 @@ const BatteryTab = ({ battdata, doddata }) => {
   useEffect(() => {
     let i = 0;
     let arrvar = optionState;
+    arrvar.shift();
     for (i; i < batterylist.length; i++) {
       arrvar.push({
         value: batterylist[i].id,
@@ -137,7 +138,10 @@ const BatteryTab = ({ battdata, doddata }) => {
         </div>
       </div> */}
       <div className="container-lg px-6 py-4 mx-4">
-        <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
+        <div className="grid grid-cols-1 gap-4 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
+          <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+            Select Battery:
+          </label>
           <Select
             value={selectedState}
             onChange={handleItemChanged}

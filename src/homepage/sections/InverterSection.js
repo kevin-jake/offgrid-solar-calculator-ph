@@ -27,10 +27,10 @@ const InverterSection = () => {
           Inverter Type: {invertertab.type}
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Input Voltage: {invertertab.inputVoltage}
+          Input Voltage: {invertertab.inputVoltage} V
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Wattage: {invertertab.wattage}
+          Wattage: {invertertab.wattage} W
         </li>
         <li class="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Price: Php {numberWithCommas(invertertab.price.toFixed(2))}

@@ -24,6 +24,7 @@ const SCCComponent = () => {
   useEffect(() => {
     let i = 0;
     let arrvar = optionState;
+    arrvar.shift();
     for (i; i < scclist.length; i++) {
       arrvar.push({
         value: scclist[i].id,
@@ -80,6 +81,9 @@ const SCCComponent = () => {
       </div>
     </div> */}
       <div>
+        <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+          Select SCC:
+        </label>
         <Select
           value={selectedState}
           onChange={handleItemChanged}

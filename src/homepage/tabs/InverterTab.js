@@ -23,6 +23,7 @@ const InverterTab = (props) => {
   useEffect(() => {
     let i = 0;
     let arrvar = optionState;
+    arrvar.shift();
     for (i; i < inverters.length; i++) {
       arrvar.push({
         value: inverters[i].id,
@@ -44,7 +45,10 @@ const InverterTab = (props) => {
   // console.log(selectedState);
   return (
     <div className="container-lg px-6 py-4 mx-4">
-      <div className="grid grid-cols-1 gap-8 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
+      <div className="grid grid-cols-1 gap-4 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
+        <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+          Select Inverter:{" "}
+        </label>
         <Select
           value={selectedState}
           onChange={handleItemChanged}

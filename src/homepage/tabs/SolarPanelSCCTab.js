@@ -24,6 +24,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   useEffect(() => {
     let i = 0;
     let arrvar = optionState;
+    arrvar.shift();
     for (i; i < pvlist.length; i++) {
       arrvar.push({
         value: pvlist[i].id,
@@ -123,6 +124,9 @@ const SolarPanelSCCTab = ({ pvdata }) => {
             <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
               <div>
                 <div>
+                  <label class="text-gray-700 text-lg font-medium dark:text-gray-200">
+                    Select Solar Panel:
+                  </label>
                   <Select
                     value={selectedState}
                     onChange={handleItemChanged}
