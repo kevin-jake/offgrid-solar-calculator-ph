@@ -22,6 +22,7 @@ const initState = {
     pvname: "",
     pvparallel: 0,
     pvseries: 0,
+    totalwatttage: 0,
     totalnumberpv: 0,
     totalprice: 0,
   },

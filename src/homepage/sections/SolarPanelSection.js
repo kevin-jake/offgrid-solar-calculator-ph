@@ -5,6 +5,7 @@ import { GlobalContext } from "../tabs/context/global-context";
 
 const SolarPanelSection = () => {
   const { solarpanel } = useContext(GlobalContext);
+  console.log(solarpanel);
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">
@@ -28,6 +29,9 @@ const SolarPanelSection = () => {
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           No. of Panels in Series: {solarpanel.pvseries}
+        </li>
+        <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
+          Total Wattage: {solarpanel.totalwattage} W
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total No. of Panels: {solarpanel.totalnumberpv}

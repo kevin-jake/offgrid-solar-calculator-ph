@@ -176,6 +176,7 @@ const pvcomputation = (totalbattcapacity, solarpanelstab) => {
       pvname: solarpanelstab.pvname,
       pvparallel: pvtable.pvparallel || 0,
       pvseries: pvtable.pvseries || 0,
+      totalwattage: pvtable.totalwattage || 0,
       totalnumberpv: pvtable.totalpv || 0,
       totalprice: pvtable.totalprice || 0,
     },

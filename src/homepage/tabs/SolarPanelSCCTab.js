@@ -65,59 +65,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   console.log(pvdata);
   return (
     <>
-      {/* <div className="square">
-        <div className="content">
-          <div className="table">
-            <div>
-              <div className="content">
-                <h4>Solar Panel Name</h4>
-                <Select
-                  value={selectedState}
-                  onChange={handleItemChanged}
-                  options={optionState}
-                />
-              </div>
-              <div>
-                <label> Sunhours: </label>
-                <input
-                  id="sunhours"
-                  type="number"
-                  value={sunhourstate}
-                  onChange={(e) => handleSHChange(e.target.value)}
-                />
-              </div>
-              <hr />
-              <div>
-                <p>Solar Panel Name: {itemState.pvname}</p>
-                <p>Wattage: {itemState.wattage}</p>
-                <p>PV in Series: {(pvdata.pvseries = pvdata.pvseries || "")}</p>
-                <p>
-                  PV in Parallel:{" "}
-                  {(pvdata.pvparallel = pvdata.pvparallel || "")}
-                </p>
-                <p>Total Panels: {(pvdata.totalpv = pvdata.totalpv || "")}</p>
-                <p>
-                  Price per pc.: Php{" "}
-                  {numberWithCommas(itemState.price.toFixed(2))}
-                </p>
-                <p>
-                  Total Price:
-                  {pvdata.totalprice
-                    ? numberWithCommas(pvdata.totalprice.toFixed(2))
-                    : ""}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="square">
-        <div className="content">
-          <div className="table">
-            <SCCComponent />
-          </div>
-        </div>
-      </div> */}
       <div className="container-lg px-6 py-4 mx-4">
         <div className="grid grid-cols-1 gap-8 xl:mt-4 md:grid-cols-1 xl:grid-cols-1">
           <div className="grid grid-cols-1 gap-8  md:grid-cols-2 xl:grid-cols-2">
@@ -208,6 +155,21 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={(pvdata.pvparallel = pvdata.pvparallel || "")}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="text-gray-700 text-lg font-medium dark:text-gray-200"
+                    htmlFor="totalWattage"
+                  >
+                    Total Wattage:
+                  </label>
+                  <input
+                    id="totalWattage"
+                    type="text"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                    disabled={true}
+                    value={pvdata.totalwattage + " W"}
                   />
                 </div>
                 <div>
