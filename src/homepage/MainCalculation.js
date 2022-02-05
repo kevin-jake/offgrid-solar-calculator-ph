@@ -19,7 +19,8 @@ const MainCalculation = () => {
     isValid,
     setValid,
   } = useContext(GlobalContext);
-  const { invertertab } = useContext(HomeContext);
+  const { invertertab, batterytab, solarpanelstab, scctab, loadtab } =
+    useContext(HomeContext);
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
   useEffect(() => {
@@ -64,7 +65,7 @@ const MainCalculation = () => {
         return <>{"Php 0.00"}</>;
     }
   };
-  console.log(validState);
+
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">

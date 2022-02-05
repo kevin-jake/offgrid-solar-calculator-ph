@@ -80,6 +80,12 @@ const pvCompute = (
   wattage,
   price
 ) => {
+  if (voc === 0 || sunhours === 0) {
+    voc = 1;
+    batteryvoltage = 0;
+    sunhours = 1;
+    imp = 1;
+  }
   const totalcapacity =
     (batteryvoltage * battinseries * (battinparallel * battcapacity) * 0.8) /
     sunhours;

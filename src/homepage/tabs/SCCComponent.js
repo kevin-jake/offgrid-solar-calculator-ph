@@ -55,6 +55,7 @@ const SCCComponent = () => {
       type: scclist[index].type,
       amprating: scclist[index].amprating,
       price: scclist[index].price,
+      link: scclist[index].link,
     };
     setItemState(stateSetter);
     setSCC(stateSetter);
@@ -149,6 +150,21 @@ const SCCComponent = () => {
               disabled={true}
               value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
             />
+          </div>
+          <div>
+            <label
+              className="text-gray-700 text-lg font-medium dark:text-gray-200"
+              htmlFor="price"
+            >
+              Supplier's Link:{" "}
+            </label>
+            <a
+              className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
+              target="_blank"
+              href={itemState.link}
+            >
+              {itemState.link ? "Link" : ""}
+            </a>
           </div>
         </div>
       </div>

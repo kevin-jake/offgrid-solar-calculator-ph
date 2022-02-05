@@ -93,7 +93,14 @@ const TabCalc = () => {
       loadtab.overalls
     );
     setOverallPrice(tp);
-  }, [solarpanelstab.id, scctab.id, batterytab.id, invertertab.id]);
+    console.log(tp);
+    console.log(scc.price);
+  }, [
+    solarpanelstab.price,
+    scc.price,
+    batterytab.totalprice,
+    invertertab.price,
+  ]);
 
   const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
   return (

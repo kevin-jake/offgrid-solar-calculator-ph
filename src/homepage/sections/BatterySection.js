@@ -25,9 +25,12 @@ const BatterySection = () => {
           Battery Type: {batterytab.batttype}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Model / Name: {batterytab.battname}
+          Battery Model Name: {batterytab.battname}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
+          Battery Model: {batterytab.battmodel}
+        </li>
+        {/* <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Battery Voltage: {batterytab.voltage}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
@@ -37,7 +40,7 @@ const BatterySection = () => {
           Price per pc.: Php{" "}
           {batterytab.priceperpc &&
             numberWithCommas(batterytab.priceperpc.toFixed(2))}
-        </li>
+        </li> */}
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total Number of Battery: {batterytab.totalqty}
         </li>

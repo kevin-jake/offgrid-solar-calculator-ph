@@ -152,20 +152,13 @@ const InverterTab = (props) => {
             >
               Supplier's Link:{" "}
             </label>
-            {/* <input
-              id="price"
-              type="text"
-              className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
-              disabled={true}
-              value={"Php " + numberWithCommas(itemState.price.toFixed(2))}
-            > */}
             <a
               className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
+              target="_blank"
               href={itemState.link}
             >
               {itemState.link ? "Link" : ""}
             </a>
-            {/* </input> */}
           </div>
         </div>
       </div>

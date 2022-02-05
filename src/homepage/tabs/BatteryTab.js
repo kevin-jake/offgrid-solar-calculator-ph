@@ -152,6 +152,21 @@ const BatteryTab = ({ battdata, doddata }) => {
               <div>
                 <label
                   className="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="battname"
+                >
+                  Battery Name:
+                </label>
+                <input
+                  id="battname"
+                  type="text"
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                  disabled={true}
+                  value={itemState.battname}
+                />
+              </div>
+              <div>
+                <label
+                  className="text-gray-700 text-lg font-medium dark:text-gray-200"
                   htmlFor="battype"
                 >
                   Battery Type:
@@ -302,6 +317,21 @@ const BatteryTab = ({ battdata, doddata }) => {
                     "Php " + numberWithCommas(battdata.totalprice.toFixed(2))
                   }
                 />
+              </div>
+              <div>
+                <label
+                  className="text-gray-700 text-lg font-medium dark:text-gray-200"
+                  htmlFor="price"
+                >
+                  Supplier's Link:{" "}
+                </label>
+                <a
+                  className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
+                  target="_blank"
+                  href={itemState.link}
+                >
+                  {itemState.link ? "Link" : ""}
+                </a>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
