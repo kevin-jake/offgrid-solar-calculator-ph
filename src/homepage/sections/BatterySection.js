@@ -25,7 +25,7 @@ const BatterySection = () => {
           Battery Type: {batterytab.batttype}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Model Name: {batterytab.battname}
+          Battery Name: {batterytab.battname}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Battery Model: {batterytab.battmodel}
