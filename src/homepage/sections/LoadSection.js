@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { kiloformat } from "../../shared/util/format";
 import load from "../resources/load.png";
 import { GlobalContext } from "../tabs/context/global-context";
 import { HomeContext } from "../tabs/context/home-context";
@@ -22,7 +23,7 @@ const LoadSection = () => {
       </div>
       <ul className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-          Total kWh Load: {loadtab.overalls.watthours}
+          Total Load: {kiloformat(loadtab.overalls.watthours) + "Wh"}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Battery Size needed: {totalbattcapacity.battsizeneed} Ah

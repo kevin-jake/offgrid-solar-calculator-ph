@@ -13,14 +13,15 @@ import { HomeContext } from "./tabs/context/home-context";
 const MainCalculation = () => {
   const {
     voltage,
+    totalbattcapacity,
+    solarpanel,
     setVoltage,
     overallprice,
     setOverallPrice,
     isValid,
     setValid,
   } = useContext(GlobalContext);
-  const { invertertab, batterytab, solarpanelstab, scctab, loadtab } =
-    useContext(HomeContext);
+  const { invertertab, solarpanelstab, scctab } = useContext(HomeContext);
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
   useEffect(() => {
@@ -30,6 +31,26 @@ const MainCalculation = () => {
   useEffect(() => {
     inverterValid(voltage, invertertab.inputVoltage);
   }, [invertertab.inputVoltage, voltage]);
+
+  useEffect(() => {
+    sccValid(
+      scctab.type,
+      scctab.amprating,
+      totalbattcapacity.battvoltage,
+      totalbattcapacity.battinseries,
+      solarpanel.totalwattage,
+      solarpanelstab.isc,
+      solarpanel.pvparallel
+    );
+  }, [
+    scctab.type,
+    scctab.amprating,
+    totalbattcapacity.voltage,
+    totalbattcapacity.battinseries,
+    solarpanel.totalwattage,
+    solarpanelstab.isc,
+    solarpanel.pvparallel,
+  ]);
 
   const inverterValid = (global_voltage, inverter_voltage) => {
     let state = validState;
@@ -47,6 +68,50 @@ const MainCalculation = () => {
     }
   };
 
+  const sccValid = (
+    scctype,
+    sccAmpRating,
+    batteryVoltage,
+    batteryInSeries,
+    solarTotalWattage,
+    pvIsc,
+    pvinParallel
+  ) => {
+    let state = validState;
+    const totalVoltage = batteryVoltage * batteryInSeries;
+    const mpptInputAmps = solarTotalWattage / totalVoltage;
+    const pwminput = pvIsc * pvinParallel * 1.25;
+    if (scctype === "") {
+      state.scc.valid = true;
+      state.scc.message = "";
+      setValidState(state);
+      setValid(state);
+    } else if (scctype === "MPPT") {
+      if (Math.ceil(mpptInputAmps / 10) * 10 <= sccAmpRating) {
+        state.scc.valid = true;
+        state.scc.message = "";
+      } else {
+        state.scc.valid = false;
+        state.scc.message =
+          "The SCC Ampere Rating is not enough for the panel it needs at least: " +
+          Math.ceil(mpptInputAmps / 10) * 10;
+      }
+      setValidState(state);
+      setValid(state);
+    } else if (scctype === "PWM") {
+      if (Math.ceil(pwminput / 10) * 10 <= sccAmpRating) {
+        state.scc.valid = true;
+        state.scc.message = "";
+      } else {
+        state.scc.valid = false;
+        state.scc.message =
+          "The SCC Ampere Rating is not enough for the panel it needs at least: " +
+          Math.ceil(pwminput / 10) * 10;
+      }
+      setValidState(state);
+      setValid(state);
+    }
+  };
   const priceRender = (voltage) => {
     switch (voltage) {
       case 12:
@@ -65,7 +130,8 @@ const MainCalculation = () => {
         return <>{"Php 0.00"}</>;
     }
   };
-
+  console.log(solarpanelstab);
+  console.log(solarpanel);
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
@@ -142,8 +208,14 @@ const MainCalculation = () => {
             <SolarPanelSection />
           </div>
 
-          <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-            <SCCSection />
+          <div
+            className={
+              validState.scc.valid
+                ? "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
+                : "transition ease-in-out p-8 space-y-3 border-2 border-red-400 dark:border-red-300 bg-red-300 rounded-xl text-red-800"
+            }
+          >
+            <SCCSection errormsg={validState.scc.message} />
           </div>
 
           <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">

@@ -50,6 +50,7 @@ const initialState = {
     brand: "",
     voc: 0,
     imp: 0,
+    isc: 0,
     price: 0,
     link: "",
     sunhours: 0,

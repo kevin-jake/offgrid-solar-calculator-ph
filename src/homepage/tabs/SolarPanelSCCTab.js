@@ -44,6 +44,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
       brand: pvlist[index].brand,
       voc: pvlist[index].voc,
       imp: pvlist[index].imp,
+      isc: pvlist[index].isc,
       price: pvlist[index].price,
       link: pvlist[index].link,
       sunhours: sunhourstate,
@@ -234,6 +235,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <a
                     className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
                     target="_blank"
+                    rel="noopener noreferrer"
                     href={itemState.link}
                   >
                     {itemState.link ? "Link" : ""}

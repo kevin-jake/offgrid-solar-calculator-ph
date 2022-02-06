@@ -55,7 +55,6 @@ const TabCalc = () => {
 
   useEffect(() => {
     const pvdata = pvcomputation(totalbattcapacity, solarpanelstab);
-    console.log(pvdata);
     setSolarPanel(pvdata.pvinfo);
     setPVState(pvdata.pvtable);
   }, [totalbattcapacity, loadtab, solarpanelstab, solarpanelstab.sunhours]);

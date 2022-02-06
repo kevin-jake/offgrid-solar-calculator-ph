@@ -155,6 +155,7 @@ const InverterTab = (props) => {
             <a
               className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600 text-lg font-medium"
               target="_blank"
+              rel="noopener noreferrer"
               href={itemState.link}
             >
               {itemState.link ? "Link" : ""}
