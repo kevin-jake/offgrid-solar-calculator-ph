@@ -119,6 +119,7 @@ export const LOVProvider = (props) => {
     scclist: scclist,
   };
 
+  console.log(value);
   return (
     <LOVContext.Provider value={value}>{props.children}</LOVContext.Provider>
   );

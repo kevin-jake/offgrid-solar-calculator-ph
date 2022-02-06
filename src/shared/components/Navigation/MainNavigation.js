@@ -15,7 +15,6 @@ const MainNavigation = (props) => {
     console.log(drawerIsOpen);
     !drawerIsOpen ? setDrawerIsOpen(true) : setDrawerIsOpen(false);
   };
-  console.log(isMobile);
 
   return (
     <MainHeader>

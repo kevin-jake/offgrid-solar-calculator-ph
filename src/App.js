@@ -15,6 +15,10 @@ import { AuthContext } from "./shared/context/auth-context";
 import Home from "./homepage/Home";
 
 import "./index.css";
+import InverterList from "./crudpages/InverterList";
+import { GlobalProvider } from "./homepage/tabs/context/global-context";
+import { HomeProvider } from "./homepage/tabs/context/home-context";
+import { LOVProvider } from "./homepage/tabs/context/lov-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,6 +56,9 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
+        <Route path="/inverters" exact>
+          <InverterList />
+        </Route>
         <Route path="/:userId/places">
           <UserPlaces />
         </Route>
@@ -66,10 +73,16 @@ const App = () => {
     <AuthContext.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
-      <Router>
-        <MainNavigation />
-        <main>{routes}</main>
-      </Router>
+      <GlobalProvider>
+        <HomeProvider>
+          <LOVProvider>
+            <Router>
+              <MainNavigation />
+              <main>{routes}</main>
+            </Router>
+          </LOVProvider>
+        </HomeProvider>
+      </GlobalProvider>
     </AuthContext.Provider>
   );
 };

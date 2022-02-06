@@ -8,14 +8,10 @@ import { GlobalProvider } from "./tabs/context/global-context";
 
 const Home = () => {
   return (
-    <GlobalProvider>
-      <HomeProvider>
-        <LOVProvider>
-          <MainCalculation />
-          <NavigateCalculations />
-        </LOVProvider>
-      </HomeProvider>
-    </GlobalProvider>
+    <>
+      <MainCalculation />
+      <NavigateCalculations />
+    </>
   );
 };
 

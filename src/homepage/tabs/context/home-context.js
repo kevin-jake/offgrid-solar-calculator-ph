@@ -152,7 +152,7 @@ export const HomeProvider = (props) => {
     setInverter,
     setPV,
   };
-  console.log(state);
+  // console.log(state);
   return (
     <HomeContext.Provider value={value}>{props.children}</HomeContext.Provider>
   );

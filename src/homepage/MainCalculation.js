@@ -205,23 +205,8 @@ const MainCalculation = () => {
       <div className="container-lg px-6 pb-10 mx-4">
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-3 xl:grid-cols-5 ">
           <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-            <SolarPanelSection />
+            <LoadSection />
           </div>
-
-          <div
-            className={
-              validState.scc.valid
-                ? "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
-                : "transition ease-in-out p-8 space-y-3 border-2 border-red-400 dark:border-red-300 bg-red-300 rounded-xl text-red-800"
-            }
-          >
-            <SCCSection errormsg={validState.scc.message} />
-          </div>
-
-          <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-            <BatterySection />
-          </div>
-
           <div
             className={
               validState.inverter.valid
@@ -233,7 +218,20 @@ const MainCalculation = () => {
           </div>
 
           <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-            <LoadSection />
+            <BatterySection />
+          </div>
+
+          <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
+            <SolarPanelSection />
+          </div>
+          <div
+            className={
+              validState.scc.valid
+                ? "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
+                : "transition ease-in-out p-8 space-y-3 border-2 border-red-400 dark:border-red-300 bg-red-300 rounded-xl text-red-800"
+            }
+          >
+            <SCCSection errormsg={validState.scc.message} />
           </div>
         </div>
       </div>

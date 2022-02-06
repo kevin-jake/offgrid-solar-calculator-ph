@@ -11,6 +11,11 @@ const NavLinks = (props) => {
           Calculation
         </NavLink>
       </p>
+      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
+        <NavLink to="/inverters" exact>
+          Inverter List
+        </NavLink>
+      </p>
       {isLoggedIn && (
         <>
           <p>
