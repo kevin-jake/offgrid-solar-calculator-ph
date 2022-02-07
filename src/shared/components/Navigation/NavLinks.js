@@ -16,6 +16,21 @@ const NavLinks = (props) => {
           Inverter List
         </NavLink>
       </p>
+      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
+        <NavLink to="/batteries" exact>
+          Battery List
+        </NavLink>
+      </p>
+      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
+        <NavLink to="/solarpanels" exact>
+          Solar Panel List
+        </NavLink>
+      </p>
+      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
+        <NavLink to="/sccs" exact>
+          SCC List
+        </NavLink>
+      </p>
       {isLoggedIn && (
         <>
           <p>

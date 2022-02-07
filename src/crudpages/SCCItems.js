@@ -1,38 +1,35 @@
 import React from "react";
 import { numberWithCommas } from "../shared/util/format";
-// import { Link } from "react-router-dom";
 
-const InverterItems = ({ invlist }) => {
+const SCCItems = ({ scclist }) => {
   return (
     <tr>
       <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-        <div class="text-sm leading-5 text-blue-900">
-          {invlist.inverterName}
-        </div>
+        <div class="text-sm leading-5 text-blue-900">{scclist.sccname}</div>
       </td>
       <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-        {invlist.type}
+        {scclist.type}
       </td>
       <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-        {invlist.inputVoltage + " V"}
+        {scclist.brand}
+      </td>
+      <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+        {scclist.amprating + " A"}
       </td>
       <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-        {invlist.efficiency + " %"}
+        {scclist.supplier}
       </td>
       <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-        {invlist.wattage + " W"}
-      </td>
-      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-        {"Php " + numberWithCommas(invlist.price.toFixed(2))}
+        {"Php " + numberWithCommas(scclist.price.toFixed(2))}
       </td>
       <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
         <a
           className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600"
           target="_blank"
           rel="noopener noreferrer"
-          href={invlist.link}
+          href={scclist.link}
         >
-          {invlist.link ? "Link" : ""}
+          {scclist.link ? "Link" : ""}
         </a>
       </td>
 
@@ -50,4 +47,4 @@ const InverterItems = ({ invlist }) => {
   );
 };
 
-export default InverterItems;
+export default SCCItems;

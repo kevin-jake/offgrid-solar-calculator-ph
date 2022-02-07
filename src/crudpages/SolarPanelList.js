@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
-import InverterItems from "./InverterItems";
+import SolarPanelItems from "./SolarPanelItems";
 
-const InverterList = () => {
-  const { inverters } = useContext(LOVContext);
-  console.log(inverters);
-  if (inverters.length === 0) {
+const SolarPanelList = () => {
+  const { pvlist } = useContext(LOVContext);
+  console.log(pvlist);
+  if (pvlist.length === 0) {
     return (
       <div class="bg-white overflow-hidden sm:rounded-lg pb-8">
         <div class="border-t border-gray-200 text-center pt-8">
           <h1 class="text-6xl font-bold text-gray-400">Empty List</h1>
-          <h1 class="text-xl font-medium py-8">No Inverters found</h1>
+          <h1 class="text-xl font-medium py-8">No Solar Panels found</h1>
         </div>
       </div>
     );
@@ -25,16 +25,25 @@ const InverterList = () => {
                 Name
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Type
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Input Voltage
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Efficiency
+                Brand
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Wattage
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                Voc
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                Imp
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                Vmp
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                Isc
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                Supplier
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Price
@@ -42,14 +51,13 @@ const InverterList = () => {
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Link
               </th>
-
               <th class="px-6 py-3 border-b-2 border-gray-300"></th>
             </tr>
           </thead>
           <tbody class="bg-white">
             {" "}
-            {inverters.map((inverterObj) => (
-              <InverterItems invlist={inverterObj} />
+            {pvlist.map((obj) => (
+              <SolarPanelItems pvlist={obj} />
             ))}
           </tbody>
         </table>
@@ -58,4 +66,4 @@ const InverterList = () => {
   );
 };
 
-export default InverterList;
+export default SolarPanelList;

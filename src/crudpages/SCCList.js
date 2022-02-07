@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
-import InverterItems from "./InverterItems";
+import SCCItems from "./SCCItems";
 
-const InverterList = () => {
-  const { inverters } = useContext(LOVContext);
-  console.log(inverters);
-  if (inverters.length === 0) {
+const SCCList = () => {
+  const { scclist } = useContext(LOVContext);
+  console.log(scclist);
+  if (scclist.length === 0) {
     return (
       <div class="bg-white overflow-hidden sm:rounded-lg pb-8">
         <div class="border-t border-gray-200 text-center pt-8">
           <h1 class="text-6xl font-bold text-gray-400">Empty List</h1>
-          <h1 class="text-xl font-medium py-8">No Inverters found</h1>
+          <h1 class="text-xl font-medium py-8">No SCC found</h1>
         </div>
       </div>
     );
@@ -28,13 +28,13 @@ const InverterList = () => {
                 Type
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Input Voltage
+                Brand
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Efficiency
+                Ampere Rating
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Wattage
+                Supplier
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Price
@@ -42,14 +42,13 @@ const InverterList = () => {
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Link
               </th>
-
               <th class="px-6 py-3 border-b-2 border-gray-300"></th>
             </tr>
           </thead>
           <tbody class="bg-white">
             {" "}
-            {inverters.map((inverterObj) => (
-              <InverterItems invlist={inverterObj} />
+            {scclist.map((obj) => (
+              <SCCItems scclist={obj} />
             ))}
           </tbody>
         </table>
@@ -58,4 +57,4 @@ const InverterList = () => {
   );
 };
 
-export default InverterList;
+export default SCCList;

@@ -19,6 +19,9 @@ import InverterList from "./crudpages/InverterList";
 import { GlobalProvider } from "./homepage/tabs/context/global-context";
 import { HomeProvider } from "./homepage/tabs/context/home-context";
 import { LOVProvider } from "./homepage/tabs/context/lov-context";
+import BatteryList from "./crudpages/BatteryList";
+import SolarPanelList from "./crudpages/SolarPanelList";
+import SCCList from "./crudpages/SCCList";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,6 +61,15 @@ const App = () => {
         </Route>
         <Route path="/inverters" exact>
           <InverterList />
+        </Route>
+        <Route path="/batteries" exact>
+          <BatteryList />
+        </Route>
+        <Route path="/solarpanels" exact>
+          <SolarPanelList />
+        </Route>
+        <Route path="/sccs" exact>
+          <SCCList />
         </Route>
         <Route path="/:userId/places">
           <UserPlaces />
