@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
+import Select from "react-select";
 
 const AddItemOverlay = ({ onCancel, formInputs, title }) => {
+  const [selectedState, setSelectedState] = useState({
+    value: "",
+    label: "",
+  });
+
+  const handleItemChanged = (event) => {
+    setSelectedState(event);
+  };
+
   const renderInputs = (obj) => {
+    if (obj.type === "select") {
+      return (
+        <div>
+          <label
+            className="text-gray-700 dark:text-gray-200"
+            htmlFor={obj.listkey}
+          >
+            {obj.label}
+          </label>
+          <Select
+            className="block w-full py-2 mt-2"
+            value={selectedState}
+            onChange={handleItemChanged}
+            options={obj.options}
+          />
+        </div>
+      );
+    }
     if (obj.hasOwnProperty("unit")) {
       if (obj.unit !== "Php") {
         return (
@@ -49,6 +77,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
         );
       }
     }
+
     return (
       <div>
         <label
@@ -68,11 +97,11 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
   const content = (
     <div
       id="authentication-modal"
-      className="overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0 flex"
+      className="fixed right-0 left-0 top-4 bottom-4 z-50 justify-center items-center h-modal md:h-full md:inset-0 flex"
       aria-modal="true"
       role="dialog"
     >
-      <div className="relative px-4 w-full max-w-4xl h-full md:h-auto">
+      <div className="relative px-4 w-full max-w-4xl h-full md:h-auto overflow-y-auto max-h-screen">
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div className="flex justify-end p-2">
             <button
@@ -102,62 +131,6 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
             <form>
               <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 {formInputs.map((obj) => renderInputs(obj))}
-
-                {/* <div>
-                  <label
-                    className="text-gray-700 dark:text-gray-200"
-                    for="username"
-                  >
-                    Username
-                  </label>
-                  <input
-                    id="username"
-                    type="text"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  />
-                </div> */}
-
-                {/* <div>
-                  <label
-                    className="text-gray-700 dark:text-gray-200"
-                    for="emailAddress"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    id="emailAddress"
-                    type="email"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    className="text-gray-700 dark:text-gray-200"
-                    for="password"
-                  >
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    className="text-gray-700 dark:text-gray-200"
-                    for="passwordConfirmation"
-                  >
-                    Password Confirmation
-                  </label>
-                  <input
-                    id="passwordConfirmation"
-                    type="password"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  />
-                </div>*/}
               </div>
               <div className="flex justify-end mt-6">
                 <button className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto">

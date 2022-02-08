@@ -6,6 +6,17 @@ import SCCItems from "./SCCItems";
 const SCCList = () => {
   const { scclist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const formInputs = [
+    { listkey: "sccname", type: "text", label: "Name" },
+    { listkey: "type", type: "text", label: "Type" },
+    { listkey: "brand", type: "text", label: "Brand" },
+    { listkey: "supplier", type: "text", label: "Supplier" },
+    { listkey: "amprating", type: "number", label: "Ampere Rating", unit: "A" },
+    { listkey: "price", type: "number", label: "Price", unit: "Php" },
+    { listkey: "img", type: "text", label: "Image" },
+    { listkey: "link", type: "text", label: "Link" },
+  ];
+
   const setModal = () => {
     setShowModal(true);
   };
@@ -70,7 +81,12 @@ const SCCList = () => {
           Add Item
         </button>
       </div>
-      <AddItem show={showModal} onCancel={cancelModal} />
+      <AddItem
+        show={showModal}
+        onCancel={cancelModal}
+        formInputs={formInputs}
+        title="SCC"
+      />
     </>
   );
 };

@@ -9,6 +9,7 @@ const inverterlist = [
     efficiency: 90,
     wattage: 500,
     price: 2500,
+    img: "",
     link: "https://shopee.ph/300W-500W-Pure-Sine-Wave-Car-Power-Inverter-12V-DC-To-AC-220V-USB-Auto-Power-Inverter-w-USB-Input-i.301705550.4550428304",
   },
   {
@@ -19,6 +20,7 @@ const inverterlist = [
     efficiency: 90,
     wattage: 1000,
     price: 2580,
+    img: "",
     link: "https://shopee.ph/300W-500W-Pure-Sine-Wave-Car-Power-Inverter-12V-DC-To-AC-220V-USB-Auto-Power-Inverter-w-USB-Input-i.301705550.4550428304",
   },
 ];

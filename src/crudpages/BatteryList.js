@@ -6,6 +6,40 @@ import AddItem from "./form/AddItem";
 const BatteryList = () => {
   const { batterylist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+
+  const formInputs = [
+    { listkey: "battname", type: "text", label: "Name" },
+    { listkey: "batttype", type: "text", label: "Type" },
+    {
+      listkey: "battmodel",
+      type: "select",
+      label: "Battery Model",
+      options: [
+        {
+          value: "Lead Acid",
+          label: "Lead Acid",
+        },
+        {
+          value: "Lithium Ion",
+          label: "Lithium Ion",
+        },
+        {
+          value: "LiFePo4",
+          label: "LiFePo4",
+        },
+      ],
+    },
+    { listkey: "voltage", type: "number", label: "Voltage", unit: "V" },
+    { listkey: "battcapacity", type: "number", label: "Capacity", unit: "Ah" },
+    {
+      listkey: "priceperpc",
+      type: "number",
+      label: "Price per pc.",
+      unit: "Php",
+    },
+    { listkey: "img", type: "text", label: "Image" },
+    { listkey: "link", type: "text", label: "Link" },
+  ];
   const setModal = () => {
     setShowModal(true);
   };
@@ -70,7 +104,12 @@ const BatteryList = () => {
           Add Item
         </button>
       </div>
-      <AddItem show={showModal} onCancel={cancelModal} />
+      <AddItem
+        show={showModal}
+        onCancel={cancelModal}
+        formInputs={formInputs}
+        title="Battery"
+      />
     </>
   );
 };

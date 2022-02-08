@@ -6,6 +6,22 @@ import InverterItems from "./InverterItems";
 const InverterList = () => {
   const { inverters } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const formInputs = [
+    { listkey: "inverterName", type: "text", label: "Name" },
+    { listkey: "type", type: "text", label: "Type" },
+    {
+      listkey: "inputVoltage",
+      type: "number",
+      label: "Input Voltage",
+      unit: "V",
+    },
+    { listkey: "efficiency", type: "number", label: "Efficiency", unit: "%" },
+    { listkey: "wattage", type: "number", label: "Wattage", unit: "W" },
+    { listkey: "price", type: "number", label: "Price", unit: "Php" },
+    { listkey: "img", type: "text", label: "Image" },
+    { listkey: "link", type: "text", label: "Link" },
+  ];
+
   const setModal = () => {
     setShowModal(true);
   };
@@ -70,7 +86,12 @@ const InverterList = () => {
           Add Item
         </button>
       </div>
-      <AddItem show={showModal} onCancel={cancelModal} />
+      <AddItem
+        show={showModal}
+        onCancel={cancelModal}
+        formInputs={formInputs}
+        title="Inverter"
+      />
     </>
   );
 };
