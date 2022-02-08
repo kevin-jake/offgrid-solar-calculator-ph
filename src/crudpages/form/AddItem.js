@@ -1,17 +1,66 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
 import Select from "react-select";
+import { LOVContext } from "../../homepage/tabs/context/lov-context";
 
 const AddItemOverlay = ({ onCancel, formInputs, title }) => {
+  const {
+    inverters,
+    batterylist,
+    pvlist,
+    scclist,
+    setInvLOV,
+    setBatteryLOV,
+    setPVLOV,
+    setSCCLOV,
+  } = useContext(LOVContext);
   const [selectedState, setSelectedState] = useState({
     value: "",
     label: "",
   });
+  const [dataState, setDataState] = useState({});
 
-  const handleItemChanged = (event) => {
+  const handleItemChanged = (event, objkey, data) => {
+    data[objkey] = event.value;
     setSelectedState(event);
+    setDataState(data);
+  };
+
+  const handleInputChange = (event, objkey, data) => {
+    data[objkey] = event;
+    console.log(data);
+    setDataState(data);
+  };
+
+  const handleSave = (event, data, title) => {
+    event.preventDefault();
+    console.log(data);
+    console.log(title);
+    switch (title) {
+      case "Battery": {
+        let newlist = batterylist;
+        newlist.push(data);
+        setBatteryLOV(newlist);
+      }
+      case "Inverter": {
+        let newlist = inverters;
+        console.log(newlist);
+        newlist.push(data);
+        setInvLOV(newlist);
+      }
+      case "Solar Panel": {
+        let newlist = pvlist;
+        newlist.push(data);
+        setPVLOV(newlist);
+      }
+      case "SCC": {
+        let newlist = scclist;
+        newlist.push(data);
+        setSCCLOV(newlist);
+      }
+    }
   };
 
   const renderInputs = (obj) => {
@@ -27,7 +76,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
           <Select
             className="block w-full py-2 mt-2"
             value={selectedState}
-            onChange={handleItemChanged}
+            onChange={(e) => handleItemChanged(e, obj.listkey, dataState)}
             options={obj.options}
           />
         </div>
@@ -47,6 +96,13 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
               <input
                 id={obj.listkey}
                 type={obj.type}
+                onChange={(e) =>
+                  handleInputChange(
+                    Number(e.target.value),
+                    obj.listkey,
+                    dataState
+                  )
+                }
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />{" "}
               {obj.unit}
@@ -69,6 +125,13 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
                 <input
                   id={obj.listkey}
                   type={obj.type}
+                  onChange={(e) =>
+                    handleInputChange(
+                      Number(e.target.value),
+                      obj.listkey,
+                      dataState
+                    )
+                  }
                   className="inline-block w-3/5 mx-2 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </span>
@@ -88,6 +151,9 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
         </label>
         <input
           id={obj.listkey}
+          onChange={(e) =>
+            handleInputChange(e.target.value, obj.listkey, dataState)
+          }
           type="text"
           className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
         />
@@ -128,12 +194,15 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
               Add New {title}
             </h2>
 
-            <form>
+            <form onSubmit={(e) => handleSave(e, dataState, title)}>
               <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 {formInputs.map((obj) => renderInputs(obj))}
               </div>
               <div className="flex justify-end mt-6">
-                <button className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto">
+                <button
+                  type="submit"
+                  className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                >
                   Save
                 </button>
               </div>

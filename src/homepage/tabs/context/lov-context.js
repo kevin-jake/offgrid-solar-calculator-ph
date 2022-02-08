@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
 
 const inverterlist = [
   {
@@ -113,12 +113,53 @@ export const LOVContext = createContext(
   scclist
 );
 
+const invReducer = (action) => {
+  return action;
+};
+
+const battReducer = (action) => {
+  return action;
+};
+
+const pvReducer = (action) => {
+  return action;
+};
+
+const sccReducer = (action) => {
+  return action;
+};
+
 export const LOVProvider = (props) => {
+  const [inverterLOV, inverterdispatch] = useReducer(invReducer, inverterlist);
+  const [batteryLOV, batterydispatch] = useReducer(battReducer, batterylist);
+  const [pvLOV, pvdispatch] = useReducer(pvReducer, solarpanellist);
+  const [sccLOV, sccdispatch] = useReducer(sccReducer, scclist);
+
+  const setInvLOV = (newInvList) => {
+    inverterdispatch({ newInvList: newInvList });
+  };
+
+  const setBatteryLOV = (newBattList) => {
+    batterydispatch({ newBattList: newBattList });
+  };
+
+  const setPVLOV = (newPVList) => {
+    pvdispatch({ newPVList: newPVList });
+  };
+
+  const setSCCLOV = (newSCCList) => {
+    sccdispatch({ newSCCList: newSCCList });
+  };
+
   const value = {
-    inverters: inverterlist,
-    batterylist: batterylist,
-    pvlist: solarpanellist,
-    scclist: scclist,
+    inverters: inverterLOV,
+    batterylist: batteryLOV,
+    pvlist: pvLOV,
+    scclist: sccLOV,
+    setInvLOV,
+    setBatteryLOV,
+    setPVLOV,
+    setSCCLOV,
   };
 
   console.log(value);
