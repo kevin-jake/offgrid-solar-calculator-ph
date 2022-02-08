@@ -74,7 +74,7 @@ const InverterList = () => {
             <tbody className="bg-white">
               {" "}
               {inverters.map((inverterObj) => (
-                <InverterItems invlist={inverterObj} />
+                <InverterItems invlist={inverterObj} formInputs={formInputs} />
               ))}
             </tbody>
           </table>

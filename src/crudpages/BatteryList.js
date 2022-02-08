@@ -9,11 +9,10 @@ const BatteryList = () => {
 
   const formInputs = [
     { listkey: "battname", type: "text", label: "Name" },
-    { listkey: "batttype", type: "text", label: "Type" },
     {
-      listkey: "battmodel",
+      listkey: "batttype",
       type: "select",
-      label: "Battery Model",
+      label: "Battery Type",
       options: [
         {
           value: "Lead Acid",
@@ -29,6 +28,7 @@ const BatteryList = () => {
         },
       ],
     },
+    { listkey: "battmodel", type: "text", label: "Model" },
     { listkey: "voltage", type: "number", label: "Voltage", unit: "V" },
     { listkey: "battcapacity", type: "number", label: "Capacity", unit: "Ah" },
     {
@@ -92,7 +92,7 @@ const BatteryList = () => {
             <tbody className="bg-white">
               {" "}
               {batterylist.map((obj) => (
-                <BatteryItems battlist={obj} />
+                <BatteryItems battlist={obj} formInputs={formInputs} />
               ))}
             </tbody>
           </table>

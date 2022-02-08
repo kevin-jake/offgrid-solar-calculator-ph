@@ -69,7 +69,7 @@ const SCCList = () => {
             <tbody className="bg-white">
               {" "}
               {scclist.map((obj) => (
-                <SCCItems scclist={obj} />
+                <SCCItems scclist={obj} formInputs={formInputs} />
               ))}
             </tbody>
           </table>

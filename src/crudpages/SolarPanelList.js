@@ -11,7 +11,7 @@ const SolarPanelList = () => {
     { listkey: "wattage", type: "number", label: "Wattage", unit: "W" },
     { listkey: "brand", type: "text", label: "Brand" },
     { listkey: "supplier", type: "text", label: "Supplier" },
-    { listkey: " voc", type: "number", label: "Voc", unit: "V" },
+    { listkey: "voc", type: "number", label: "Voc", unit: "V" },
     { listkey: "imp", type: "number", label: "Imp", unit: "A" },
     { listkey: "vmp", type: "number", label: "Vmp", unit: "V" },
     { listkey: "isc", type: "number", label: "Isc", unit: "A" },
@@ -81,7 +81,7 @@ const SolarPanelList = () => {
             <tbody className="bg-white">
               {" "}
               {pvlist.map((obj) => (
-                <SolarPanelItems pvlist={obj} />
+                <SolarPanelItems pvlist={obj} formInputs={formInputs} />
               ))}
             </tbody>
           </table>
