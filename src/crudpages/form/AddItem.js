@@ -4,8 +4,9 @@ import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
 import Select from "react-select";
 import { LOVContext } from "../../homepage/tabs/context/lov-context";
+import { validate } from "../../shared/util/validators";
 
-const AddItemOverlay = ({ onCancel, formInputs, title }) => {
+const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   const {
     inverters,
     batterylist,
@@ -21,6 +22,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
     label: "",
   });
   const [dataState, setDataState] = useState({});
+  const [validState, setValidState] = useState(state);
 
   const handleItemChanged = (event, objkey, data) => {
     data[objkey] = event.value;
@@ -28,16 +30,28 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
     setDataState(data);
   };
 
-  const handleInputChange = (event, objkey, data) => {
+  const handleInputChange = (event, objkey, data, validator) => {
     data[objkey] = event;
-    console.log(data);
-    setDataState(data);
+    if (validator) {
+      let val = event.toString();
+      if (val === "0") val = "";
+      console.log(val);
+      const valid = validate(val, validator);
+      if (valid) {
+        setDataState(data);
+        console.log(dataState);
+      } else {
+        const stateSet = validState;
+        stateSet[objkey] = false;
+        setValidState(stateSet);
+        console.log(validState);
+      }
+    } else setDataState(data);
   };
 
   const handleSave = (event, data, title) => {
     event.preventDefault();
-    console.log(data);
-    console.log(title);
+
     switch (title) {
       case "Battery": {
         let newlist = batterylist;
@@ -66,7 +80,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
   const renderInputs = (obj) => {
     if (obj.type === "select") {
       return (
-        <div>
+        <div key={obj.listkey}>
           <label
             className="text-gray-700 dark:text-gray-200"
             htmlFor={obj.listkey}
@@ -76,7 +90,9 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
           <Select
             className="block w-full py-2 mt-2"
             value={selectedState}
-            onChange={(e) => handleItemChanged(e, obj.listkey, dataState)}
+            onChange={(e) =>
+              handleItemChanged(e, obj.listkey, dataState, obj.validator)
+            }
             options={obj.options}
           />
         </div>
@@ -85,7 +101,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
     if (obj.hasOwnProperty("unit")) {
       if (obj.unit !== "Php") {
         return (
-          <div>
+          <div key={obj.listkey}>
             <label
               className="text-gray-700 dark:text-gray-200"
               htmlFor={obj.listkey}
@@ -100,7 +116,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
                   handleInputChange(
                     Number(e.target.value),
                     obj.listkey,
-                    dataState
+                    dataState,
+                    obj.validator
                   )
                 }
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -111,7 +128,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
         );
       } else {
         return (
-          <div>
+          <div key={obj.listkey}>
             <label
               className="text-gray-700 dark:text-gray-200"
               htmlFor={obj.listkey}
@@ -129,7 +146,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
                     handleInputChange(
                       Number(e.target.value),
                       obj.listkey,
-                      dataState
+                      dataState,
+                      obj.validator
                     )
                   }
                   className="inline-block w-3/5 mx-2 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -140,9 +158,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
         );
       }
     }
-
     return (
-      <div>
+      <div key={obj.listkey}>
         <label
           className="text-gray-700 dark:text-gray-200"
           htmlFor={obj.listkey}
@@ -152,10 +169,21 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
         <input
           id={obj.listkey}
           onChange={(e) =>
-            handleInputChange(e.target.value, obj.listkey, dataState)
+            handleInputChange(
+              e.target.value,
+              obj.listkey,
+              dataState,
+              obj.validator
+            )
           }
           type="text"
-          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+            validState.hasOwnProperty(obj.listkey)
+              ? validState[obj.listkey]
+                ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+              : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+          }`}
         />
       </div>
     );
@@ -216,6 +244,12 @@ const AddItemOverlay = ({ onCancel, formInputs, title }) => {
 };
 
 const AddItem = (props) => {
+  let state = {};
+  props.formInputs.forEach((item) => {
+    if (item.hasOwnProperty("isValid")) {
+      state[item.listkey] = item.isValid;
+    }
+  });
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
@@ -226,7 +260,7 @@ const AddItem = (props) => {
         timeout={200}
         classNames="modal"
       >
-        <AddItemOverlay {...props} />
+        <AddItemOverlay {...props} state={state} />
       </CSSTransition>
     </React.Fragment>
   );

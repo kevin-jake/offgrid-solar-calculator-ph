@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
+import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import InverterItems from "./InverterItems";
 
@@ -7,17 +8,47 @@ const InverterList = () => {
   const { inverters } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
   const formInputs = [
-    { listkey: "inverterName", type: "text", label: "Name" },
+    {
+      listkey: "inverterName",
+      type: "text",
+      label: "Name",
+      isValid: true,
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "type", type: "text", label: "Type" },
     {
       listkey: "inputVoltage",
       type: "number",
       label: "Input Voltage",
       unit: "V",
+      isValid: true,
+      validator: [VALIDATOR_REQUIRE()],
     },
-    { listkey: "efficiency", type: "number", label: "Efficiency", unit: "%" },
-    { listkey: "wattage", type: "number", label: "Wattage", unit: "W" },
-    { listkey: "price", type: "number", label: "Price", unit: "Php" },
+    {
+      listkey: "efficiency",
+      type: "number",
+      label: "Efficiency",
+      unit: "%",
+      isValid: true,
+      isValid: true,
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "wattage",
+      type: "number",
+      label: "Wattage",
+      unit: "W",
+      isValid: true,
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "price",
+      type: "number",
+      label: "Price",
+      unit: "Php",
+      isValid: true,
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];
