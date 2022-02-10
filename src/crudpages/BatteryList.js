@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
+import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import BatteryItems from "./BatteryItems";
 import AddItem from "./form/AddItem";
 
@@ -8,7 +9,12 @@ const BatteryList = () => {
   const [showModal, setShowModal] = useState(false);
 
   const formInputs = [
-    { listkey: "battname", type: "text", label: "Name" },
+    {
+      listkey: "battname",
+      type: "text",
+      label: "Name",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     {
       listkey: "batttype",
       type: "select",
@@ -27,15 +33,29 @@ const BatteryList = () => {
           label: "LiFePo4",
         },
       ],
+      validator: [VALIDATOR_REQUIRE()],
     },
     { listkey: "battmodel", type: "text", label: "Model" },
-    { listkey: "voltage", type: "number", label: "Voltage", unit: "V" },
-    { listkey: "battcapacity", type: "number", label: "Capacity", unit: "Ah" },
+    {
+      listkey: "voltage",
+      type: "number",
+      label: "Voltage",
+      unit: "V",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "battcapacity",
+      type: "number",
+      label: "Capacity",
+      unit: "Ah",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     {
       listkey: "priceperpc",
       type: "number",
       label: "Price per pc.",
       unit: "Php",
+      validator: [VALIDATOR_REQUIRE()],
     },
     { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },

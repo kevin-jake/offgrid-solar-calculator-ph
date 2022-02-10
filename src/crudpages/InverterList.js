@@ -12,7 +12,6 @@ const InverterList = () => {
       listkey: "inverterName",
       type: "text",
       label: "Name",
-      isValid: true,
       validator: [VALIDATOR_REQUIRE()],
     },
     { listkey: "type", type: "text", label: "Type" },
@@ -21,7 +20,6 @@ const InverterList = () => {
       type: "number",
       label: "Input Voltage",
       unit: "V",
-      isValid: true,
       validator: [VALIDATOR_REQUIRE()],
     },
     {
@@ -29,8 +27,6 @@ const InverterList = () => {
       type: "number",
       label: "Efficiency",
       unit: "%",
-      isValid: true,
-      isValid: true,
       validator: [VALIDATOR_REQUIRE()],
     },
     {
@@ -38,7 +34,6 @@ const InverterList = () => {
       type: "number",
       label: "Wattage",
       unit: "W",
-      isValid: true,
       validator: [VALIDATOR_REQUIRE()],
     },
     {
@@ -46,7 +41,6 @@ const InverterList = () => {
       type: "number",
       label: "Price",
       unit: "Php",
-      isValid: true,
       validator: [VALIDATOR_REQUIRE()],
     },
     { listkey: "img", type: "text", label: "Image" },

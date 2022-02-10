@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
+import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import SolarPanelItems from "./SolarPanelItems";
 
@@ -7,15 +8,56 @@ const SolarPanelList = () => {
   const { pvlist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
   const formInputs = [
-    { listkey: "pvname", type: "text", label: "Name" },
-    { listkey: "wattage", type: "number", label: "Wattage", unit: "W" },
+    {
+      listkey: "pvname",
+      type: "text",
+      label: "Name",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "wattage",
+      type: "number",
+      label: "Wattage",
+      unit: "W",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "brand", type: "text", label: "Brand" },
     { listkey: "supplier", type: "text", label: "Supplier" },
-    { listkey: "voc", type: "number", label: "Voc", unit: "V" },
-    { listkey: "imp", type: "number", label: "Imp", unit: "A" },
-    { listkey: "vmp", type: "number", label: "Vmp", unit: "V" },
-    { listkey: "isc", type: "number", label: "Isc", unit: "A" },
-    { listkey: "price", type: "number", label: "Price", unit: "Php" },
+    {
+      listkey: "voc",
+      type: "number",
+      label: "Voc",
+      unit: "V",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "imp",
+      type: "number",
+      label: "Imp",
+      unit: "A",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "vmp",
+      type: "number",
+      label: "Vmp",
+      unit: "V",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "isc",
+      type: "number",
+      label: "Isc",
+      unit: "A",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "price",
+      type: "number",
+      label: "Price",
+      unit: "Php",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];

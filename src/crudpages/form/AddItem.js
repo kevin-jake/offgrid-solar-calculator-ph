@@ -26,96 +26,187 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   const [dataState, setDataState] = useState({});
   const [validState, setValidState] = useState(state);
   const [errorMsg, setErrorMsg] = useState({});
+  const [validatorState, setValidator] = useState({});
 
   useEffect(() => {
     setContent(renderContent());
-  }, [validState, dataState]);
+  }, [validState, dataState, selectedState]);
 
-  const generalValidity = (validators) => {
-    let genValid = true;
-    for (const key in validators) {
-      genValid = genValid && validators[key];
+  useEffect(() => {
+    const setValid = validatorState;
+    formInputs.forEach((i) => {
+      if (i.hasOwnProperty("validator")) {
+        setValid[i.listkey] = {
+          validator: i.validator,
+          label: i.label,
+        };
+      }
+    });
+    setValidator(setValid);
+  }, []);
+
+  const validateGeneral = (validator, label, value, objkey) => {
+    let returnObj = {};
+    const errorObj = errorMsg;
+    const stateSet = validState;
+    if (validator) {
+      let val = value.toString();
+      if (val === "0") val = "";
+      const valid = validate(val, validator);
+      stateSet[objkey] = valid;
+      validator.forEach((i) => {
+        errorObj[objkey] = {
+          type: i.type,
+          message: valid ? "" : getErrorMessage(i.type, label),
+        };
+      });
     }
-    return genValid;
+    returnObj = { stateSet: stateSet, errorObj: errorObj };
+    return returnObj;
   };
 
-  const handleItemChanged = (event, objkey, data) => {
-    data[objkey] = event.value;
-    setSelectedState(event);
-    setDataState(data);
+  const saveValidation = (list, data) => {
+    let validatingFields = {};
+    for (const key in list[0]) {
+      if (validatorState.hasOwnProperty(key)) {
+        if (!(Object.keys(data).length === 0)) {
+          console.log(data);
+          if (data.hasOwnProperty(key)) {
+            validatingFields[key] = validateGeneral(
+              validatorState[key].validator,
+              data[key].label,
+              data[key].dataval,
+              key
+            );
+          } else {
+            validatingFields[key] = validateGeneral(
+              validatorState[key].validator,
+              validatorState[key].label,
+              "",
+              key
+            );
+          }
+        } else {
+          validatingFields[key] = validateGeneral(
+            validatorState[key].validator,
+            validatorState[key].label,
+            "",
+            key
+          );
+        }
+      }
+    }
+    return validatingFields;
+  };
+
+  const handleItemChanged = (event, objkey, data, validator, label) => {
+    data[objkey] = {
+      dataval: event.value,
+      label: label,
+    };
+    if (validator) {
+      const valid = validateGeneral(validator, label, event, objkey);
+      setErrorMsg(valid.errorObj);
+      setValidState(valid.stateSet);
+      setSelectedState(event);
+      setDataState(data);
+      setContent(renderContent());
+    } else {
+      setSelectedState(event);
+      setDataState(data);
+    }
   };
 
   const handleInputChange = (event, objkey, data, validator, label) => {
-    data[objkey] = event;
-    const errorObj = errorMsg;
+    data[objkey] = { dataval: event, label: label };
+    const valid = validateGeneral(validator, label, event, objkey);
     if (validator) {
-      let val = event.toString();
-      if (val === "0") val = "";
-      console.log(val);
-      const valid = validate(val, validator);
-      if (valid) {
-        const stateSet = validState;
-        stateSet[objkey] = true;
-
-        validator.forEach((i) => {
-          errorObj[objkey] = {
-            type: i.type,
-            message: "",
-          };
-        });
-        setErrorMsg(errorObj);
-        setValidState(stateSet);
-        setDataState(data);
-        setContent(renderContent());
-        console.log(dataState);
-      } else {
-        const stateSet = validState;
-        stateSet[objkey] = false;
-
-        validator.forEach((i) => {
-          errorObj[objkey] = {
-            type: i.type,
-            message: getErrorMessage(i.type, label),
-          };
-        });
-        setErrorMsg(errorObj);
-        setValidState(stateSet);
-        setContent(renderContent());
-        console.log(validState);
-      }
+      setErrorMsg(valid.errorObj);
+      setValidState(valid.stateSet);
+      setDataState(data);
+      setContent(renderContent());
+      console.log(dataState);
     } else setDataState(data);
   };
 
   const handleSave = (event, data, title) => {
     event.preventDefault();
-    if (generalValidity(validState)) {
-      switch (title) {
-        case "Battery": {
-          let newlist = batterylist;
-          newlist.push(data);
+    console.log(title);
+    switch (title) {
+      case "Battery": {
+        let newlist = batterylist;
+        let validatingFields = saveValidation(newlist, data);
+        let saveValid = true;
+        for (const key in validatingFields) {
+          saveValid = saveValid && validatingFields[key].stateSet[key];
+        }
+        if (saveValid) {
+          let datatoPush = {};
+          for (const key in data) {
+            datatoPush[key] = data[key].dataval;
+          }
+          newlist.push(datatoPush);
           setBatteryLOV(newlist);
+          onCancel();
         }
-        case "Inverter": {
-          let newlist = inverters;
-          console.log(newlist);
-          newlist.push(data);
-          setInvLOV(newlist);
-        }
-        case "Solar Panel": {
-          let newlist = pvlist;
-          newlist.push(data);
-          setPVLOV(newlist);
-        }
-        case "SCC": {
-          let newlist = scclist;
-          newlist.push(data);
-          setSCCLOV(newlist);
-        }
+        break;
       }
-    } else {
-      console.log("ERROR Validated");
-      setContent(renderContent());
+      case "Inverter": {
+        let newlist = inverters;
+        let validatingFields = saveValidation(newlist, data);
+        let saveValid = true;
+        for (const key in validatingFields) {
+          saveValid = saveValid && validatingFields[key].stateSet[key];
+        }
+        if (saveValid) {
+          let datatoPush = {};
+          for (const key in data) {
+            datatoPush[key] = data[key].dataval;
+          }
+          newlist.push(datatoPush);
+          setInvLOV(newlist);
+          onCancel();
+        }
+        break;
+      }
+      case "Solar Panel": {
+        let newlist = pvlist;
+        let validatingFields = saveValidation(newlist, data);
+        let saveValid = true;
+        for (const key in validatingFields) {
+          saveValid = saveValid && validatingFields[key].stateSet[key];
+        }
+        if (saveValid) {
+          let datatoPush = {};
+          for (const key in data) {
+            datatoPush[key] = data[key].dataval;
+          }
+          newlist.push(datatoPush);
+          setPVLOV(newlist);
+          onCancel();
+        }
+        break;
+      }
+      case "SCC": {
+        let newlist = scclist;
+        let validatingFields = saveValidation(newlist, data);
+        let saveValid = true;
+        for (const key in validatingFields) {
+          saveValid = saveValid && validatingFields[key].stateSet[key];
+        }
+        if (saveValid) {
+          let datatoPush = {};
+          for (const key in data) {
+            datatoPush[key] = data[key].dataval;
+          }
+          newlist.push(datatoPush);
+          setSCCLOV(newlist);
+          onCancel();
+        }
+        break;
+      }
     }
+    setContent(renderContent());
   };
 
   const renderInputs = (obj) => {
@@ -139,7 +230,13 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
             }`}
             value={selectedState}
             onChange={(e) =>
-              handleItemChanged(e, obj.listkey, dataState, obj.validator)
+              handleItemChanged(
+                e,
+                obj.listkey,
+                dataState,
+                obj.validator,
+                obj.label
+              )
             }
             options={obj.options}
           />
@@ -327,8 +424,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
 const AddItem = (props) => {
   let state = {};
   props.formInputs.forEach((item) => {
-    if (item.hasOwnProperty("isValid")) {
-      state[item.listkey] = item.isValid;
+    if (item.hasOwnProperty("validator")) {
+      state[item.listkey] = true;
     }
   });
   return (

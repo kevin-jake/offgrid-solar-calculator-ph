@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
+import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import SCCItems from "./SCCItems";
 
@@ -7,12 +8,34 @@ const SCCList = () => {
   const { scclist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
   const formInputs = [
-    { listkey: "sccname", type: "text", label: "Name" },
-    { listkey: "type", type: "text", label: "Type" },
+    {
+      listkey: "sccname",
+      type: "text",
+      label: "Name",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "type",
+      type: "text",
+      label: "Type",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "brand", type: "text", label: "Brand" },
     { listkey: "supplier", type: "text", label: "Supplier" },
-    { listkey: "amprating", type: "number", label: "Ampere Rating", unit: "A" },
-    { listkey: "price", type: "number", label: "Price", unit: "Php" },
+    {
+      listkey: "amprating",
+      type: "number",
+      label: "Ampere Rating",
+      unit: "A",
+      validator: [VALIDATOR_REQUIRE()],
+    },
+    {
+      listkey: "price",
+      type: "number",
+      label: "Price",
+      unit: "Php",
+      validator: [VALIDATOR_REQUIRE()],
+    },
     { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];
