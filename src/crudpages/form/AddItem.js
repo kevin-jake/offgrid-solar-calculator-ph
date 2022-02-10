@@ -219,6 +219,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
             htmlFor={obj.listkey}
           >
             {obj.label}
+            {obj.validator && "*"}
           </label>
           <Select
             className={`block w-full px-4 py-2 mt-2 ${
@@ -255,7 +256,12 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
               className="text-gray-700 dark:text-gray-200"
               htmlFor={obj.listkey}
             >
-              {obj.label}
+              <span>
+                {obj.label}{" "}
+                <p className="inline-block text-red-700 text-sm font-bold">
+                  {obj.validator && " *"}
+                </p>
+              </span>
             </label>
             <div className="grid grid-cols-2 gap-2 justify-items-start place-items-center">
               <input
@@ -293,7 +299,12 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
               className="text-gray-700 dark:text-gray-200"
               htmlFor={obj.listkey}
             >
-              {obj.label}
+              <span>
+                {obj.label}{" "}
+                <p className="inline-block text-red-700 text-sm font-bold">
+                  {obj.validator && " *"}
+                </p>
+              </span>
             </label>
             <div className="justify-items-start place-items-center">
               <span>
@@ -311,7 +322,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                       obj.label
                     )
                   }
-                  className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                  className={`inline-block w-3/5 mx-2 px-4 py-2 mt-2 border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
                     validState.hasOwnProperty(obj.listkey)
                       ? validState[obj.listkey]
                         ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
@@ -335,7 +346,12 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
           className="text-gray-700 dark:text-gray-200"
           htmlFor={obj.listkey}
         >
-          {obj.label}
+          <span>
+            {obj.label}{" "}
+            <p className="inline-block text-red-700 text-sm font-bold">
+              {obj.validator && " *"}
+            </p>
+          </span>
         </label>
         <input
           id={obj.listkey}
