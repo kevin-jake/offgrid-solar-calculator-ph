@@ -29,6 +29,14 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
     setContent(renderContent());
   }, [validState, dataState]);
 
+  const generalValidity = (validators) => {
+    let genValid = true;
+    for (const key in validators) {
+      genValid = genValid && validators[key];
+    }
+    return genValid;
+  };
+
   const handleItemChanged = (event, objkey, data) => {
     data[objkey] = event.value;
     setSelectedState(event);
@@ -60,30 +68,34 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   };
 
   const handleSave = (event, data, title) => {
-    setContent(renderContent());
     event.preventDefault();
-    switch (title) {
-      case "Battery": {
-        let newlist = batterylist;
-        newlist.push(data);
-        setBatteryLOV(newlist);
+    if (generalValidity(validState)) {
+      switch (title) {
+        case "Battery": {
+          let newlist = batterylist;
+          newlist.push(data);
+          setBatteryLOV(newlist);
+        }
+        case "Inverter": {
+          let newlist = inverters;
+          console.log(newlist);
+          newlist.push(data);
+          setInvLOV(newlist);
+        }
+        case "Solar Panel": {
+          let newlist = pvlist;
+          newlist.push(data);
+          setPVLOV(newlist);
+        }
+        case "SCC": {
+          let newlist = scclist;
+          newlist.push(data);
+          setSCCLOV(newlist);
+        }
       }
-      case "Inverter": {
-        let newlist = inverters;
-        console.log(newlist);
-        newlist.push(data);
-        setInvLOV(newlist);
-      }
-      case "Solar Panel": {
-        let newlist = pvlist;
-        newlist.push(data);
-        setPVLOV(newlist);
-      }
-      case "SCC": {
-        let newlist = scclist;
-        newlist.push(data);
-        setSCCLOV(newlist);
-      }
+    } else {
+      console.log("ERROR Validated");
+      setContent(renderContent());
     }
   };
 
@@ -130,7 +142,13 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                     obj.validator
                   )
                 }
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                  validState.hasOwnProperty(obj.listkey)
+                    ? validState[obj.listkey]
+                      ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                      : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                    : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                }`}
               />{" "}
               {obj.unit}
             </div>
@@ -160,7 +178,13 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                       obj.validator
                     )
                   }
-                  className="inline-block w-3/5 mx-2 px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                    validState.hasOwnProperty(obj.listkey)
+                      ? validState[obj.listkey]
+                        ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                        : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                      : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  }`}
                 />
               </span>
             </div>
