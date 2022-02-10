@@ -5,6 +5,7 @@ import Backdrop from "../../shared/components/UIElements/Backdrop";
 import Select from "react-select";
 import { LOVContext } from "../../homepage/tabs/context/lov-context";
 import { validate } from "../../shared/util/validators";
+import { getErrorMessage } from "../../shared/util/errorMessages";
 
 const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   const [content, setContent] = useState(<></>);
@@ -24,6 +25,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   });
   const [dataState, setDataState] = useState({});
   const [validState, setValidState] = useState(state);
+  const [errorMsg, setErrorMsg] = useState({});
 
   useEffect(() => {
     setContent(renderContent());
@@ -43,8 +45,9 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
     setDataState(data);
   };
 
-  const handleInputChange = (event, objkey, data, validator) => {
+  const handleInputChange = (event, objkey, data, validator, label) => {
     data[objkey] = event;
+    const errorObj = errorMsg;
     if (validator) {
       let val = event.toString();
       if (val === "0") val = "";
@@ -53,6 +56,14 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
       if (valid) {
         const stateSet = validState;
         stateSet[objkey] = true;
+
+        validator.forEach((i) => {
+          errorObj[objkey] = {
+            type: i.type,
+            message: "",
+          };
+        });
+        setErrorMsg(errorObj);
         setValidState(stateSet);
         setDataState(data);
         setContent(renderContent());
@@ -60,6 +71,14 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
       } else {
         const stateSet = validState;
         stateSet[objkey] = false;
+
+        validator.forEach((i) => {
+          errorObj[objkey] = {
+            type: i.type,
+            message: getErrorMessage(i.type, label),
+          };
+        });
+        setErrorMsg(errorObj);
         setValidState(stateSet);
         setContent(renderContent());
         console.log(validState);
@@ -100,6 +119,7 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
   };
 
   const renderInputs = (obj) => {
+    console.log(errorMsg);
     if (obj.type === "select") {
       return (
         <div key={obj.listkey}>
@@ -110,13 +130,23 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
             {obj.label}
           </label>
           <Select
-            className="block w-full py-2 mt-2"
+            className={`block w-full px-4 py-2 mt-2 ${
+              validState.hasOwnProperty(obj.listkey)
+                ? validState[obj.listkey]
+                  ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+            }`}
             value={selectedState}
             onChange={(e) =>
               handleItemChanged(e, obj.listkey, dataState, obj.validator)
             }
             options={obj.options}
           />
+          <p className="text-red-700 text-xs">
+            {errorMsg.hasOwnProperty(obj.listkey) &&
+              errorMsg[obj.listkey].message}
+          </p>
         </div>
       );
     }
@@ -139,7 +169,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                     Number(e.target.value),
                     obj.listkey,
                     dataState,
-                    obj.validator
+                    obj.validator,
+                    obj.label
                   )
                 }
                 className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
@@ -152,6 +183,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
               />{" "}
               {obj.unit}
             </div>
+            <p className="text-red-700 text-xs">
+              {errorMsg.hasOwnProperty(obj.listkey) &&
+                errorMsg[obj.listkey].message}
+            </p>
           </div>
         );
       } else {
@@ -175,7 +210,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                       Number(e.target.value),
                       obj.listkey,
                       dataState,
-                      obj.validator
+                      obj.validator,
+                      obj.label
                     )
                   }
                   className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
@@ -187,6 +223,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
                   }`}
                 />
               </span>
+              <p className="text-red-700 text-xs">
+                {errorMsg.hasOwnProperty(obj.listkey) &&
+                  errorMsg[obj.listkey].message}
+              </p>
             </div>
           </div>
         );
@@ -207,7 +247,8 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
               e.target.value,
               obj.listkey,
               dataState,
-              obj.validator
+              obj.validator,
+              obj.label
             )
           }
           type="text"
@@ -219,6 +260,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
               : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
           }`}
         />
+        <p className="text-red-700 text-xs">
+          {errorMsg.hasOwnProperty(obj.listkey) &&
+            errorMsg[obj.listkey].message}
+        </p>
       </div>
     );
   };
