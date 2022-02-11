@@ -126,7 +126,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
       setDataState(data);
       setContent(renderContent());
       console.log(dataState);
-    } else setDataState(data);
+    } else {
+      setDataState(data);
+      setContent(renderContent());
+    }
   };
 
   const handleSave = (event, data, title) => {
@@ -339,6 +342,9 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
           </div>
         );
       }
+    }
+    if (obj.listkey === "id") {
+      return <></>;
     }
     return (
       <div key={obj.listkey}>

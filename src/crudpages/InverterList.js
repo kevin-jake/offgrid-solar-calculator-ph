@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LOVContext } from "../homepage/tabs/context/lov-context";
 import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
@@ -7,7 +7,14 @@ import InverterItems from "./InverterItems";
 const InverterList = () => {
   const { inverters } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+
   const formInputs = [
+    {
+      listkey: "id",
+      type: "text",
+      label: "ID",
+    },
     {
       listkey: "inverterName",
       type: "text",
@@ -54,6 +61,11 @@ const InverterList = () => {
   const cancelModal = () => {
     setShowModal(false);
   };
+
+  const onUpdate = () => {
+    setRefresh(!refresh);
+  };
+
   if (inverters.length === 0) {
     return (
       <div className="bg-white overflow-hidden sm:rounded-lg pb-8">
@@ -99,7 +111,11 @@ const InverterList = () => {
             <tbody className="bg-white">
               {" "}
               {inverters.map((inverterObj) => (
-                <InverterItems invlist={inverterObj} formInputs={formInputs} />
+                <InverterItems
+                  invlist={inverterObj}
+                  formInputs={formInputs}
+                  onUpdate={onUpdate}
+                />
               ))}
             </tbody>
           </table>

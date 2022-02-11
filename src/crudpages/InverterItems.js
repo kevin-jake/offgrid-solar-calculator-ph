@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { numberWithCommas } from "../shared/util/format";
 import EditItem from "./form/EditItem";
 
-const InverterItems = ({ invlist, formInputs }) => {
+const InverterItems = ({ invlist, formInputs, onUpdate }) => {
   console.log(invlist);
   const [showEditModal, setShowEditModal] = useState(false);
   const openEdit = () => {
@@ -11,6 +11,10 @@ const InverterItems = ({ invlist, formInputs }) => {
 
   const closeEdit = () => {
     setShowEditModal(false);
+  };
+
+  const update = () => {
+    onUpdate();
   };
 
   return (
@@ -66,6 +70,7 @@ const InverterItems = ({ invlist, formInputs }) => {
         onCancel={closeEdit}
         formInputs={formInputs}
         initialValue={invlist}
+        onUpdate={update}
         title="Inverter"
       />
     </>
