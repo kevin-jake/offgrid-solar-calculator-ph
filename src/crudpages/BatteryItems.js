@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { numberWithCommas } from "../shared/util/format";
 import EditItem from "./form/EditItem";
 
-const BatteryItems = ({ battlist, formInputs }) => {
+const BatteryItems = ({ battlist, formInputs, onUpdate }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const openEdit = () => {
     setShowEditModal(true);
@@ -10,6 +10,10 @@ const BatteryItems = ({ battlist, formInputs }) => {
 
   const closeEdit = () => {
     setShowEditModal(false);
+  };
+
+  const update = () => {
+    onUpdate();
   };
 
   return (
@@ -65,6 +69,7 @@ const BatteryItems = ({ battlist, formInputs }) => {
         onCancel={closeEdit}
         formInputs={formInputs}
         initialValue={battlist}
+        onUpdate={update}
         title="Battery"
       />
     </>

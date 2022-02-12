@@ -7,7 +7,14 @@ import SolarPanelItems from "./SolarPanelItems";
 const SolarPanelList = () => {
   const { pvlist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+
   const formInputs = [
+    {
+      listkey: "id",
+      type: "text",
+      label: "ID",
+    },
     {
       listkey: "pvname",
       type: "text",
@@ -70,6 +77,10 @@ const SolarPanelList = () => {
     setShowModal(false);
   };
 
+  const onUpdate = () => {
+    setRefresh(!refresh);
+  };
+
   if (pvlist.length === 0) {
     return (
       <div className="bg-white overflow-hidden sm:rounded-lg pb-8">
@@ -123,7 +134,11 @@ const SolarPanelList = () => {
             <tbody className="bg-white">
               {" "}
               {pvlist.map((obj) => (
-                <SolarPanelItems pvlist={obj} formInputs={formInputs} />
+                <SolarPanelItems
+                  pvlist={obj}
+                  formInputs={formInputs}
+                  onUpdate={onUpdate}
+                />
               ))}
             </tbody>
           </table>

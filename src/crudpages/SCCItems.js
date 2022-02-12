@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { numberWithCommas } from "../shared/util/format";
 import EditItem from "./form/EditItem";
 
-const SCCItems = ({ scclist, formInputs }) => {
+const SCCItems = ({ scclist, formInputs, onUpdate }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const openEdit = () => {
     setShowEditModal(true);
@@ -11,6 +11,11 @@ const SCCItems = ({ scclist, formInputs }) => {
   const closeEdit = () => {
     setShowEditModal(false);
   };
+
+  const update = () => {
+    onUpdate();
+  };
+
   return (
     <>
       <tr>
@@ -64,6 +69,7 @@ const SCCItems = ({ scclist, formInputs }) => {
         onCancel={closeEdit}
         formInputs={formInputs}
         initialValue={scclist}
+        onUpdate={update}
         title="SCC"
       />
     </>

@@ -3,7 +3,6 @@ import { numberWithCommas } from "../shared/util/format";
 import EditItem from "./form/EditItem";
 
 const InverterItems = ({ invlist, formInputs, onUpdate }) => {
-  console.log(invlist);
   const [showEditModal, setShowEditModal] = useState(false);
   const openEdit = () => {
     setShowEditModal(true);

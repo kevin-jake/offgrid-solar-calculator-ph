@@ -150,6 +150,7 @@ const EditItemOverlay = ({
       case "Battery": {
         let newlist = batterylist;
         let validatingFields = saveValidation(newlist, data);
+        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -159,9 +160,11 @@ const EditItemOverlay = ({
           for (const key in data) {
             datatoPush[key] = data[key].dataval;
           }
-          newlist.push(datatoPush);
+          newlist[arrindex] = datatoPush;
+          console.log(newlist);
           setBatteryLOV(newlist);
           onCancel();
+          onUpdate();
         }
         break;
       }
@@ -189,6 +192,7 @@ const EditItemOverlay = ({
       case "Solar Panel": {
         let newlist = pvlist;
         let validatingFields = saveValidation(newlist, data);
+        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -198,15 +202,18 @@ const EditItemOverlay = ({
           for (const key in data) {
             datatoPush[key] = data[key].dataval;
           }
-          newlist.push(datatoPush);
+          newlist[arrindex] = datatoPush;
+          console.log(newlist);
           setPVLOV(newlist);
           onCancel();
+          onUpdate();
         }
         break;
       }
       case "SCC": {
         let newlist = scclist;
         let validatingFields = saveValidation(newlist, data);
+        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -216,9 +223,11 @@ const EditItemOverlay = ({
           for (const key in data) {
             datatoPush[key] = data[key].dataval;
           }
-          newlist.push(datatoPush);
+          newlist[arrindex] = datatoPush;
+          console.log(newlist);
           setSCCLOV(newlist);
           onCancel();
+          onUpdate();
         }
         break;
       }

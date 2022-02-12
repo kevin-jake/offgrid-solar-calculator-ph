@@ -7,7 +7,14 @@ import SCCItems from "./SCCItems";
 const SCCList = () => {
   const { scclist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+
   const formInputs = [
+    {
+      listkey: "id",
+      type: "text",
+      label: "ID",
+    },
     {
       listkey: "sccname",
       type: "text",
@@ -46,6 +53,10 @@ const SCCList = () => {
 
   const cancelModal = () => {
     setShowModal(false);
+  };
+
+  const onUpdate = () => {
+    setRefresh(!refresh);
   };
 
   if (scclist.length === 0) {
@@ -92,7 +103,11 @@ const SCCList = () => {
             <tbody className="bg-white">
               {" "}
               {scclist.map((obj) => (
-                <SCCItems scclist={obj} formInputs={formInputs} />
+                <SCCItems
+                  scclist={obj}
+                  formInputs={formInputs}
+                  onUpdate={onUpdate}
+                />
               ))}
             </tbody>
           </table>

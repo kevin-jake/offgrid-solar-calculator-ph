@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { numberWithCommas } from "../shared/util/format";
 import EditItem from "./form/EditItem";
 
-const SolarPanelItems = ({ pvlist, formInputs }) => {
+const SolarPanelItems = ({ pvlist, formInputs, onUpdate }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const openEdit = () => {
     setShowEditModal(true);
@@ -11,6 +11,11 @@ const SolarPanelItems = ({ pvlist, formInputs }) => {
   const closeEdit = () => {
     setShowEditModal(false);
   };
+
+  const update = () => {
+    onUpdate();
+  };
+
   return (
     <>
       <tr>

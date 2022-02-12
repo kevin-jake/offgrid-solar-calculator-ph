@@ -7,8 +7,14 @@ import AddItem from "./form/AddItem";
 const BatteryList = () => {
   const { batterylist } = useContext(LOVContext);
   const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   const formInputs = [
+    {
+      listkey: "id",
+      type: "text",
+      label: "ID",
+    },
     {
       listkey: "battname",
       type: "text",
@@ -67,6 +73,11 @@ const BatteryList = () => {
   const cancelModal = () => {
     setShowModal(false);
   };
+
+  const onUpdate = () => {
+    setRefresh(!refresh);
+  };
+
   console.log(batterylist);
   if (batterylist.length === 0) {
     return (
@@ -112,7 +123,11 @@ const BatteryList = () => {
             <tbody className="bg-white">
               {" "}
               {batterylist.map((obj) => (
-                <BatteryItems battlist={obj} formInputs={formInputs} />
+                <BatteryItems
+                  battlist={obj}
+                  formInputs={formInputs}
+                  onUpdate={onUpdate}
+                />
               ))}
             </tbody>
           </table>
