@@ -36,7 +36,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
       case "Inverter": {
         let newlist = inverters;
         let arrindex = newlist.findIndex((x) => x.id === data);
-        console.log(arrindex);
+        newlist.splice(arrindex, 1);
         setInvLOV(newlist);
         onCancel();
         onUpdate();
@@ -45,7 +45,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
       case "Solar Panel": {
         let newlist = pvlist;
         let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist = newlist.splice(arrindex, arrindex);
+        newlist.splice(arrindex, 1);
         console.log(newlist);
         setPVLOV(newlist);
         onCancel();
@@ -55,7 +55,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
       case "SCC": {
         let newlist = scclist;
         let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist = newlist.splice(arrindex, arrindex);
+        newlist.splice(arrindex, 1);
         console.log(newlist);
         setSCCLOV(newlist);
         onCancel();

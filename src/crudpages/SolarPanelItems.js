@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { numberWithCommas } from "../shared/util/format";
+import DeleteItem from "./form/DeleteItem";
 import EditItem from "./form/EditItem";
 
 const SolarPanelItems = ({ pvlist, formInputs, onUpdate }) => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const openEdit = () => {
     setShowEditModal(true);
   };
 
   const closeEdit = () => {
     setShowEditModal(false);
+  };
+
+  const openDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const closeDelete = () => {
+    setShowDeleteModal(false);
   };
 
   const update = () => {
@@ -65,7 +75,10 @@ const SolarPanelItems = ({ pvlist, formInputs, onUpdate }) => {
             >
               Edit
             </button>
-            <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none md:row-span-auto">
+            <button
+              className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none md:row-span-auto"
+              onClick={openDelete}
+            >
               Delete
             </button>
           </div>
@@ -77,6 +90,14 @@ const SolarPanelItems = ({ pvlist, formInputs, onUpdate }) => {
         onCancel={closeEdit}
         formInputs={formInputs}
         initialValue={pvlist}
+        onUpdate={update}
+        title="Solar Panel"
+      />
+      <DeleteItem
+        show={showDeleteModal}
+        onCancel={closeDelete}
+        idToDelete={pvlist.id}
+        onUpdate={update}
         title="Solar Panel"
       />
     </>
