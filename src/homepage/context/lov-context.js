@@ -130,10 +130,10 @@ const sccReducer = (action) => {
 };
 
 export const LOVProvider = (props) => {
-  const [inverterLOV, inverterdispatch] = useReducer(invReducer, inverterlist);
-  const [batteryLOV, batterydispatch] = useReducer(battReducer, batterylist);
-  const [pvLOV, pvdispatch] = useReducer(pvReducer, solarpanellist);
-  const [sccLOV, sccdispatch] = useReducer(sccReducer, scclist);
+  const [inverterLOV, inverterdispatch] = useReducer(invReducer, []);
+  const [batteryLOV, batterydispatch] = useReducer(battReducer, []);
+  const [pvLOV, pvdispatch] = useReducer(pvReducer, []);
+  const [sccLOV, sccdispatch] = useReducer(sccReducer, []);
 
   const setInvLOV = (newInvList) => {
     inverterdispatch({ newInvList: newInvList });

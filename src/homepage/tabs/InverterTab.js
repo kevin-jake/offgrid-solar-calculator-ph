@@ -1,45 +1,90 @@
 import React, { useContext, useState, useEffect } from "react";
 import { HomeContext } from "../context/home-context";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import { LOVContext } from "../context/lov-context";
 import { numberWithCommas } from "../../shared/util/format";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 
 const InverterTab = (props) => {
   const { invertertab, setInverter } = useContext(HomeContext);
-  const { inverters } = useContext(LOVContext);
+  const { inverters, setInvLOV } = useContext(LOVContext);
   const [itemState, setItemState] = useState(invertertab);
-  const [optionState, setOptions] = useState([
-    {
-      value: "",
-      label: "",
-    },
-  ]);
-  const [selectedState, setSelectedState] = useState({
-    value: itemState.id,
-    label: itemState.inverterName,
-  });
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // const [optionState, setOptions] = useState([
+  //   {
+  //     value: "",
+  //     label: "",
+  //   },
+  // ]);
+  const [selectedState, setSelectedState] = useState();
 
-  useEffect(() => {
-    let i = 0;
-    let arrvar = optionState;
-    arrvar.shift();
-    for (i; i < inverters.length; i++) {
-      arrvar.push({
-        value: inverters[i].id,
-        label: inverters[i].inverterName,
-      });
-    }
-    setOptions(arrvar);
-  }, [optionState, inverters]);
+  // useEffect(() => {
+  //   const fetchInverter = async () => {
+  //     try {
+  //       const responseData = await sendRequest(
+  //         "http://localhost:5000/api/inverter"
+  //       );
+
+  //       setLoadedInverter(responseData.inverters);
+  //       setInvLOV(responseData.inverters);
+  //     } catch (err) {}
+  //   };
+  //   fetchInverter();
+  // }, [sendRequest]);
+
+  // useEffect(() => {
+  //   let i = 0;
+  //   let arrvar = optionState;
+  //   arrvar.shift();
+  //   for (i; i < inverters.length; i++) {
+  //     arrvar.push({
+  //       value: inverters[i].id,
+  //       label: inverters[i].inverterName,
+  //     });
+  //   }
+  //   setOptions(arrvar);
+  // }, [optionState, inverters]);
+
+  const filterOptions = (inputValue, array) => {
+    return array.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const fetchInverter = async (input, callback) => {
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/api/inverter"
+      );
+
+      setInvLOV(responseData.inverters);
+      console.log(
+        responseData.inverters.map((i) => ({
+          label: i.inverterName,
+          value: i.id,
+        }))
+      );
+      const options = responseData.inverters.map((i) => ({
+        label: i.inverterName,
+        value: i.id,
+      }));
+      if (input) callback(filterOptions(input, options));
+      else callback(options);
+    } catch (err) {}
+  };
+
+  const handleInputChanged = (event) => {
+    let input = event.value;
+    setSelectedState({ input });
+  };
 
   const handleItemChanged = (event) => {
-    // console.log(event);
     let selectedId = event.value;
     let index = inverters.findIndex((x) => x.id === selectedId);
-    // console.log(inverters[index]);
+    console.log(inverters[index]);
     setItemState(inverters[index]);
     setInverter(inverters[index]);
-    setSelectedState(event);
+    setSelectedState(selectedId);
   };
   // console.log(selectedState);
   return (
@@ -48,10 +93,13 @@ const InverterTab = (props) => {
         <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
           Select Inverter:{" "}
         </label>
-        <Select
+        <AsyncSelect
           value={selectedState}
+          cacheOptions
+          defaultOptions
+          onInputChange={handleInputChanged}
           onChange={handleItemChanged}
-          options={optionState}
+          loadOptions={fetchInverter}
         />
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
