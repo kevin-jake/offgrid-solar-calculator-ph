@@ -37,15 +37,6 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Redirect to="/" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
         <Route path="/inverters" exact>
           <InverterList />
         </Route>
@@ -57,6 +48,15 @@ const App = () => {
         </Route>
         <Route path="/sccs" exact>
           <SCCList />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Home />
         </Route>
         <Route path="/auth" exact>
           <Auth />
