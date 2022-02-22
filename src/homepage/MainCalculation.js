@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import Card from "../shared/components/UIElements/Card";
 import InverterSection from "./sections/InverterSection";
 import SCCSection from "./sections/SCCSection";
 import LoadSection from "./sections/LoadSection";
 import SolarPanelSection from "./sections/SolarPanelSection";
 import BatterySection from "./sections/BatterySection";
-import Button from "../shared/components/FormElement/Button";
-import { GlobalContext } from "./tabs/context/global-context";
+import { GlobalContext } from "./context/global-context";
 import { numberWithCommas } from "../shared/util/format";
-import { HomeContext } from "./tabs/context/home-context";
+import { HomeContext } from "./context/home-context";
 
 const MainCalculation = () => {
   const {

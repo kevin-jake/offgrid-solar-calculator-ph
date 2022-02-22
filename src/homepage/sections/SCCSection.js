@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import sccimg from "../resources/scc.png";
-import { GlobalContext } from "../tabs/context/global-context";
+import { GlobalContext } from "../context/global-context";
 
 const SCCSection = ({ errormsg }) => {
   const { scc } = useContext(GlobalContext);

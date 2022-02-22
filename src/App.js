@@ -5,20 +5,16 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-
-import NewPlaces from "./places/pages/NewPlaces";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
-import UserPlaces from "./places/pages/UserPlaces";
-import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./users/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
 import Home from "./homepage/Home";
 
 import "./index.css";
 import InverterList from "./crudpages/InverterList";
-import { GlobalProvider } from "./homepage/tabs/context/global-context";
-import { HomeProvider } from "./homepage/tabs/context/home-context";
-import { LOVProvider } from "./homepage/tabs/context/lov-context";
+import { GlobalProvider } from "./homepage/context/global-context";
+import { HomeProvider } from "./homepage/context/home-context";
+import { LOVProvider } from "./homepage/context/lov-context";
 import BatteryList from "./crudpages/BatteryList";
 import SolarPanelList from "./crudpages/SolarPanelList";
 import SCCList from "./crudpages/SCCList";
@@ -41,15 +37,6 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/:userId/places">
-          <UserPlaces />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlaces />
-        </Route>
-        <Route path="/places/:placeId" exact>
-          <UpdatePlace />
-        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -70,9 +57,6 @@ const App = () => {
         </Route>
         <Route path="/sccs" exact>
           <SCCList />
-        </Route>
-        <Route path="/:userId/places">
-          <UserPlaces />
         </Route>
         <Route path="/auth" exact>
           <Auth />

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { HomeContext } from "./context/home-context";
+import { HomeContext } from "../context/home-context";
 import Select from "react-select";
-import { LOVContext } from "./context/lov-context";
+import { LOVContext } from "../context/lov-context";
 import { useEffect } from "react/cjs/react.development";
 import { numberWithCommas } from "../../shared/util/format";
 

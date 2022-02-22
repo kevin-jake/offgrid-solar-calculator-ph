@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useEffect } from "react/cjs/react.development";
-import { HomeContext } from "./context/home-context";
+import { HomeContext } from "../context/home-context";
 
 const LoadTab = () => {
   const { loadtab, setLoad } = useContext(HomeContext);

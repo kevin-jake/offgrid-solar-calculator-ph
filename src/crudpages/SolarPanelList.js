@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { LOVContext } from "../homepage/tabs/context/lov-context";
+import { LOVContext } from "../homepage/context/lov-context";
 import { VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import SolarPanelItems from "./SolarPanelItems";

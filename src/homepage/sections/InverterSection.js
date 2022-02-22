@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import inverter from "../resources/inverter.png";
-import { HomeContext } from "../tabs/context/home-context";
+import { HomeContext } from "../context/home-context";
 
 const InverterSection = ({ errormsg }) => {
   const { invertertab } = useContext(HomeContext);

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
-import { LOVContext } from "../../homepage/tabs/context/lov-context";
+import { LOVContext } from "../../homepage/context/lov-context";
 
 const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
   const [content, setContent] = useState(<></>);

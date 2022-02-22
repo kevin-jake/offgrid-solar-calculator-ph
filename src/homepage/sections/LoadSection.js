@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { kiloformat } from "../../shared/util/format";
 import load from "../resources/load.png";
-import { GlobalContext } from "../tabs/context/global-context";
-import { HomeContext } from "../tabs/context/home-context";
+import { GlobalContext } from "../context/global-context";
+import { HomeContext } from "../context/home-context";
 
 const LoadSection = () => {
   const { loadtab } = useContext(HomeContext);

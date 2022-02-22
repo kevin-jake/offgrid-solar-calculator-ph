@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import panel from "../resources/panel.png";
-import { GlobalContext } from "../tabs/context/global-context";
+import { GlobalContext } from "../context/global-context";
 
 const SolarPanelSection = () => {
   const { solarpanel } = useContext(GlobalContext);

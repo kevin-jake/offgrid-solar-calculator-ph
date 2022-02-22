@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "./context/global-context";
-import { HomeContext } from "./context/home-context";
-import { LOVContext } from "./context/lov-context";
+import { GlobalContext } from "../context/global-context";
+import { HomeContext } from "../context/home-context";
+import { LOVContext } from "../context/lov-context";
 import Select from "react-select";
 import { numberWithCommas } from "../../shared/util/format";
 

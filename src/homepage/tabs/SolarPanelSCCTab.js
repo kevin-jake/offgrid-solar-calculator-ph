@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { numberWithCommas } from "../../shared/util/format";
-import { HomeContext } from "./context/home-context";
-import { LOVContext } from "./context/lov-context";
+import { HomeContext } from "../context/home-context";
+import { LOVContext } from "../context/lov-context";
 import SCCComponent from "./SCCComponent";
 
 const SolarPanelSCCTab = ({ pvdata }) => {
