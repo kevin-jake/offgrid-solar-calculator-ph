@@ -113,8 +113,9 @@ export const LOVContext = createContext(
   scclist
 );
 
-const invReducer = (action) => {
-  return action;
+const invReducer = (state, action) => {
+  // console.log(state);
+  return action.inverters;
 };
 
 const battReducer = (action) => {
@@ -136,7 +137,7 @@ export const LOVProvider = (props) => {
   const [sccLOV, sccdispatch] = useReducer(sccReducer, []);
 
   const setInvLOV = (newInvList) => {
-    inverterdispatch({ newInvList: newInvList });
+    inverterdispatch({ inverters: newInvList });
   };
 
   const setBatteryLOV = (newBattList) => {

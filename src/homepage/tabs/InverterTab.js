@@ -10,27 +10,25 @@ const InverterTab = (props) => {
   const { inverters, setInvLOV } = useContext(LOVContext);
   const [itemState, setItemState] = useState(invertertab);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  // const [optionState, setOptions] = useState([
-  //   {
-  //     value: "",
-  //     label: "",
-  //   },
-  // ]);
+  const [optionState, setOptions] = useState();
   const [selectedState, setSelectedState] = useState();
 
-  // useEffect(() => {
-  //   const fetchInverter = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         "http://localhost:5000/api/inverter"
-  //       );
-
-  //       setLoadedInverter(responseData.inverters);
-  //       setInvLOV(responseData.inverters);
-  //     } catch (err) {}
-  //   };
-  //   fetchInverter();
-  // }, [sendRequest]);
+  useEffect(() => {
+    const fetchInverter = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/inverter"
+        );
+        setInvLOV(responseData.inverters);
+        const options = responseData.inverters.map((i) => ({
+          label: i.inverterName,
+          value: i.id,
+        }));
+        setOptions(options);
+      } catch (err) {}
+    };
+    fetchInverter();
+  }, [sendRequest]);
 
   // useEffect(() => {
   //   let i = 0;
@@ -56,20 +54,12 @@ const InverterTab = (props) => {
       const responseData = await sendRequest(
         "http://localhost:5000/api/inverter"
       );
-
       setInvLOV(responseData.inverters);
-      console.log(
-        responseData.inverters.map((i) => ({
-          label: i.inverterName,
-          value: i.id,
-        }))
-      );
       const options = responseData.inverters.map((i) => ({
         label: i.inverterName,
         value: i.id,
       }));
-      if (input) callback(filterOptions(input, options));
-      else callback(options);
+      callback(filterOptions(input, options));
     } catch (err) {}
   };
 
@@ -86,7 +76,7 @@ const InverterTab = (props) => {
     setInverter(inverters[index]);
     setSelectedState(selectedId);
   };
-  // console.log(selectedState);
+  console.log(inverters);
   return (
     <div className="container-lg px-6 py-4 mx-4">
       <div className="grid grid-cols-1 gap-4 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
@@ -94,9 +84,8 @@ const InverterTab = (props) => {
           Select Inverter:{" "}
         </label>
         <AsyncSelect
-          value={selectedState}
           cacheOptions
-          defaultOptions
+          defaultOptions={optionState}
           onInputChange={handleInputChanged}
           onChange={handleItemChanged}
           loadOptions={fetchInverter}
