@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
 import { LOVContext } from "../../homepage/context/lov-context";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
   const [content, setContent] = useState(<></>);
@@ -16,50 +18,53 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
     setPVLOV,
     setSCCLOV,
   } = useContext(LOVContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     setContent(renderContent());
   }, [inverters, batterylist, pvlist, scclist]);
 
+  const deleteToBackend = async (idToDel, title) => {
+    let api_suffix;
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/" + api_suffix + "/" + idToDel,
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      onCancel();
+      onUpdate();
+      // history.push('/');
+    } catch (err) {}
+  };
+
   const handleDelete = (event, data, title) => {
     event.preventDefault();
     switch (title) {
       case "Battery": {
-        let newlist = batterylist;
-        let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist.splice(arrindex, 1);
-        setBatteryLOV(newlist);
-        onCancel();
-        onUpdate();
+        deleteToBackend(idToDelete, title);
         break;
       }
       case "Inverter": {
-        let newlist = inverters;
-        let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist.splice(arrindex, 1);
-        setInvLOV(newlist);
-        onCancel();
-        onUpdate();
+        deleteToBackend(idToDelete, title);
+
         break;
       }
       case "Solar Panel": {
-        let newlist = pvlist;
-        let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist.splice(arrindex, 1);
-        console.log(newlist);
-        setPVLOV(newlist);
-        onCancel();
-        onUpdate();
+        deleteToBackend(idToDelete, title);
+
         break;
       }
       case "SCC": {
-        let newlist = scclist;
-        let arrindex = newlist.findIndex((x) => x.id === data);
-        newlist.splice(arrindex, 1);
-        console.log(newlist);
-        setSCCLOV(newlist);
-        onCancel();
-        onUpdate();
+        deleteToBackend(idToDelete, title);
         break;
       }
     }
@@ -74,7 +79,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
         aria-modal="true"
         role="dialog"
       >
-        <div className="relative px-4 w-full max-w-2xl h-full md:h-auto overflow-y-auto max-h-screen">
+        <div className="relative px-4 w-full max-w-lg h-full md:h-auto overflow-y-auto max-h-screen">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="flex justify-end p-2">
               <button
@@ -96,7 +101,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
                 </svg>
               </button>
             </div>
-            <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+            <section className="max-w-xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
               <div className="text-center p-5 flex-auto justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -113,10 +118,6 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
                 <h2 className="text-xl font-bold py-4 ">Are you sure?</h2>
                 <p className="text-sm text-gray-500 px-8">
                   Do you really want to delete your this row?
-                </p>
-                <p className="text-sm text-gray-500 px-8">
-                  {" "}
-                  This process cannot be undone
                 </p>
               </div>
               <div className="p-3 grid gap-4 mt-2 grid-cols-2 sm:grid-row">

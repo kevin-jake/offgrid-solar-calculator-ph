@@ -177,7 +177,6 @@ const EditItemOverlay = ({
 
   const handleSave = (event, data, title) => {
     event.preventDefault();
-    console.log(title);
     switch (title) {
       case "Battery": {
         let validatingFields = saveValidation(formInputs, data);
