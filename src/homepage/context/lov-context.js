@@ -113,8 +113,7 @@ export const LOVContext = createContext(
   scclist
 );
 
-const invReducer = (state, action) => {
-  // console.log(state);
+const invReducer = (action) => {
   return action.inverters;
 };
 

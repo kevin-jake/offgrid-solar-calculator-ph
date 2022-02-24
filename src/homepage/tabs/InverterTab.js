@@ -9,7 +9,7 @@ const InverterTab = (props) => {
   const { invertertab, setInverter } = useContext(HomeContext);
   const { inverters, setInvLOV } = useContext(LOVContext);
   const [itemState, setItemState] = useState(invertertab);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const [optionState, setOptions] = useState();
   const [selectedState, setSelectedState] = useState();
 
@@ -19,7 +19,6 @@ const InverterTab = (props) => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/inverter"
         );
-        setInvLOV(responseData.inverters);
         const options = responseData.inverters.map((i) => ({
           label: i.inverterName,
           value: i.id,
@@ -54,7 +53,7 @@ const InverterTab = (props) => {
       const responseData = await sendRequest(
         "http://localhost:5000/api/inverter"
       );
-      setInvLOV(responseData.inverters);
+      // setInvLOV(responseData.inverters);
       const options = responseData.inverters.map((i) => ({
         label: i.inverterName,
         value: i.id,
@@ -76,7 +75,6 @@ const InverterTab = (props) => {
     setInverter(inverters[index]);
     setSelectedState(selectedId);
   };
-  console.log(inverters);
   return (
     <div className="container-lg px-6 py-4 mx-4">
       <div className="grid grid-cols-1 gap-4 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">

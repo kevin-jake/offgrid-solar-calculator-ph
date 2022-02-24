@@ -20,7 +20,7 @@ import SolarPanelList from "./crudpages/SolarPanelList";
 import SCCList from "./crudpages/SCCList";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const login = useCallback(() => {
     setIsLoggedIn(true);
   }, []);
