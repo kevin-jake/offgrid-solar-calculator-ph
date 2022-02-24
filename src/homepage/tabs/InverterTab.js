@@ -7,7 +7,8 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 
 const InverterTab = (props) => {
   const { invertertab, setInverter } = useContext(HomeContext);
-  const { inverters, setInvLOV } = useContext(LOVContext);
+  // const { inverters, setInvLOV } = useContext(LOVContext);
+  const [inverters, setInverters] = useState([]);
   const [itemState, setItemState] = useState(invertertab);
   const { sendRequest } = useHttpClient();
   const [optionState, setOptions] = useState();
@@ -24,6 +25,7 @@ const InverterTab = (props) => {
           value: i.id,
         }));
         setOptions(options);
+        setInverters(responseData.inverters);
       } catch (err) {}
     };
     fetchInverter();
@@ -68,7 +70,8 @@ const InverterTab = (props) => {
   };
 
   const handleItemChanged = (event) => {
-    let selectedId = event.value;
+    console.log(event.value);
+    const selectedId = event.value;
     let index = inverters.findIndex((x) => x.id === selectedId);
     console.log(inverters[index]);
     setItemState(inverters[index]);
