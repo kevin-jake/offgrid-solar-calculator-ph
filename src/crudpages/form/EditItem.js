@@ -6,6 +6,8 @@ import Select from "react-select";
 import { LOVContext } from "../../homepage/context/lov-context";
 import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const EditItemOverlay = ({
   onCancel,
@@ -26,6 +28,10 @@ const EditItemOverlay = ({
     setPVLOV,
     setSCCLOV,
   } = useContext(LOVContext);
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+
   const [dataState, setDataState] = useState(defaultData);
   const [validState, setValidState] = useState(state);
   const [errorMsg, setErrorMsg] = useState({});
@@ -77,7 +83,8 @@ const EditItemOverlay = ({
 
   const saveValidation = (list, data) => {
     let validatingFields = {};
-    for (const key in list[0]) {
+    list.forEach((i) => {
+      const key = i.listkey;
       if (validatorState.hasOwnProperty(key)) {
         if (!(Object.keys(data).length === 0)) {
           console.log(data);
@@ -105,7 +112,7 @@ const EditItemOverlay = ({
           );
         }
       }
-    }
+    });
     return validatingFields;
   };
 
@@ -143,91 +150,76 @@ const EditItemOverlay = ({
     console.log(dataState);
   };
 
+  const patchToBackend = async (data, title) => {
+    let datatoPush = {};
+    let api_suffix;
+    for (const key in data) {
+      datatoPush[key] = data[key].dataval;
+    }
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/" + api_suffix + "/" + datatoPush.id,
+        "PATCH",
+        JSON.stringify(datatoPush),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      onCancel();
+      onUpdate();
+      // history.push('/');
+    } catch (err) {}
+  };
+
   const handleSave = (event, data, title) => {
     event.preventDefault();
     console.log(title);
     switch (title) {
       case "Battery": {
-        let newlist = batterylist;
-        let validatingFields = saveValidation(newlist, data);
-        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist[arrindex] = datatoPush;
-          console.log(newlist);
-          setBatteryLOV(newlist);
-          onCancel();
-          onUpdate();
+          patchToBackend(data, title);
         }
         break;
       }
       case "Inverter": {
-        let newlist = inverters;
-        let validatingFields = saveValidation(newlist, data);
-        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist[arrindex] = datatoPush;
-          console.log(newlist);
-          setInvLOV(newlist);
-          onCancel();
-          onUpdate();
+          patchToBackend(data, title);
         }
         break;
       }
       case "Solar Panel": {
-        let newlist = pvlist;
-        let validatingFields = saveValidation(newlist, data);
-        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist[arrindex] = datatoPush;
-          console.log(newlist);
-          setPVLOV(newlist);
-          onCancel();
-          onUpdate();
+          patchToBackend(data, title);
         }
         break;
       }
       case "SCC": {
-        let newlist = scclist;
-        let validatingFields = saveValidation(newlist, data);
-        let arrindex = newlist.findIndex((x) => x.id === data.id.dataval);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist[arrindex] = datatoPush;
-          console.log(newlist);
-          setSCCLOV(newlist);
-          onCancel();
-          onUpdate();
+          patchToBackend(data, title);
         }
         break;
       }
