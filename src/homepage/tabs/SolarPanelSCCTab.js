@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
 import { LOVContext } from "../context/lov-context";
@@ -9,30 +10,62 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   const { solarpanelstab, setPV } = useContext(HomeContext);
   const [itemState, setItemState] = useState(solarpanelstab);
   const [sunhourstate, setshState] = useState(solarpanelstab.sunhours);
-  const { pvlist } = useContext(LOVContext);
-  const [optionState, setOptions] = useState([
-    {
-      value: "",
-      label: "",
-    },
-  ]);
-  const [selectedState, setSelectedState] = useState({
-    value: itemState.id,
-    label: itemState.pvname,
-  });
+  // const { pvlist } = useContext(LOVContext);
+  const [pvlist, setPVList] = useState([]);
+  const { sendRequest } = useHttpClient();
+
+  const [optionState, setOptions] = useState();
+  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
-    let i = 0;
-    let arrvar = optionState;
-    arrvar.shift();
-    for (i; i < pvlist.length; i++) {
-      arrvar.push({
-        value: pvlist[i].id,
-        label: pvlist[i].pvname,
-      });
-    }
-    setOptions(arrvar);
-  }, [optionState, pvlist]);
+    const fetchPV = async () => {
+      try {
+        const responseData = await sendRequest("http://localhost:5000/api/pv");
+        const options = responseData.solar_panel.map((i) => ({
+          label: i.pvname,
+          value: i.id,
+        }));
+        setOptions(options);
+        setPVList(responseData.solar_panel);
+      } catch (err) {}
+    };
+    fetchPV();
+  }, [sendRequest]);
+
+  // useEffect(() => {
+  //   let i = 0;
+  //   let arrvar = optionState;
+  //   arrvar.shift();
+  //   for (i; i < pvlist.length; i++) {
+  //     arrvar.push({
+  //       value: pvlist[i].id,
+  //       label: pvlist[i].pvname,
+  //     });
+  //   }
+  //   setOptions(arrvar);
+  // }, [optionState, pvlist]);
+
+  const filterOptions = (inputValue, array) => {
+    return array.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const fetchPV = async (input, callback) => {
+    try {
+      const responseData = await sendRequest("http://localhost:5000/api/pv");
+      const options = responseData.solar_panel.map((i) => ({
+        label: i.pvname,
+        value: i.id,
+      }));
+      callback(filterOptions(input, options));
+    } catch (err) {}
+  };
+
+  const handleInputChanged = (event) => {
+    let input = event.value;
+    setSelectedState({ input });
+  };
 
   const handleItemChanged = (event) => {
     let selectedId = event.value;
@@ -75,10 +108,13 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                   <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
                     Select Solar Panel:
                   </label>
-                  <Select
-                    value={selectedState}
+                  <AsyncSelect
+                    cacheOptions
+                    defaultInputValue={itemState.pvname}
+                    defaultOptions={optionState}
+                    onInputChange={handleInputChanged}
                     onChange={handleItemChanged}
-                    options={optionState}
+                    loadOptions={fetchPV}
                   />
                 </div>
                 <div className="mt-2.5">
