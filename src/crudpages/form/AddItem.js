@@ -138,14 +138,18 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     }
   };
 
-  const postToBackend = async (data) => {
+  const postToBackend = async (data, title) => {
     let datatoPush = {};
+    let api_suffix;
     for (const key in data) {
       datatoPush[key] = data[key].dataval;
     }
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
     try {
       await sendRequest(
-        "http://localhost:5000/api/inverter",
+        "http://localhost:5000/api/" + api_suffix,
         "POST",
         JSON.stringify(datatoPush),
         {
@@ -153,6 +157,8 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           "Content-Type": "application/json",
         }
       );
+      onCancel();
+      onUpdate();
       // history.push('/');
     } catch (err) {}
   };
@@ -169,13 +175,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist.push(datatoPush);
-          setBatteryLOV(newlist);
-          onCancel();
+          postToBackend(data, title);
         }
         break;
       }
@@ -187,10 +187,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          postToBackend(data);
-          setInvLOV(newlist);
-          onCancel();
-          onUpdate();
+          postToBackend(data, title);
         }
         break;
       }
@@ -202,13 +199,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist.push(datatoPush);
-          setPVLOV(newlist);
-          onCancel();
+          postToBackend(data, title);
         }
         break;
       }
@@ -220,13 +211,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist.push(datatoPush);
-          setSCCLOV(newlist);
-          onCancel();
+          postToBackend(data, title);
         }
         break;
       }

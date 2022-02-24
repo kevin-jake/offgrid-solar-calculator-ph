@@ -65,7 +65,7 @@ const SolarPanelList = () => {
       unit: "Php",
       validator: [VALIDATOR_REQUIRE()],
     },
-    { listkey: "img", type: "text", label: "Image" },
+    // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];
 
@@ -153,6 +153,7 @@ const SolarPanelList = () => {
       <AddItem
         show={showModal}
         onCancel={cancelModal}
+        onUpdate={onUpdate}
         formInputs={formInputs}
         title="Solar Panel"
       />

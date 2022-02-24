@@ -43,7 +43,7 @@ const SCCList = () => {
       unit: "Php",
       validator: [VALIDATOR_REQUIRE()],
     },
-    { listkey: "img", type: "text", label: "Image" },
+    // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];
 
@@ -122,6 +122,7 @@ const SCCList = () => {
       <AddItem
         show={showModal}
         onCancel={cancelModal}
+        onUpdate={onUpdate}
         formInputs={formInputs}
         title="SCC"
       />
