@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
 import { LOVContext } from "../context/lov-context";
@@ -7,36 +8,70 @@ import { LOVContext } from "../context/lov-context";
 const BatteryTab = ({ battdata, doddata }) => {
   const { batterytab, setBattery } = useContext(HomeContext);
   const [itemState, setItemState] = useState(batterytab);
-  const { batterylist } = useContext(LOVContext);
-  const [optionState, setOptions] = useState([
-    {
-      value: "",
-      label: "",
-    },
-  ]);
-  const [selectedState, setSelectedState] = useState({
-    value: itemState.id,
-    label: itemState.battname,
-  });
+  const [batterylist, setBattList] = useState([]);
+  const { sendRequest } = useHttpClient();
+
+  // const { batterylist } = useContext(LOVContext);
+  const [optionState, setOptions] = useState();
+  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
-    let i = 0;
-    let arrvar = optionState;
-    arrvar.shift();
-    for (i; i < batterylist.length; i++) {
-      arrvar.push({
-        value: batterylist[i].id,
-        label: batterylist[i].battname,
-      });
-    }
-    setOptions(arrvar);
-  }, [optionState, batterylist]);
+    const fetchBattery = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/battery"
+        );
+        const options = responseData.battery.map((i) => ({
+          label: i.battname,
+          value: i.id,
+        }));
+        setOptions(options);
+        setBattList(responseData.battery);
+      } catch (err) {}
+    };
+    fetchBattery();
+  }, [sendRequest]);
+
+  // useEffect(() => {
+  //   let i = 0;
+  //   let arrvar = optionState;
+  //   arrvar.shift();
+  //   for (i; i < batterylist.length; i++) {
+  //     arrvar.push({
+  //       value: batterylist[i].id,
+  //       label: batterylist[i].battname,
+  //     });
+  //   }
+  //   setOptions(arrvar);
+  // }, [optionState, batterylist]);
+
+  const filterOptions = (inputValue, array) => {
+    return array.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const fetchBattery = async (input, callback) => {
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/api/battery"
+      );
+      const options = responseData.battery.map((i) => ({
+        label: i.battname,
+        value: i.id,
+      }));
+      callback(filterOptions(input, options));
+    } catch (err) {}
+  };
+
+  const handleInputChanged = (event) => {
+    let input = event.value;
+    setSelectedState({ input });
+  };
 
   const handleItemChanged = (event) => {
-    // console.log(event);
     let selectedId = event.value;
     let index = batterylist.findIndex((x) => x.id === selectedId);
-    // console.log(batterylist[index]);
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);
     setSelectedState(event);
@@ -49,10 +84,13 @@ const BatteryTab = ({ battdata, doddata }) => {
           <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
             Select Battery:
           </label>
-          <Select
-            value={selectedState}
+          <AsyncSelect
+            cacheOptions
+            defaultInputValue={itemState.battname}
+            defaultOptions={optionState}
+            onInputChange={handleInputChanged}
             onChange={handleItemChanged}
-            options={optionState}
+            loadOptions={fetchBattery}
           />
           <div className="grid grid-cols-1 gap-8  md:grid-cols-2 xl:grid-cols-2">
             <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
