@@ -11,16 +11,16 @@ import { AuthContext } from "../../shared/context/auth-context";
 
 const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   const [content, setContent] = useState(<></>);
-  const {
-    inverters,
-    batterylist,
-    pvlist,
-    scclist,
-    setInvLOV,
-    setBatteryLOV,
-    setPVLOV,
-    setSCCLOV,
-  } = useContext(LOVContext);
+  // const {
+  //   inverters,
+  //   batterylist,
+  //   pvlist,
+  //   scclist,
+  //   setInvLOV,
+  //   setBatteryLOV,
+  //   setPVLOV,
+  //   setSCCLOV,
+  // } = useContext(LOVContext);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
@@ -73,7 +73,8 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
 
   const saveValidation = (list, data) => {
     let validatingFields = {};
-    for (const key in list[0]) {
+    list.forEach((i) => {
+      const key = i.listkey;
       if (validatorState.hasOwnProperty(key)) {
         if (!(Object.keys(data).length === 0)) {
           console.log(data);
@@ -101,7 +102,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           );
         }
       }
-    }
+    });
     return validatingFields;
   };
 
@@ -168,8 +169,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     console.log(title);
     switch (title) {
       case "Battery": {
-        let newlist = batterylist;
-        let validatingFields = saveValidation(newlist, data);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -180,8 +180,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         break;
       }
       case "Inverter": {
-        let newlist = inverters;
-        let validatingFields = saveValidation(newlist, data);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -192,8 +191,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         break;
       }
       case "Solar Panel": {
-        let newlist = pvlist;
-        let validatingFields = saveValidation(newlist, data);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
@@ -204,8 +202,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         break;
       }
       case "SCC": {
-        let newlist = scclist;
-        let validatingFields = saveValidation(newlist, data);
+        let validatingFields = saveValidation(formInputs, data);
         let saveValid = true;
         for (const key in validatingFields) {
           saveValid = saveValid && validatingFields[key].stateSet[key];
