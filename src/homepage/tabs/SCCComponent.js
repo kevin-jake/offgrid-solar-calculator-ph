@@ -2,37 +2,48 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
 import { LOVContext } from "../context/lov-context";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 
 const SCCComponent = () => {
   const { scctab, setSCC } = useContext(HomeContext);
   const [itemState, setItemState] = useState(scctab);
   const { setSCCGlobal } = useContext(GlobalContext);
-  const { scclist } = useContext(LOVContext);
-  const [optionState, setOptions] = useState([
-    {
-      value: "",
-      label: "",
-    },
-  ]);
-  const [selectedState, setSelectedState] = useState({
-    value: itemState.id,
-    label: itemState.sccname,
-  });
+  // const { scclist } = useContext(LOVContext);
+  const [scclist, setSCCList] = useState([]);
+  const { sendRequest } = useHttpClient();
+
+  const [optionState, setOptions] = useState();
+  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
-    let i = 0;
-    let arrvar = optionState;
-    arrvar.shift();
-    for (i; i < scclist.length; i++) {
-      arrvar.push({
-        value: scclist[i].id,
-        label: scclist[i].sccname,
-      });
-    }
-    setOptions(arrvar);
-  }, [optionState, scclist]);
+    const fetchSCC = async () => {
+      try {
+        const responseData = await sendRequest("http://localhost:5000/api/scc");
+        const options = responseData.sccs.map((i) => ({
+          label: i.sccname,
+          value: i.id,
+        }));
+        setOptions(options);
+        setSCCList(responseData.sccs);
+      } catch (err) {}
+    };
+    fetchSCC();
+  }, [sendRequest]);
+
+  // useEffect(() => {
+  //   let i = 0;
+  //   let arrvar = optionState;
+  //   arrvar.shift();
+  //   for (i; i < scclist.length; i++) {
+  //     arrvar.push({
+  //       value: scclist[i].id,
+  //       label: scclist[i].sccname,
+  //     });
+  //   }
+  //   setOptions(arrvar);
+  // }, [optionState, scclist]);
 
   useEffect(() => {
     const sccinfo = {
@@ -43,6 +54,28 @@ const SCCComponent = () => {
     };
     setSCCGlobal(sccinfo);
   }, [itemState]);
+
+  const filterOptions = (inputValue, array) => {
+    return array.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const fetchSCC = async (input, callback) => {
+    try {
+      const responseData = await sendRequest("http://localhost:5000/api/scc");
+      const options = responseData.sccs.map((i) => ({
+        label: i.sccname,
+        value: i.id,
+      }));
+      callback(filterOptions(input, options));
+    } catch (err) {}
+  };
+
+  const handleInputChanged = (event) => {
+    let input = event.value;
+    setSelectedState({ input });
+  };
 
   const handleItemChanged = (event) => {
     let selectedId = event.value;
@@ -64,31 +97,17 @@ const SCCComponent = () => {
 
   return (
     <>
-      {/* <div>
-      <div className="content">
-        <h4>SCC Name</h4>
-        <Select
-          value={selectedState}
-          onChange={handleItemChanged}
-          options={optionState}
-        />
-      </div>
-      <hr />
-      <div>
-        <h4>SCC Type: {itemState.type}</h4>
-        <p>Ampere Rating: {itemState.amprating}</p>
-        <p>Brand: {itemState.brand}</p>
-        <p>Price: Php {numberWithCommas(itemState.price.toFixed(2))}</p>
-      </div>
-    </div> */}
       <div>
         <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
           Select SCC:
         </label>
-        <Select
-          value={selectedState}
+        <AsyncSelect
+          cacheOptions
+          defaultInputValue={itemState.sccname}
+          defaultOptions={optionState}
+          onInputChange={handleInputChanged}
           onChange={handleItemChanged}
-          options={optionState}
+          loadOptions={fetchSCC}
         />
         <div className="grid grid-cols-1 my-10 gap-8 md:grid-cols-2 xl:grid-cols-2">
           <div>
