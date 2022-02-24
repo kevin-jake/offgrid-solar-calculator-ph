@@ -24,7 +24,7 @@ const InverterList = () => {
       } catch (err) {}
     };
     fetchInverter();
-  }, [sendRequest]);
+  }, [sendRequest, refresh]);
 
   const formInputs = [
     {
@@ -150,6 +150,7 @@ const InverterList = () => {
           <AddItem
             show={showModal}
             onCancel={cancelModal}
+            onUpdate={onUpdate}
             formInputs={formInputs}
             title="Inverter"
           />

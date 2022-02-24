@@ -6,8 +6,10 @@ import Select from "react-select";
 import { LOVContext } from "../../homepage/context/lov-context";
 import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
-const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
+const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   const [content, setContent] = useState(<></>);
   const {
     inverters,
@@ -19,6 +21,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
     setPVLOV,
     setSCCLOV,
   } = useContext(LOVContext);
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+
   const [selectedState, setSelectedState] = useState({
     value: "",
     label: "",
@@ -132,6 +138,25 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
     }
   };
 
+  const postToBackend = async (data) => {
+    let datatoPush = {};
+    for (const key in data) {
+      datatoPush[key] = data[key].dataval;
+    }
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/inverter",
+        "POST",
+        JSON.stringify(datatoPush),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      // history.push('/');
+    } catch (err) {}
+  };
+
   const handleSave = (event, data, title) => {
     event.preventDefault();
     console.log(title);
@@ -162,13 +187,10 @@ const AddItemOverlay = ({ onCancel, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          let datatoPush = {};
-          for (const key in data) {
-            datatoPush[key] = data[key].dataval;
-          }
-          newlist.push(datatoPush);
+          postToBackend(data);
           setInvLOV(newlist);
           onCancel();
+          onUpdate();
         }
         break;
       }
