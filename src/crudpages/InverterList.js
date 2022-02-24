@@ -67,7 +67,7 @@ const InverterList = () => {
       unit: "Php",
       validator: [VALIDATOR_REQUIRE()],
     },
-    { listkey: "img", type: "text", label: "Image" },
+    // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
   ];
 

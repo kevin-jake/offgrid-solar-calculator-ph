@@ -236,6 +236,8 @@ const EditItemOverlay = ({
   };
 
   const renderInputs = (obj, data) => {
+    console.log(obj);
+    console.log(data);
     if (obj.type === "select") {
       const index = obj.options.findIndex(
         (x) => x.value === data[obj.listkey].dataval
@@ -494,6 +496,9 @@ const EditItem = (props) => {
       state[item.listkey] = true;
     }
   });
+  delete datatoSet.creator;
+  delete datatoSet.__v;
+  delete datatoSet._id;
   console.log(datatoSet);
   return (
     <React.Fragment>

@@ -18,20 +18,14 @@ import { LOVProvider } from "./homepage/context/lov-context";
 import BatteryList from "./crudpages/BatteryList";
 import SolarPanelList from "./crudpages/SolarPanelList";
 import SCCList from "./crudpages/SCCList";
+import { useAuth } from "./shared/components/hooks/auth-hook";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
+  const { token, login, logout, userId } = useAuth();
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -67,7 +61,13 @@ const App = () => {
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
     >
       <GlobalProvider>
         <HomeProvider>
