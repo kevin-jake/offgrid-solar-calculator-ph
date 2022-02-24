@@ -91,6 +91,19 @@ const InverterList = () => {
             <div className="border-t border-gray-200 text-center pt-8">
               <h1 className="text-6xl font-bold text-gray-400">Empty List</h1>
               <h1 className="text-xl font-medium py-8">No Inverters found</h1>
+              <button
+                className="px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                onClick={setModal}
+              >
+                Add Item
+              </button>
+              <AddItem
+                show={showModal}
+                onCancel={cancelModal}
+                onUpdate={onUpdate}
+                formInputs={formInputs}
+                title="Inverter"
+              />
             </div>
           </div>
         </>
