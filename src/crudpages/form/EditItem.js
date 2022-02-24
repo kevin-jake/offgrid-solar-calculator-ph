@@ -18,16 +18,16 @@ const EditItemOverlay = ({
   onUpdate,
 }) => {
   const [content, setContent] = useState(<></>);
-  const {
-    inverters,
-    batterylist,
-    pvlist,
-    scclist,
-    setInvLOV,
-    setBatteryLOV,
-    setPVLOV,
-    setSCCLOV,
-  } = useContext(LOVContext);
+  // const {
+  //   inverters,
+  //   batterylist,
+  //   pvlist,
+  //   scclist,
+  //   setInvLOV,
+  //   setBatteryLOV,
+  //   setPVLOV,
+  //   setSCCLOV,
+  // } = useContext(LOVContext);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
