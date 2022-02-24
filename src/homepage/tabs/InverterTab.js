@@ -86,6 +86,7 @@ const InverterTab = (props) => {
         </label>
         <AsyncSelect
           cacheOptions
+          defaultInputValue={itemState.inverterName}
           defaultOptions={optionState}
           onInputChange={handleInputChanged}
           onChange={handleItemChanged}
