@@ -162,7 +162,7 @@ const SCCList = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner asOverlay />}
+      {isLoading && <LoadingSpinner />}
       {!isLoading && scclist && toRender(scclist)}
     </>
   );

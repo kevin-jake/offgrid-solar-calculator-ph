@@ -14,6 +14,11 @@ const LoadTab = () => {
     setLoad({ itemState, overalls });
   }, [itemState, overalls]);
 
+  useEffect(() => {
+    setItemState(loadtab.itemState);
+    setOveralls(loadtab.overalls);
+  }, [loadtab.itemState, loadtab.overalls]);
+
   const handleClick = () => {
     itemState.items.push({
       loadname: "",

@@ -185,7 +185,7 @@ const BatteryList = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner asOverlay />}
+      {isLoading && <LoadingSpinner />}
       {!isLoading && batterylist && toRender(batterylist)}
     </>
   );

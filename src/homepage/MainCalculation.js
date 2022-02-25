@@ -39,6 +39,7 @@ const MainCalculation = () => {
 
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,13 +47,13 @@ const MainCalculation = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/" + userId
         );
-        console.log(responseData.users.data);
-        if (responseData.users.data) {
-          setLoad(responseData.users.data.loadtab);
-          setSCC(responseData.users.data.scc);
-          setBattery(responseData.users.data.battery);
-          setInverter(responseData.users.data.inverter);
-          setPV(responseData.users.data.solarpanel);
+        console.log(responseData.user.data);
+        if (responseData.user.data) {
+          setLoad(responseData.user.data.loadtab);
+          setSCC(responseData.user.data.scc);
+          setBattery(responseData.user.data.battery);
+          setInverter(responseData.user.data.inverter);
+          setPV(responseData.user.data.solarpanel);
         }
       } catch (err) {}
     };
@@ -163,6 +164,7 @@ const MainCalculation = () => {
       },
     };
     try {
+      setIsSaving(true);
       await sendRequest(
         "http://localhost:5000/api/users/save",
         "POST",
@@ -172,8 +174,10 @@ const MainCalculation = () => {
           "Content-Type": "application/json",
         }
       );
-      console.log(datatoPush);
-    } catch (err) {}
+      setIsSaving(false);
+    } catch (err) {
+      setIsSaving(false);
+    }
   };
 
   const priceRender = (voltage) => {
@@ -197,6 +201,7 @@ const MainCalculation = () => {
 
   return (
     <>
+      {isLoading && !isSaving && <LoadingSpinner />} (
       <section className="bg-white dark:bg-gray-900">
         <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
           <h1 className="text-2xl my-4 font-semibold text-gray-700 capitalize dark:text-white">
@@ -270,21 +275,28 @@ const MainCalculation = () => {
               >
                 <div className="grid  grid-flow-col">
                   Save Computations
-                  {isLoading && (
+                  {isLoading && isSaving && (
                     <>
-                      <div class=" inline-block items-center text-lg text-white-700">
+                      <div className=" inline-block items-center text-lg text-white-700">
                         <svg
-                          fill="none"
-                          class="w-6 h-6 animate-spin"
-                          viewBox="0 0 32 32"
+                          className="animate-spin ml-4 h-5 w-5 text-white"
                           xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
                         >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
                           <path
-                            clip-rule="evenodd"
-                            d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+                            className="opacity-75"
                             fill="currentColor"
-                            fill-rule="evenodd"
-                          />
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                       </div>
                     </>
@@ -328,7 +340,8 @@ const MainCalculation = () => {
             </div>
           </div>
         </div>
-      </section>{" "}
+      </section>
+      )
     </>
   );
 };

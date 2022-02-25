@@ -193,7 +193,7 @@ const SolarPanelList = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner asOverlay />}
+      {isLoading && <LoadingSpinner />}
       {!isLoading && pvlist && toRender(pvlist)}
     </>
   );

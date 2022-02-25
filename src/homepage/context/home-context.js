@@ -5,12 +5,12 @@ const initialState = {
     itemState: {
       items: [
         {
-          loadname: "TV",
-          userqty: "2",
-          wattage: "10",
-          totalwatts: "",
-          ophours: "4",
-          watthours: "",
+          loadname: "",
+          userqty: 0,
+          wattage: 0,
+          totalwatts: 0,
+          ophours: 0,
+          watthours: 0,
         },
       ],
     },

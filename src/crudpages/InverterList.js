@@ -174,7 +174,7 @@ const InverterList = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner asOverlay />}
+      {isLoading && <LoadingSpinner />}
       {!isLoading && invertersList && toRender(invertersList)}
     </>
   );
