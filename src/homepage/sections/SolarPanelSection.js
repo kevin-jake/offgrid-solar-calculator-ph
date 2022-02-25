@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { numberWithCommas } from "../../shared/util/format";
+import { kiloformat, numberWithCommas } from "../../shared/util/format";
 import panel from "../resources/panel.png";
 import { GlobalContext } from "../context/global-context";
 
@@ -31,7 +31,7 @@ const SolarPanelSection = () => {
           No. of Panels in Series: {solarpanel.pvseries}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Total Wattage: {solarpanel.totalwattage} W
+          Total Wattage: {kiloformat(solarpanel.totalwattage) + "W"}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total No. of Panels: {solarpanel.totalnumberpv}

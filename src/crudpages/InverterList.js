@@ -142,9 +142,9 @@ const InverterList = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {" "}
                   {list.map((inverterObj) => (
                     <InverterItems
+                      key={inverterObj.id}
                       invlist={inverterObj}
                       formInputs={formInputs}
                       onUpdate={onUpdate}

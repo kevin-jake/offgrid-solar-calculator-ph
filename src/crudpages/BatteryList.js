@@ -153,9 +153,9 @@ const BatteryList = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {" "}
                   {batterylist.map((obj) => (
                     <BatteryItems
+                      key={obj.id}
                       battlist={obj}
                       formInputs={formInputs}
                       onUpdate={onUpdate}

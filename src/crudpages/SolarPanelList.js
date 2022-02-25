@@ -161,9 +161,9 @@ const SolarPanelList = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {" "}
                   {pvlist.map((obj) => (
                     <SolarPanelItems
+                      key={obj.id}
                       pvlist={obj}
                       formInputs={formInputs}
                       onUpdate={onUpdate}

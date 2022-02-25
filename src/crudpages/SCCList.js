@@ -130,9 +130,9 @@ const SCCList = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {" "}
                   {scclist.map((obj) => (
                     <SCCItems
+                      key={obj.id}
                       scclist={obj}
                       formInputs={formInputs}
                       onUpdate={onUpdate}
