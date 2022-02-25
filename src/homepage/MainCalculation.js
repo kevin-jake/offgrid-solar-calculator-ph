@@ -165,7 +165,6 @@ const MainCalculation = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner asOverlay />}
       <section className="bg-white dark:bg-gray-900">
         <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
           <h1 className="text-2xl my-4 font-semibold text-gray-700 capitalize dark:text-white">
@@ -237,7 +236,28 @@ const MainCalculation = () => {
                 className="float-right px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
                 onClick={handleSaveComputation}
               >
-                Save Computations
+                <div className="grid  grid-flow-col">
+                  Save Computations
+                  {isLoading && (
+                    <>
+                      <div class=" inline-block items-center text-lg text-white-700">
+                        <svg
+                          fill="none"
+                          class="w-6 h-6 animate-spin"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </>
+                  )}
+                </div>
               </button>
             )}
           </div>
