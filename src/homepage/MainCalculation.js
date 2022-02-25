@@ -22,13 +22,45 @@ const MainCalculation = () => {
     isValid,
     setValid,
   } = useContext(GlobalContext);
-  const { loadtab, invertertab, batterytab, solarpanelstab, scctab } =
-    useContext(HomeContext);
+  const {
+    loadtab,
+    invertertab,
+    batterytab,
+    solarpanelstab,
+    scctab,
+    setSCC,
+    setLoad,
+    setBattery,
+    setInverter,
+    setPV,
+  } = useContext(HomeContext);
   const { isLoggedIn, token, userId } = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttpClient();
 
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/" + userId
+        );
+        console.log(responseData.users.data);
+        if (responseData.users.data) {
+          setLoad(responseData.users.data.loadtab);
+          setSCC(responseData.users.data.scc);
+          setBattery(responseData.users.data.battery);
+          setInverter(responseData.users.data.inverter);
+          setPV(responseData.users.data.solarpanel);
+        }
+      } catch (err) {}
+    };
+    if (userId) {
+      fetchUser();
+    }
+  }, [sendRequest, userId]);
+
   useEffect(() => {
     setOverallPrice(overallprice);
   }, [overallprice]);
@@ -122,11 +154,11 @@ const MainCalculation = () => {
     let datatoPush = {
       uid: userId,
       data: {
-        loadtab: loadtab.itemState.items,
-        inverter: invertertab.id,
-        battery: batterytab.id,
-        solarpanel: solarpanelstab.id,
-        scc: scctab.id,
+        loadtab: loadtab,
+        inverter: invertertab,
+        battery: batterytab,
+        solarpanel: solarpanelstab,
+        scc: scctab,
         voltage_system: voltage,
       },
     };
