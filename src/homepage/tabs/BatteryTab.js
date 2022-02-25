@@ -3,7 +3,6 @@ import AsyncSelect from "react-select/async";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
-import { LOVContext } from "../context/lov-context";
 
 const BatteryTab = ({ battdata, doddata }) => {
   const { batterytab, setBattery } = useContext(HomeContext);
@@ -31,19 +30,6 @@ const BatteryTab = ({ battdata, doddata }) => {
     };
     fetchBattery();
   }, [sendRequest]);
-
-  // useEffect(() => {
-  //   let i = 0;
-  //   let arrvar = optionState;
-  //   arrvar.shift();
-  //   for (i; i < batterylist.length; i++) {
-  //     arrvar.push({
-  //       value: batterylist[i].id,
-  //       label: batterylist[i].battname,
-  //     });
-  //   }
-  //   setOptions(arrvar);
-  // }, [optionState, batterylist]);
 
   const filterOptions = (inputValue, array) => {
     return array.filter((i) =>

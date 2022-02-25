@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import bat from "../resources/bat.png";
 import { HomeContext } from "../context/home-context";
+import { dodComputation, seriesParallelBattCompute } from "../Caculations";
+import { GlobalContext } from "../context/global-context";
 
 const BatterySection = () => {
-  const { batterytab } = useContext(HomeContext);
-  console.log(batterytab);
+  const { batterytab, invertertab, loadtab } = useContext(HomeContext);
+  const { voltage } = useContext(GlobalContext);
+  const [battSPState, setBattSPState] = useState({});
+
+  const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
+
+  useEffect(() => {
+    const seriesParallelTable = seriesParallelBattCompute(
+      batterytab,
+      dodTable,
+      voltage
+    );
+    setBattSPState(seriesParallelTable);
+  }, [batterytab, voltage, loadtab]);
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">
@@ -29,6 +43,9 @@ const BatterySection = () => {
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Battery Model: {batterytab.battmodel}
+        </li>
+        <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
+          Battery Configuration: {battSPState.series}S {battSPState.parallel}P
         </li>
         {/* <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Battery Voltage: {batterytab.voltage}
