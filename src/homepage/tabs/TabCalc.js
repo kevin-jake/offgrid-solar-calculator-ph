@@ -30,12 +30,17 @@ const TabCalc = () => {
     scc,
     totalbattcapacity,
     overallprice,
+    setSCCGlobal,
     setBatteryCap,
     setSolarPanel,
     setOverallPrice,
   } = useContext(GlobalContext);
   const [battSPState, setBattSPState] = useState({});
   const [pvState, setPVState] = useState({});
+
+  useEffect(() => {
+    setSCCGlobal(scctab);
+  }, [scctab]);
 
   useEffect(() => {
     const battcap = batterycomputation(batterytab, dodTable, voltage);
@@ -92,8 +97,6 @@ const TabCalc = () => {
       loadtab.overalls
     );
     setOverallPrice(tp);
-    console.log(tp);
-    console.log(scc.price);
   }, [
     solarpanelstab.price,
     scc.price,

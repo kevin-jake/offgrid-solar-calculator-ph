@@ -51,8 +51,8 @@ const NavLinks = () => {
       )}
       {isLoggedIn && (
         <ProfileCard name={name} email={email} role={role}>
-          <div class="sec self-center p-2 w-2/8">
-            <div class="buttons text-xs flex font-light">
+          <div className="sec self-center p-2 w-2/8">
+            <div className="buttons text-xs flex font-light">
               <button
                 className="float-right px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
                 onClick={handleLogout}
