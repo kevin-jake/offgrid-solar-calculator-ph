@@ -46,7 +46,7 @@ const MainCalculation = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/" + userId
+          process.env.REACT_APP_BACKEND_URL + "/users/" + userId
         );
         if (responseData.user.data) {
           setLoad(responseData.user.data.loadtab);
@@ -166,7 +166,7 @@ const MainCalculation = () => {
     try {
       setIsSaving(true);
       await sendRequest(
-        "http://localhost:5000/api/users/save",
+        process.env.REACT_APP_BACKEND_URL + "/users/save",
         "POST",
         JSON.stringify(datatoPush),
         {

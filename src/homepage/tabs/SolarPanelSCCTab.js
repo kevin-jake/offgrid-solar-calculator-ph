@@ -20,7 +20,9 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   useEffect(() => {
     const fetchPV = async () => {
       try {
-        const responseData = await sendRequest("http://localhost:5000/api/pv");
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/pv"
+        );
         const options = responseData.solar_panel.map((i) => ({
           label: i.pvname,
           value: i.id,
@@ -53,7 +55,9 @@ const SolarPanelSCCTab = ({ pvdata }) => {
 
   const fetchPV = async (input, callback) => {
     try {
-      const responseData = await sendRequest("http://localhost:5000/api/pv");
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/pv"
+      );
       const options = responseData.solar_panel.map((i) => ({
         label: i.pvname,
         value: i.id,

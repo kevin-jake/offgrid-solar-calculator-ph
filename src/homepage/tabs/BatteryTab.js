@@ -18,7 +18,7 @@ const BatteryTab = ({ battdata, doddata }) => {
     const fetchBattery = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/battery"
+          process.env.REACT_APP_BACKEND_URL + "/battery"
         );
         const options = responseData.battery.map((i) => ({
           label: i.battname,
@@ -40,7 +40,7 @@ const BatteryTab = ({ battdata, doddata }) => {
   const fetchBattery = async (input, callback) => {
     try {
       const responseData = await sendRequest(
-        "http://localhost:5000/api/battery"
+        process.env.REACT_APP_BACKEND_URL + "/battery"
       );
       const options = responseData.battery.map((i) => ({
         label: i.battname,

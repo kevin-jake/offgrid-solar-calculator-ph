@@ -32,7 +32,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
       : (api_suffix = title.toLowerCase());
     try {
       await sendRequest(
-        "http://localhost:5000/api/" + api_suffix + "/" + idToDel,
+        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix + "/" + idToDel,
         "DELETE",
         null,
         {

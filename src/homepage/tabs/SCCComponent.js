@@ -20,7 +20,9 @@ const SCCComponent = () => {
   useEffect(() => {
     const fetchSCC = async () => {
       try {
-        const responseData = await sendRequest("http://localhost:5000/api/scc");
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/scc"
+        );
         const options = responseData.sccs.map((i) => ({
           label: i.sccname,
           value: i.id,
@@ -63,7 +65,9 @@ const SCCComponent = () => {
 
   const fetchSCC = async (input, callback) => {
     try {
-      const responseData = await sendRequest("http://localhost:5000/api/scc");
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/scc"
+      );
       const options = responseData.sccs.map((i) => ({
         label: i.sccname,
         value: i.id,

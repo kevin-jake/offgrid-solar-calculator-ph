@@ -18,7 +18,7 @@ const InverterTab = (props) => {
     const fetchInverter = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/inverter"
+          process.env.REACT_APP_BACKEND_URL + "/inverter"
         );
         const options = responseData.inverters.map((i) => ({
           label: i.inverterName,
@@ -53,7 +53,7 @@ const InverterTab = (props) => {
   const fetchInverter = async (input, callback) => {
     try {
       const responseData = await sendRequest(
-        "http://localhost:5000/api/inverter"
+        process.env.REACT_APP_BACKEND_URL + "/inverter"
       );
       // setInvLOV(responseData.inverters);
       const options = responseData.inverters.map((i) => ({

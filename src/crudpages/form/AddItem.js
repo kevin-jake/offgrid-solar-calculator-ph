@@ -150,7 +150,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       : (api_suffix = title.toLowerCase());
     try {
       await sendRequest(
-        "http://localhost:5000/api/" + api_suffix,
+        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix,
         "POST",
         JSON.stringify(datatoPush),
         {

@@ -18,7 +18,9 @@ const SolarPanelList = () => {
   useEffect(() => {
     const fetchPV = async () => {
       try {
-        const responseData = await sendRequest("http://localhost:5000/api/pv");
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/pv"
+        );
 
         setPVList(responseData.solar_panel);
       } catch (err) {}
