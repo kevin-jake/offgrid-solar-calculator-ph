@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const AlertModal = (props) => {
-  const [msg, setMsg] = useState(props.error);
-
+const AlertModal = ({ msg, type }) => {
   useEffect(() => {
-    notify(props.type, msg);
+    notify(type, msg);
     // eslint-disable-next-line
-  }, [msg, props.type]);
+  }, [msg, type]);
 
   const notify = (type, message) => {
     switch (type) {
