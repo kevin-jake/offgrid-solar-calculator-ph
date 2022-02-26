@@ -36,7 +36,7 @@ const MainCalculation = () => {
     setPV,
   } = useContext(HomeContext);
   const { isLoggedIn, token, userId } = useContext(AuthContext);
-  const { isLoading, sendRequest, error } = useHttpClient();
+  const { isLoading, sendRequest, error, clearError } = useHttpClient();
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
@@ -156,6 +156,8 @@ const MainCalculation = () => {
   };
 
   const handleSaveComputation = async () => {
+    clearError();
+    console.log(error);
     let datatoPush = {
       uid: userId,
       data: {
