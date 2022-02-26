@@ -10,6 +10,7 @@ import { HomeContext } from "./context/home-context";
 import { AuthContext } from "../shared/context/auth-context";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
+import AlertModal from "../shared/components/UIElements/AlertModal";
 
 const MainCalculation = () => {
   const {
@@ -35,7 +36,7 @@ const MainCalculation = () => {
     setPV,
   } = useContext(HomeContext);
   const { isLoggedIn, token, userId } = useContext(AuthContext);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { isLoading, sendRequest, error } = useHttpClient();
 
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
@@ -340,6 +341,7 @@ const MainCalculation = () => {
           </div>
         </div>
       </section>
+      {error && !isLoading && <AlertModal error={error} type={"ERROR"} />}
     </>
   );
 };
