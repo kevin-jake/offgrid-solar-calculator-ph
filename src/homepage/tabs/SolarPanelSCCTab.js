@@ -3,7 +3,7 @@ import AsyncSelect from "react-select/async";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
-import { LOVContext } from "../context/lov-context";
+// import { LOVContext } from "../context/lov-context";
 import SCCComponent from "./SCCComponent";
 
 const SolarPanelSCCTab = ({ pvdata }) => {
@@ -15,7 +15,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   const { sendRequest } = useHttpClient();
 
   const [optionState, setOptions] = useState();
-  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
     const fetchPV = async () => {
@@ -33,19 +32,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
     };
     fetchPV();
   }, [sendRequest]);
-
-  // useEffect(() => {
-  //   let i = 0;
-  //   let arrvar = optionState;
-  //   arrvar.shift();
-  //   for (i; i < pvlist.length; i++) {
-  //     arrvar.push({
-  //       value: pvlist[i].id,
-  //       label: pvlist[i].pvname,
-  //     });
-  //   }
-  //   setOptions(arrvar);
-  // }, [optionState, pvlist]);
 
   const filterOptions = (inputValue, array) => {
     return array.filter((i) =>
@@ -66,11 +52,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
     } catch (err) {}
   };
 
-  const handleInputChanged = (event) => {
-    let input = event.value;
-    setSelectedState({ input });
-  };
-
   const handleItemChanged = (event) => {
     let selectedId = event.value;
     let index = pvlist.findIndex((x) => x.id === selectedId);
@@ -88,7 +69,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
     };
     setItemState(stateSetter);
     setPV(stateSetter);
-    setSelectedState(event);
   };
 
   const handleSHChange = (value) => {
@@ -116,7 +96,6 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     cacheOptions
                     defaultInputValue={itemState.pvname}
                     defaultOptions={optionState}
-                    onInputChange={handleInputChanged}
                     onChange={handleItemChanged}
                     loadOptions={fetchPV}
                   />

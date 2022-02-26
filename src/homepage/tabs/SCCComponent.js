@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
-import { LOVContext } from "../context/lov-context";
+// import { LOVContext } from "../context/lov-context";
 import AsyncSelect from "react-select/async";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
@@ -15,7 +15,6 @@ const SCCComponent = () => {
   const { sendRequest } = useHttpClient();
 
   const [optionState, setOptions] = useState();
-  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
     const fetchSCC = async () => {
@@ -33,19 +32,6 @@ const SCCComponent = () => {
     };
     fetchSCC();
   }, [sendRequest]);
-
-  // useEffect(() => {
-  //   let i = 0;
-  //   let arrvar = optionState;
-  //   arrvar.shift();
-  //   for (i; i < scclist.length; i++) {
-  //     arrvar.push({
-  //       value: scclist[i].id,
-  //       label: scclist[i].sccname,
-  //     });
-  //   }
-  //   setOptions(arrvar);
-  // }, [optionState, scclist]);
 
   useEffect(() => {
     const sccinfo = {
@@ -76,11 +62,6 @@ const SCCComponent = () => {
     } catch (err) {}
   };
 
-  const handleInputChanged = (event) => {
-    let input = event.value;
-    setSelectedState({ input });
-  };
-
   const handleItemChanged = (event) => {
     let selectedId = event.value;
     let index = scclist.findIndex((x) => x.id === selectedId);
@@ -96,7 +77,6 @@ const SCCComponent = () => {
     };
     setItemState(stateSetter);
     setSCC(stateSetter);
-    setSelectedState(event);
   };
 
   return (
@@ -109,7 +89,6 @@ const SCCComponent = () => {
           cacheOptions
           defaultInputValue={itemState.sccname}
           defaultOptions={optionState}
-          onInputChange={handleInputChanged}
           onChange={handleItemChanged}
           loadOptions={fetchSCC}
         />

@@ -50,6 +50,5 @@ export const useHttpClient = () => {
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
   }, []);
-  console.log(error);
   return { isLoading, error, sendRequest, clearError };
 };

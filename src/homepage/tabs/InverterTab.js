@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { HomeContext } from "../context/home-context";
 import AsyncSelect from "react-select/async";
-import { LOVContext } from "../context/lov-context";
+// import { LOVContext } from "../context/lov-context";
 import { numberWithCommas } from "../../shared/util/format";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 
@@ -12,7 +12,6 @@ const InverterTab = (props) => {
   const [itemState, setItemState] = useState(invertertab);
   const { sendRequest } = useHttpClient();
   const [optionState, setOptions] = useState();
-  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
     const fetchInverter = async () => {
@@ -64,11 +63,6 @@ const InverterTab = (props) => {
     } catch (err) {}
   };
 
-  const handleInputChanged = (event) => {
-    let input = event.value;
-    setSelectedState({ input });
-  };
-
   const handleItemChanged = (event) => {
     console.log(event.value);
     const selectedId = event.value;
@@ -76,7 +70,6 @@ const InverterTab = (props) => {
     console.log(inverters[index]);
     setItemState(inverters[index]);
     setInverter(inverters[index]);
-    setSelectedState(selectedId);
   };
   return (
     <div className="container-lg px-6 py-4 mx-4">
@@ -88,7 +81,6 @@ const InverterTab = (props) => {
           cacheOptions
           defaultInputValue={itemState.inverterName}
           defaultOptions={optionState}
-          onInputChange={handleInputChanged}
           onChange={handleItemChanged}
           loadOptions={fetchInverter}
         />

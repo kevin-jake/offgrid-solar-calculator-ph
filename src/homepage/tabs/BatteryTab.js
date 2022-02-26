@@ -12,7 +12,6 @@ const BatteryTab = ({ battdata, doddata }) => {
 
   // const { batterylist } = useContext(LOVContext);
   const [optionState, setOptions] = useState();
-  const [selectedState, setSelectedState] = useState();
 
   useEffect(() => {
     const fetchBattery = async () => {
@@ -50,17 +49,11 @@ const BatteryTab = ({ battdata, doddata }) => {
     } catch (err) {}
   };
 
-  const handleInputChanged = (event) => {
-    let input = event.value;
-    setSelectedState({ input });
-  };
-
   const handleItemChanged = (event) => {
     let selectedId = event.value;
     let index = batterylist.findIndex((x) => x.id === selectedId);
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);
-    setSelectedState(event);
   };
   console.log(battdata);
   return (
@@ -74,7 +67,6 @@ const BatteryTab = ({ battdata, doddata }) => {
             cacheOptions
             defaultInputValue={itemState.battname}
             defaultOptions={optionState}
-            onInputChange={handleInputChanged}
             onChange={handleItemChanged}
             loadOptions={fetchBattery}
           />

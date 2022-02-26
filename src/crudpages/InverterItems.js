@@ -96,7 +96,7 @@ const InverterItems = ({ invlist, formInputs, onUpdate }) => {
             idToDelete={invlist.id}
             onUpdate={update}
             title="Inverter"
-          />{" "}
+          />
         </>
       )}
     </>

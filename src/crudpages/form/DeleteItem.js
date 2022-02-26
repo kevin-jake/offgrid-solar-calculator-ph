@@ -2,28 +2,28 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
-import { LOVContext } from "../../homepage/context/lov-context";
+// import { LOVContext } from "../../homepage/context/lov-context";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
   const [content, setContent] = useState(<></>);
-  const {
-    inverters,
-    batterylist,
-    pvlist,
-    scclist,
-    setInvLOV,
-    setBatteryLOV,
-    setPVLOV,
-    setSCCLOV,
-  } = useContext(LOVContext);
+  // const {
+  //   inverters,
+  //   batterylist,
+  //   pvlist,
+  //   scclist,
+  //   setInvLOV,
+  //   setBatteryLOV,
+  //   setPVLOV,
+  //   setSCCLOV,
+  // } = useContext(LOVContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
 
   useEffect(() => {
     setContent(renderContent());
-  }, [inverters, batterylist, pvlist, scclist]);
+  }, [setContent]);
 
   const deleteToBackend = async (idToDel, title) => {
     let api_suffix;
