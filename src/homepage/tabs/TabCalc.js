@@ -23,6 +23,10 @@ const TabCalc = () => {
     setBattery,
     scctab,
     solarpanelstab,
+    dodTable,
+    seriesParallelTable,
+    setDOD,
+    setSP,
   } = useContext(HomeContext);
   const {
     voltage,
@@ -35,7 +39,6 @@ const TabCalc = () => {
     setSolarPanel,
     setOverallPrice,
   } = useContext(GlobalContext);
-  const [battSPState, setBattSPState] = useState({});
   const [pvState, setPVState] = useState({});
 
   useEffect(() => {
@@ -43,20 +46,28 @@ const TabCalc = () => {
   }, [scctab]);
 
   useEffect(() => {
-    const battcap = batterycomputation(batterytab, dodTable, voltage);
-    const seriesParallelTable = seriesParallelBattCompute(
-      batterytab,
-      dodTable,
-      voltage
+    const dodTabletoSet = dodComputation(
+      voltage,
+      loadtab.overalls,
+      invertertab
     );
+    setDOD(dodTabletoSet);
+  }, [voltage, loadtab.overalls.totalwatts, invertertab.id]);
+
+  useEffect(() => {
+    const battcap = batterycomputation(batterytab, dodTable, voltage);
+    const spToSet = seriesParallelBattCompute(batterytab, dodTable, voltage);
     setBatteryCap(battcap);
+    setSP(spToSet);
+  }, [batterytab.id, voltage, dodTable]);
+
+  useEffect(() => {
     const batterytoSet = batterytab;
     batterytoSet.totalqty = seriesParallelTable.totalnumber;
     batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
     batterytoSet.totalprice = seriesParallelTable.totalprice;
     setBattery(batterytoSet);
-    setBattSPState(seriesParallelTable);
-  }, [batterytab, voltage, loadtab]);
+  }, [batterytab.id, voltage, seriesParallelTable]);
 
   useEffect(() => {
     const pvdata = pvcomputation(totalbattcapacity, solarpanelstab);
@@ -104,7 +115,6 @@ const TabCalc = () => {
     invertertab.price,
   ]);
 
-  const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
   return (
     // <>
     <Tabs selectedTabClassName="tab--selected">
@@ -133,7 +143,7 @@ const TabCalc = () => {
         <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
           Battery
         </h2>
-        <BatteryTab battdata={battSPState} doddata={dodTable} />
+        <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
       </TabPanel>
       <TabPanel>
         <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">

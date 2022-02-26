@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import inverter from "../resources/inverter.png";
 import { HomeContext } from "../context/home-context";

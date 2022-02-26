@@ -1,25 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import bat from "../resources/bat.png";
 import { HomeContext } from "../context/home-context";
-import { dodComputation, seriesParallelBattCompute } from "../Caculations";
 import { GlobalContext } from "../context/global-context";
 
 const BatterySection = () => {
-  const { batterytab, invertertab, loadtab } = useContext(HomeContext);
-  const { voltage } = useContext(GlobalContext);
-  const [battSPState, setBattSPState] = useState({});
+  const { batterytab, seriesParallelTable } = useContext(HomeContext);
 
-  const dodTable = dodComputation(voltage, loadtab.overalls, invertertab);
-
-  useEffect(() => {
-    const seriesParallelTable = seriesParallelBattCompute(
-      batterytab,
-      dodTable,
-      voltage
-    );
-    setBattSPState(seriesParallelTable);
-  }, [batterytab, voltage, loadtab]);
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">
@@ -45,19 +32,9 @@ const BatterySection = () => {
           Battery Model: {batterytab.battmodel}
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Configuration: {battSPState.series}S {battSPState.parallel}P
+          Battery Configuration: {seriesParallelTable.series}S{" "}
+          {seriesParallelTable.parallel}P
         </li>
-        {/* <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Voltage: {batterytab.voltage}
-        </li>
-        <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Battery Capacity: {batterytab.battcapacity} Ah
-        </li>
-        <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Price per pc.: Php{" "}
-          {batterytab.priceperpc &&
-            numberWithCommas(batterytab.priceperpc.toFixed(2))}
-        </li> */}
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
           Total Number of Battery: {batterytab.totalqty}
         </li>

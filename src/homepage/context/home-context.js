@@ -66,6 +66,36 @@ const initialState = {
     img: "",
     link: "",
   },
+  dodTable: {
+    leadacid: {
+      battcapacity: 0,
+      dodbattcap: 0,
+      inverterpower: 0,
+      totalCurrentLoad: 0,
+      totalDCPower: 0,
+    },
+    lifepo: {
+      battcapacity: 0,
+      dodbattcap: 0,
+      inverterpower: 0,
+      totalCurrentLoad: 0,
+      totalDCPower: 0,
+    },
+    lion: {
+      battcapacity: 0,
+      dodbattcap: 0,
+      inverterpower: 0,
+      totalCurrentLoad: 0,
+      totalDCPower: 0,
+    },
+  },
+  seriesParallelTable: {
+    parallel: 0,
+    series: 0,
+    totalcapacity: 0,
+    totalnumber: 0,
+    totalprice: 0,
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -94,6 +124,16 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         scctab: action.scctab,
+      };
+    case "DOD":
+      return {
+        ...state,
+        dodTable: action.dodTable,
+      };
+    case "SP":
+      return {
+        ...state,
+        seriesParallelTable: action.seriesParallelTable,
       };
     case "reset":
       console.log(action.initState);
@@ -143,6 +183,20 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setDOD = (dodtable) => {
+    dispatch({
+      type: "DOD",
+      dodTable: dodtable,
+    });
+  };
+
+  const setSP = (sptable) => {
+    dispatch({
+      type: "SP",
+      seriesParallelTable: sptable,
+    });
+  };
+
   const reset = () => {
     dispatch({
       type: "reset",
@@ -156,7 +210,11 @@ export const HomeProvider = (props) => {
     invertertab: state.invertertab,
     solarpanelstab: state.solarpanelstab,
     scctab: state.scctab,
+    seriesParallelTable: state.seriesParallelTable,
+    dodTable: state.dodTable,
     reset,
+    setDOD,
+    setSP,
     setSCC,
     setLoad,
     setBattery,

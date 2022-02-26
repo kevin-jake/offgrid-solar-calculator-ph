@@ -5,9 +5,14 @@ const battcapacityCompute = (
   battDOD,
   voltage
 ) => {
-  const inverterPowerNeeded = Math.ceil(
-    totalkwh * (1 + (1 - efficiency / 100))
-  );
+  let eff;
+  if (efficiency) {
+    eff = 1 - efficiency / 100;
+  } else {
+    eff = 0;
+  }
+
+  const inverterPowerNeeded = Math.ceil(totalkwh * (1 + eff));
   const battcapacity = Math.ceil(inverterPowerNeeded / voltage);
   const battcapwithDOD = Math.ceil(
     Math.round(battcapacity * (1 + (1 - battDOD)) * 100) / 100
