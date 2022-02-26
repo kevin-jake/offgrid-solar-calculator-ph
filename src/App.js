@@ -21,7 +21,7 @@ import SCCList from "./crudpages/SCCList";
 import { useAuth } from "./shared/components/hooks/auth-hook";
 
 const App = () => {
-  const { token, login, logout, userId, email, name } = useAuth();
+  const { token, login, logout, userId, email, name, role } = useAuth();
 
   let routes;
 
@@ -67,6 +67,7 @@ const App = () => {
         userId: userId,
         email: email,
         name: name,
+        role: role,
         login: login,
         logout: logout,
       }}

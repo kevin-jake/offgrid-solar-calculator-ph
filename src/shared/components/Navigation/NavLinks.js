@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import ProfileCard from "./ProfileCard";
 
-const NavLinks = (props) => {
-  const { isLoggedIn, logout, email, name } = useContext(AuthContext);
+const NavLinks = () => {
+  const { isLoggedIn, logout, email, name, role } = useContext(AuthContext);
+  console.log(role);
   return (
     <>
       <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
@@ -42,7 +43,7 @@ const NavLinks = (props) => {
         </p>
       )}
       {isLoggedIn && (
-        <ProfileCard name={name} email={email} role={""}>
+        <ProfileCard name={name} email={email} role={role}>
           <div class="sec self-center p-2 w-2/8">
             <div class="buttons text-xs flex font-light">
               <button

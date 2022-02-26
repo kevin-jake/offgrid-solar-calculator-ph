@@ -72,7 +72,8 @@ const Auth = () => {
           responseData.userId,
           responseData.token,
           responseData.email,
-          responseData.name
+          responseData.name,
+          responseData.role
         );
       } catch (err) {}
     } else {
@@ -88,13 +89,20 @@ const Auth = () => {
             email: formstate.inputs.email.value,
             password: formstate.inputs.password.value,
             name: formstate.inputs.name.value,
+            role: "User",
           }),
           {
             "Content-Type": "application/json",
           }
         );
 
-        login(responseData.userId, responseData.token);
+        login(
+          responseData.userId,
+          responseData.token,
+          responseData.email,
+          responseData.name,
+          responseData.role
+        );
       } catch (err) {}
     }
   };
