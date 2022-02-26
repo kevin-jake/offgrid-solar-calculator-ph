@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const AlertModal = ({ msg, type }) => {
@@ -7,7 +7,9 @@ const AlertModal = ({ msg, type }) => {
     // eslint-disable-next-line
   }, [msg, type]);
 
+  console.log(msg);
   const notify = (type, message) => {
+    toast.remove();
     switch (type) {
       case "SUCCESS": {
         return toast.custom(
@@ -35,8 +37,7 @@ const AlertModal = ({ msg, type }) => {
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
                 <div className="ml-2 inline-block">
-                  <span className="font-medium">Success alert!</span> Change a
-                  few things up and try submitting again.
+                  <span className="font-medium">Success!</span> {message}
                 </div>
                 <button
                   onClick={() => toast.remove(t.id)}
@@ -59,7 +60,7 @@ const AlertModal = ({ msg, type }) => {
               </div>
             </div>
           ),
-          { duration: 2000 }
+          { duration: 3000 }
         );
       }
       case "ERROR":
@@ -112,7 +113,7 @@ const AlertModal = ({ msg, type }) => {
               </div>
             </div>
           ),
-          { duration: 2000 }
+          { duration: 3000 }
         );
       default:
         return <></>;

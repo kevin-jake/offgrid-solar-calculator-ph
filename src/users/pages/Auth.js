@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "../../shared/components/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import {
@@ -50,6 +50,7 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
+        clearError();
         return login(
           responseData.userId,
           responseData.token,
@@ -77,7 +78,7 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
-
+        clearError();
         return login(
           responseData.userId,
           responseData.token,
@@ -92,7 +93,7 @@ const Auth = () => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      <div className="w-full max-w-sm mx-auto overflow-hidden mt-4 bg-white rounded-lg shadow-md border-2 border-blue-400 dark:border-blue-300 dark:bg-gray-800">
+      <div className="w-full max-w-sm mx-auto overflow-hidden mt-32 bg-white rounded-lg shadow-md border-2 border-blue-400 dark:border-blue-300 dark:bg-gray-800">
         <div className="px-6 py-4">
           <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">
             LOGIN HERE
@@ -187,9 +188,7 @@ const Auth = () => {
           )}
         </div>
       </div>
-      {error && !isLoading && (
-        <AlertModal error={error} type={"ERROR"} clearError={clearError} />
-      )}
+      {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
     </>
   );
 };
