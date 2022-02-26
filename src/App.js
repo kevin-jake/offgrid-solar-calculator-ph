@@ -1,24 +1,34 @@
-import React, { useState, useCallback } from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import MainNavigation from "./shared/components/Navigation/MainNavigation";
-import Auth from "./users/pages/Auth";
+import { useAuth } from "./shared/components/hooks/auth-hook";
 import { AuthContext } from "./shared/context/auth-context";
-import Home from "./homepage/Home";
-
-import "./index.css";
-import InverterList from "./crudpages/InverterList";
 import { GlobalProvider } from "./homepage/context/global-context";
 import { HomeProvider } from "./homepage/context/home-context";
-import { LOVProvider } from "./homepage/context/lov-context";
-import BatteryList from "./crudpages/BatteryList";
-import SolarPanelList from "./crudpages/SolarPanelList";
-import SCCList from "./crudpages/SCCList";
-import { useAuth } from "./shared/components/hooks/auth-hook";
+import "./index.css";
+
+// import Home from "./homepage/Home";
+// import Auth from "./users/pages/Auth";
+// import MainNavigation from "./shared/components/Navigation/MainNavigation";
+// import InverterList from "./crudpages/InverterList";
+// import BatteryList from "./crudpages/BatteryList";
+// import SolarPanelList from "./crudpages/SolarPanelList";
+// import SCCList from "./crudpages/SCCList";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
+
+const Home = React.lazy(() => import("./homepage/Home"));
+const Auth = React.lazy(() => import("./users/pages/Auth"));
+const MainNavigation = React.lazy(() =>
+  import("./shared/components/Navigation/MainNavigation")
+);
+const InverterList = React.lazy(() => import("./crudpages/InverterList"));
+const BatteryList = React.lazy(() => import("./crudpages/BatteryList"));
+const SolarPanelList = React.lazy(() => import("./crudpages/SolarPanelList"));
+const SCCList = React.lazy(() => import("./crudpages/SCCList"));
 
 const App = () => {
   const { token, login, logout, userId, email, name, role } = useAuth();
@@ -74,12 +84,12 @@ const App = () => {
     >
       <GlobalProvider>
         <HomeProvider>
-          <LOVProvider>
-            <Router>
-              <MainNavigation />
-              <main>{routes}</main>
-            </Router>
-          </LOVProvider>
+          <Router>
+            <MainNavigation />
+            <main>
+              <Suspense fallback={<LoadingSpinner />}>{routes}</Suspense>
+            </main>
+          </Router>
         </HomeProvider>
       </GlobalProvider>
     </AuthContext.Provider>
