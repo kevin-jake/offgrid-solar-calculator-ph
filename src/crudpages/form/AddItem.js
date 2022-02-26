@@ -278,9 +278,10 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
               <input
                 id={obj.listkey}
                 type={obj.type}
+                step="0.01"
                 onChange={(e) =>
                   handleInputChange(
-                    Number(e.target.value),
+                    parseFloat(e.target.value),
                     obj.listkey,
                     dataState,
                     obj.validator,
@@ -324,9 +325,10 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
                 <input
                   id={obj.listkey}
                   type={obj.type}
+                  step="0.01"
                   onChange={(e) =>
                     handleInputChange(
-                      Number(e.target.value),
+                      parseFloat(e.target.value),
                       obj.listkey,
                       dataState,
                       obj.validator,
