@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import React, { useContext, useState, useEffect } from "react";
 import { HomeContext } from "../context/home-context";
 
 const LoadTab = () => {
   const { loadtab, setLoad } = useContext(HomeContext);
   const [itemState, setItemState] = useState(loadtab.itemState);
-
   const [overalls, setOveralls] = useState(loadtab.overalls);
 
   useEffect(() => {
