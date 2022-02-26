@@ -5,7 +5,6 @@ import { GlobalContext } from "../context/global-context";
 
 const SolarPanelSection = () => {
   const { solarpanel } = useContext(GlobalContext);
-  console.log(solarpanel);
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center">

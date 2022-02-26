@@ -47,7 +47,6 @@ const MainCalculation = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/" + userId
         );
-        console.log(responseData.user.data);
         if (responseData.user.data) {
           setLoad(responseData.user.data.loadtab);
           setSCC(responseData.user.data.scc);

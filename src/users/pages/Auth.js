@@ -9,11 +9,13 @@ import {
 import Input from "../../shared/components/FormElement/Input";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import AlertModal from "../../shared/components/UIElements/AlertModal";
 
 const Auth = () => {
   const { login } = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   const [formstate, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -29,26 +31,6 @@ const Auth = () => {
   );
 
   const registerHandler = () => {
-    // if (!isLoginMode) {
-    //   setFormData(
-    //     {
-    //       ...formstate.inputs,
-    //       name: undefined,
-    //     },
-    //     formstate.inputs.email.isValid && formstate.inputs.password.isValid
-    //   );
-    // } else {
-    //   setFormData(
-    //     {
-    //       ...formstate.inputs,
-    //       name: {
-    //         value: "",
-    //         isValid: false,
-    //       },
-    //     },
-    //     false
-    //   );
-    // }
     setIsLoginMode((prevMode) => !prevMode);
   };
 
@@ -68,7 +50,7 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
-        login(
+        return login(
           responseData.userId,
           responseData.token,
           responseData.email,
@@ -96,7 +78,7 @@ const Auth = () => {
           }
         );
 
-        login(
+        return login(
           responseData.userId,
           responseData.token,
           responseData.email,
@@ -109,8 +91,6 @@ const Auth = () => {
 
   return (
     <>
-      {/* <ErrorModal error={error} onClear={clearError} />
-      <Card className="authentication"> */}
       {isLoading && <LoadingSpinner />}
       <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md border-2 border-blue-400 dark:border-blue-300 dark:bg-gray-800">
         <div className="px-6 py-4">
@@ -208,7 +188,10 @@ const Auth = () => {
             </span>
           )}
         </div>
-      </div>{" "}
+      </div>
+      {error && !isLoading && (
+        <AlertModal error={error} type={"ERROR"} clearError={clearError} />
+      )}
     </>
   );
 };
