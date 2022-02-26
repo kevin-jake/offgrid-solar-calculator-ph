@@ -1,0 +1,1 @@
+{"version":3,"sources":["Backdrop.css"],"names":[],"mappings":"AAAA,UACE,cAAe,CACf,KAAM,CACN,MAAO,CACP,UAAW,CACX,YAAa,CACb,0BAA+B,CAC/B,UACF","file":"2.5959f3e1.chunk.css","sourcesContent":[".backdrop {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.75);\n  z-index: 10;\n}\n"]}
