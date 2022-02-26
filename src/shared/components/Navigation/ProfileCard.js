@@ -2,7 +2,7 @@ import React from "react";
 
 const ProfileCard = (props) => {
   return (
-    <div className="each flex rounded shadow w-max text-gray-600 mb-5 bg-white">
+    <div className="each flex rounded border border-1 border-blue-400 w-max text-gray-600 mb-5 bg-white">
       <div className="sec self-center p-2 pr-1">
         <svg
           className="h-10 w-10 text-black"

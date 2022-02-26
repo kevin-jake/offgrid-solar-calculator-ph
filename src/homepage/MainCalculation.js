@@ -201,7 +201,7 @@ const MainCalculation = () => {
   return (
     <>
       {isLoading && !isSaving && <LoadingSpinner />}
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white mt-2 dark:bg-gray-900">
         <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
           <h1 className="text-2xl my-4 font-semibold text-gray-700 capitalize dark:text-white">
             {" "}
