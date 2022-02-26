@@ -37,10 +37,10 @@ const MainCalculation = () => {
   } = useContext(HomeContext);
   const { isLoggedIn, token, userId } = useContext(AuthContext);
   const { isLoading, sendRequest, error } = useHttpClient();
-
   const [validState, setValidState] = useState(isValid);
   const [openTab, setOpenTab] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
+  const [successMsg, setSuccessMsg] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -179,6 +179,7 @@ const MainCalculation = () => {
         }
       );
       setIsSaving(false);
+      setSuccessMsg("Data Saved successfully.");
     } catch (err) {
       setIsSaving(false);
     }
@@ -345,7 +346,10 @@ const MainCalculation = () => {
           </div>
         </div>
       </section>
-      {error && !isLoading && <AlertModal error={error} type={"ERROR"} />}
+      {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
+      {successMsg && !isLoading && (
+        <AlertModal msg={successMsg} type={"SUCCESS"} />
+      )}
     </>
   );
 };

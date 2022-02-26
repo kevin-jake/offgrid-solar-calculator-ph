@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const AlertModal = (props) => {
-  const [msg, setMsg] = useState(props.error);
-
+const AlertModal = ({ msg, type }) => {
   useEffect(() => {
-    notify(props.type, msg);
+    notify(type, msg);
     // eslint-disable-next-line
-  }, [msg, props.type]);
+  }, [msg, type]);
 
   const notify = (type, message) => {
     switch (type) {
@@ -45,7 +43,7 @@ const AlertModal = (props) => {
                   className="border border-transparent p-2 items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <svg
-                    className="h-6 w-6 text-red-500"
+                    className="h-6 w-6 text-green-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

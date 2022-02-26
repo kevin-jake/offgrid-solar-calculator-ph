@@ -140,6 +140,21 @@ const EditItemOverlay = ({
   const handleInputChange = (event, objkey, data, validator, label) => {
     data[objkey] = { dataval: event, label: label };
     const valid = validateGeneral(validator, label, event, objkey);
+    const numArray = [
+      "voltage",
+      "price",
+      "priceperpc",
+      "battcapacity",
+      "voc",
+      "imp",
+      "vmp",
+      "isc",
+      "amprating",
+      "efficiency",
+    ];
+    if (numArray.includes(objkey)) {
+      data[objkey].dataval = parseFloat(data[objkey].dataval);
+    }
     if (validator) {
       setErrorMsg(valid.errorObj);
       setValidState(valid.stateSet);
@@ -301,10 +316,9 @@ const EditItemOverlay = ({
                 id={obj.listkey}
                 value={data[obj.listkey].dataval}
                 type={obj.type}
-                step="0.01"
                 onChange={(e) =>
                   handleInputChange(
-                    parseFloat(e.target.value),
+                    e.target.value,
                     obj.listkey,
                     dataState,
                     obj.validator,
@@ -349,10 +363,9 @@ const EditItemOverlay = ({
                   id={obj.listkey}
                   type={obj.type}
                   value={data[obj.listkey].dataval}
-                  step="0.01"
                   onChange={(e) =>
                     handleInputChange(
-                      parseFloat(e.target.value),
+                      e.target.value,
                       obj.listkey,
                       dataState,
                       obj.validator,

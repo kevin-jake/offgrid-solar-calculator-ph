@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 // // import { LOVContext } from "../homepage/context/lov-context";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
+import AlertModal from "../shared/components/UIElements/AlertModal";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../shared/context/auth-context";
-import { VALIDATOR_REQUIRE } from "../shared/util/validators";
+import { VALIDATOR_REQUIRE, VALIDATOR_NUMBER } from "../shared/util/validators";
 import BatteryItems from "./BatteryItems";
 import AddItem from "./form/AddItem";
 
 const BatteryList = () => {
   // const { batterylist } = useContext(LOVContext);
   const [batterylist, setBatteryList] = useState([]);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const { role } = useContext(AuthContext);
+  const [msg, setMsg] = useState();
 
   useEffect(() => {
     const fetchBattery = async () => {
@@ -64,24 +66,24 @@ const BatteryList = () => {
     { listkey: "battmodel", type: "text", label: "Model" },
     {
       listkey: "voltage",
-      type: "number",
+      type: "text",
       label: "Voltage",
       unit: "V",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "battcapacity",
-      type: "number",
+      type: "text",
       label: "Capacity",
       unit: "Ah",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "priceperpc",
-      type: "number",
+      type: "text",
       label: "Price per pc.",
       unit: "Php",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
@@ -94,14 +96,20 @@ const BatteryList = () => {
     setShowModal(false);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (success, operation) => {
     setRefresh(!refresh);
+    if (success && operation === "ADD") {
+      setMsg("Battery added successfully");
+    }
+    if (success && operation === "Edited") {
+      setMsg("Battery modified successfully");
+    }
   };
-
   const toRender = (list) => {
     if (list.length === 0) {
       return (
         <>
+          {isLoading && <LoadingSpinner />}
           <div className="bg-white overflow-hidden sm:rounded-lg pb-8">
             <div className="border-t border-gray-200 text-center pt-8">
               <h1 className="text-6xl font-bold text-gray-400">Empty List</h1>
@@ -125,6 +133,8 @@ const BatteryList = () => {
               )}
             </div>
           </div>
+          {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
+          {msg && !isLoading && <AlertModal msg={msg} type={"SUCCESS"} />}
         </>
       );
     } else {

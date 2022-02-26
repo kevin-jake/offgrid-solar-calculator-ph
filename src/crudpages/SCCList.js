@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../shared/context/auth-context";
-import { VALIDATOR_REQUIRE } from "../shared/util/validators";
+import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import SCCItems from "./SCCItems";
 
@@ -51,17 +51,17 @@ const SCCList = () => {
     { listkey: "supplier", type: "text", label: "Supplier" },
     {
       listkey: "amprating",
-      type: "number",
+      type: "text",
       label: "Ampere Rating",
       unit: "A",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "price",
-      type: "number",
+      type: "text",
       label: "Price",
       unit: "Php",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
