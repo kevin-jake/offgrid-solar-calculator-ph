@@ -43,7 +43,7 @@ const AlertModal = ({ msg, type }) => {
                   className="border border-transparent p-2 items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <svg
-                    className="h-6 w-6 text-red-500"
+                    className="h-6 w-6 text-green-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
