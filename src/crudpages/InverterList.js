@@ -5,6 +5,7 @@ import { useHttpClient } from "../shared/components/hooks/http-hook";
 import AddItem from "./form/AddItem";
 import InverterItems from "./InverterItems";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
+import { AuthContext } from "../shared/context/auth-context";
 
 const InverterList = () => {
   // const { inverters } = useContext(LOVContext);
@@ -12,6 +13,7 @@ const InverterList = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
+  const { role } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchInverter = async () => {
@@ -91,19 +93,23 @@ const InverterList = () => {
             <div className="border-t border-gray-200 text-center pt-8">
               <h1 className="text-6xl font-bold text-gray-400">Empty List</h1>
               <h1 className="text-xl font-medium py-8">No Inverters found</h1>
-              <button
-                className="px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
-                onClick={setModal}
-              >
-                Add Item
-              </button>
-              <AddItem
-                show={showModal}
-                onCancel={cancelModal}
-                onUpdate={onUpdate}
-                formInputs={formInputs}
-                title="Inverter"
-              />
+              {role === "Admin" && (
+                <>
+                  <button
+                    className="px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                    onClick={setModal}
+                  >
+                    Add Item
+                  </button>
+                  <AddItem
+                    show={showModal}
+                    onCancel={cancelModal}
+                    onUpdate={onUpdate}
+                    formInputs={formInputs}
+                    title="Inverter"
+                  />
+                </>
+              )}
             </div>
           </div>
         </>
@@ -137,8 +143,9 @@ const InverterList = () => {
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                       Link
                     </th>
-
-                    <th className="px-6 py-3 border-b-2 border-gray-300"></th>
+                    {role === "Admin" && (
+                      <th className="px-6 py-3 border-b-2 border-gray-300"></th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="bg-white">
@@ -153,20 +160,24 @@ const InverterList = () => {
                 </tbody>
               </table>
             </div>
-            <button
-              className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
-              onClick={setModal}
-            >
-              Add Item
-            </button>
+            {role === "Admin" && (
+              <button
+                className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
+                onClick={setModal}
+              >
+                Add Item
+              </button>
+            )}
           </div>
-          <AddItem
-            show={showModal}
-            onCancel={cancelModal}
-            onUpdate={onUpdate}
-            formInputs={formInputs}
-            title="Inverter"
-          />
+          {role === "Admin" && (
+            <AddItem
+              show={showModal}
+              onCancel={cancelModal}
+              onUpdate={onUpdate}
+              formInputs={formInputs}
+              title="Inverter"
+            />
+          )}
         </>
       );
     }
