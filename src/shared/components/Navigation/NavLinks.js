@@ -1,11 +1,18 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { HomeContext } from "../../../homepage/context/home-context";
 import { AuthContext } from "../../context/auth-context";
 import ProfileCard from "./ProfileCard";
 
 const NavLinks = () => {
   const { isLoggedIn, logout, email, name, role } = useContext(AuthContext);
-  console.log(role);
+  const { reset } = useContext(HomeContext);
+
+  const handleLogout = () => {
+    logout();
+    reset();
+  };
+
   return (
     <>
       <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
@@ -48,7 +55,7 @@ const NavLinks = () => {
             <div class="buttons text-xs flex font-light">
               <button
                 className="float-right px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
-                onClick={logout}
+                onClick={handleLogout}
               >
                 LOGOUT
               </button>

@@ -95,6 +95,9 @@ const HomeReducer = (state, action) => {
         ...state,
         scctab: action.scctab,
       };
+    case "reset":
+      console.log(action.initState);
+      return action.initState;
     default:
       return state;
   }
@@ -140,12 +143,20 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const reset = () => {
+    dispatch({
+      type: "reset",
+      initState: initialState,
+    });
+  };
+
   const value = {
     loadtab: state.loadtab,
     batterytab: state.batterytab,
     invertertab: state.invertertab,
     solarpanelstab: state.solarpanelstab,
     scctab: state.scctab,
+    reset,
     setSCC,
     setLoad,
     setBattery,

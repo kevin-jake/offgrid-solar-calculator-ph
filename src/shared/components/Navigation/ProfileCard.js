@@ -22,7 +22,7 @@ const ProfileCard = (props) => {
         <div class="flex">
           <div class="name text-sm">{props.name}</div>
           {props.role === "Admin" && (
-            <div class="role font-normal text-xxs text-blue-600 self-center px-1 w-max rounded">
+            <div class="role font-bold text-sm text-blue-600 self-center px-1 w-max rounded">
               (Admin)
             </div>
           )}
