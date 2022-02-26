@@ -136,7 +136,7 @@ const HomeReducer = (state, action) => {
         seriesParallelTable: action.seriesParallelTable,
       };
     case "reset":
-      console.log(action.initState);
+      // console.log(action.initState);
       return action.initState;
     default:
       return state;
@@ -221,7 +221,7 @@ export const HomeProvider = (props) => {
     setInverter,
     setPV,
   };
-  // console.log(state);
+  // // console.log(state);
   return (
     <HomeContext.Provider value={value}>{props.children}</HomeContext.Provider>
   );

@@ -52,10 +52,10 @@ const InverterTab = (props) => {
   };
 
   const handleItemChanged = (event) => {
-    console.log(event.value);
+    // console.log(event.value);
     const selectedId = event.value;
     let index = inverters.findIndex((x) => x.id === selectedId);
-    console.log(inverters[index]);
+    // console.log(inverters[index]);
     setItemState(inverters[index]);
     setInverter(inverters[index]);
   };

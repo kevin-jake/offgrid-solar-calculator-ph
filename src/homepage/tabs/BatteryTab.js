@@ -56,7 +56,7 @@ const BatteryTab = ({ battdata, doddata }) => {
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);
   };
-  console.log(battdata);
+  // console.log(battdata);
   return (
     <>
       <div className="container-lg px-6 py-4 mx-4">

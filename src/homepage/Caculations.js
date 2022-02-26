@@ -28,7 +28,7 @@ const battcapacityCompute = (
   };
 };
 const dodComputation = (voltage, load, inverter) => {
-  // console.log(load);
+  // // console.log(load);
   const leadacid = battcapacityCompute(
     load.watthours,
     load.totalwatts,

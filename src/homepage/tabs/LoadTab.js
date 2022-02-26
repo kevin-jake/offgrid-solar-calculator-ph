@@ -91,7 +91,7 @@ const LoadTab = () => {
     };
     if (items_var.length > 1) {
       overallscomp = items_var.reduce(reducer);
-      console.log(overallscomp);
+      // console.log(overallscomp);
     } else {
       overallscomp = {
         totalwatts: itemState.items[0].totalwatts,
@@ -101,8 +101,8 @@ const LoadTab = () => {
     setOveralls(overallscomp);
   };
 
-  // console.log(itemState);
-  // console.log(overalls);
+  // // console.log(itemState);
+  // // console.log(overalls);
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

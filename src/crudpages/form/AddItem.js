@@ -79,7 +79,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       const key = i.listkey;
       if (validatorState.hasOwnProperty(key)) {
         if (!(Object.keys(data).length === 0)) {
-          console.log(data);
+          // console.log(data);
           if (data.hasOwnProperty(key)) {
             validatingFields[key] = validateGeneral(
               validatorState[key].validator,
@@ -134,7 +134,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       setValidState(valid.stateSet);
       setDataState(data);
       setContent(renderContent());
-      console.log(dataState);
+      // console.log(dataState);
     } else {
       setDataState(data);
       setContent(renderContent());
@@ -168,7 +168,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
 
   const handleSave = (event, data, title) => {
     event.preventDefault();
-    console.log(title);
+    // console.log(title);
     switch (title) {
       case "Battery": {
         let validatingFields = saveValidation(formInputs, data);
@@ -221,7 +221,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   };
 
   const renderInputs = (obj) => {
-    console.log(errorMsg);
+    // console.log(errorMsg);
     if (obj.type === "select") {
       return (
         <div key={obj.listkey}>

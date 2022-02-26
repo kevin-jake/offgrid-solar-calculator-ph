@@ -8,7 +8,7 @@ const MainNavigation = (props) => {
   const isMobile = useMediaQuery({ query: `(max-width: 1011px)` });
 
   const DrawerHandler = () => {
-    console.log(drawerIsOpen);
+    // console.log(drawerIsOpen);
     !drawerIsOpen ? setDrawerIsOpen(true) : setDrawerIsOpen(false);
   };
 

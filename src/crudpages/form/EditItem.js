@@ -90,7 +90,7 @@ const EditItemOverlay = ({
       const key = i.listkey;
       if (validatorState.hasOwnProperty(key)) {
         if (!(Object.keys(data).length === 0)) {
-          console.log(data);
+          // console.log(data);
           if (data.hasOwnProperty(key)) {
             validatingFields[key] = validateGeneral(
               validatorState[key].validator,
@@ -145,12 +145,12 @@ const EditItemOverlay = ({
       setValidState(valid.stateSet);
       setDataState(data);
       setContent(renderContent());
-      console.log(dataState);
+      // console.log(dataState);
     } else {
       setDataState(data);
       setContent(renderContent());
     }
-    console.log(dataState);
+    // console.log(dataState);
   };
 
   const patchToBackend = async (data, title) => {
@@ -236,13 +236,13 @@ const EditItemOverlay = ({
   };
 
   const renderInputs = (obj, data) => {
-    console.log(obj);
-    console.log(data);
+    // console.log(obj);
+    // console.log(data);
     if (obj.type === "select") {
       const index = obj.options.findIndex(
         (x) => x.value === data[obj.listkey].dataval
       );
-      console.log(obj.options[index]);
+      // console.log(obj.options[index]);
       return (
         <div key={obj.listkey}>
           <label
@@ -473,7 +473,7 @@ const EditItemOverlay = ({
       </div>
     );
   };
-  console.log(dataState);
+  // console.log(dataState);
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));
 };
 
@@ -499,7 +499,7 @@ const EditItem = (props) => {
   delete datatoSet.creator;
   delete datatoSet.__v;
   delete datatoSet._id;
-  console.log(datatoSet);
+  // console.log(datatoSet);
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}

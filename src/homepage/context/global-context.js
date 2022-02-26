@@ -146,7 +146,7 @@ export const GlobalProvider = (props) => {
     setVoltage,
     setBatteryCap,
   };
-  // console.log(state);
+  // // console.log(state);
   return (
     <GlobalContext.Provider value={value}>
       {props.children}

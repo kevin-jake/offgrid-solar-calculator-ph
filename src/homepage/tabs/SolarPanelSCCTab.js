@@ -77,11 +77,11 @@ const SolarPanelSCCTab = ({ pvdata }) => {
     setstate.sunhours = 1 * value;
     setshState(value);
     setItemState(setstate);
-    console.log(itemState);
+    // console.log(itemState);
     setPV(setstate);
   };
 
-  console.log(pvdata);
+  // console.log(pvdata);
   return (
     <>
       <div className="container-lg px-6 py-4 mx-4">
