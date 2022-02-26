@@ -9,22 +9,19 @@ import { useAuth } from "./shared/components/hooks/auth-hook";
 import { AuthContext } from "./shared/context/auth-context";
 import { GlobalProvider } from "./homepage/context/global-context";
 import { HomeProvider } from "./homepage/context/home-context";
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import "./index.css";
 
 // import Home from "./homepage/Home";
 // import Auth from "./users/pages/Auth";
-// import MainNavigation from "./shared/components/Navigation/MainNavigation";
 // import InverterList from "./crudpages/InverterList";
 // import BatteryList from "./crudpages/BatteryList";
 // import SolarPanelList from "./crudpages/SolarPanelList";
 // import SCCList from "./crudpages/SCCList";
-import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
 const Home = React.lazy(() => import("./homepage/Home"));
 const Auth = React.lazy(() => import("./users/pages/Auth"));
-const MainNavigation = React.lazy(() =>
-  import("./shared/components/Navigation/MainNavigation")
-);
 const InverterList = React.lazy(() => import("./crudpages/InverterList"));
 const BatteryList = React.lazy(() => import("./crudpages/BatteryList"));
 const SolarPanelList = React.lazy(() => import("./crudpages/SolarPanelList"));
@@ -87,7 +84,15 @@ const App = () => {
           <Router>
             <MainNavigation />
             <main>
-              <Suspense fallback={<LoadingSpinner />}>{routes}</Suspense>
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                {routes}
+              </Suspense>
             </main>
           </Router>
         </HomeProvider>

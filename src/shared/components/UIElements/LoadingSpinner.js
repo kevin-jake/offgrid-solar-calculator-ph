@@ -1,8 +1,6 @@
 import React from "react";
 
-import "./LoadingSpinner.css";
-
-const LoadingSpinner = (props) => {
+const LoadingSpinner = () => {
   return (
     <div className=" inset-0 z-40 w-full h-full absolute flex justify-center bg-white bg-opacity-75 items-center text-lg text-blue-700">
       <svg
