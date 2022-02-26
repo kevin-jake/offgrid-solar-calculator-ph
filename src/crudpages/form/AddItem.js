@@ -58,6 +58,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     const errorObj = errorMsg;
     const stateSet = validState;
     if (validator) {
+      console.log(value);
       let val = value.toString();
       if (val === "0") val = "";
       const valid = validate(val, validator);
@@ -129,12 +130,13 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   const handleInputChange = (event, objkey, data, validator, label) => {
     data[objkey] = { dataval: event, label: label };
     const valid = validateGeneral(validator, label, event, objkey);
+    data[objkey].dataval = parseFloat(data[objkey].dataval);
     if (validator) {
       setErrorMsg(valid.errorObj);
       setValidState(valid.stateSet);
       setDataState(data);
       setContent(renderContent());
-      // console.log(dataState);
+      console.log(dataState);
     } else {
       setDataState(data);
       setContent(renderContent());
@@ -221,7 +223,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   };
 
   const renderInputs = (obj) => {
-    // console.log(errorMsg);
+    console.log(errorMsg);
     if (obj.type === "select") {
       return (
         <div key={obj.listkey}>
@@ -278,10 +280,9 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
               <input
                 id={obj.listkey}
                 type={obj.type}
-                step="0.01"
                 onChange={(e) =>
                   handleInputChange(
-                    parseFloat(e.target.value),
+                    e.target.value,
                     obj.listkey,
                     dataState,
                     obj.validator,
@@ -325,10 +326,9 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
                 <input
                   id={obj.listkey}
                   type={obj.type}
-                  step="0.01"
                   onChange={(e) =>
                     handleInputChange(
-                      parseFloat(e.target.value),
+                      e.target.value,
                       obj.listkey,
                       dataState,
                       obj.validator,

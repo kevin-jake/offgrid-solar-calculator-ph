@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../shared/context/auth-context";
-import { VALIDATOR_REQUIRE } from "../shared/util/validators";
+import { VALIDATOR_REQUIRE, VALIDATOR_NUMBER } from "../shared/util/validators";
 import BatteryItems from "./BatteryItems";
 import AddItem from "./form/AddItem";
 
@@ -64,24 +64,24 @@ const BatteryList = () => {
     { listkey: "battmodel", type: "text", label: "Model" },
     {
       listkey: "voltage",
-      type: "number",
+      type: "text",
       label: "Voltage",
       unit: "V",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "battcapacity",
-      type: "number",
+      type: "text",
       label: "Capacity",
       unit: "Ah",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "priceperpc",
-      type: "number",
+      type: "text",
       label: "Price per pc.",
       unit: "Php",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },

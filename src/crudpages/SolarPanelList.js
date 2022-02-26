@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../shared/context/auth-context";
-import { VALIDATOR_REQUIRE } from "../shared/util/validators";
+import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
 import AddItem from "./form/AddItem";
 import SolarPanelItems from "./SolarPanelItems";
 
@@ -52,38 +52,38 @@ const SolarPanelList = () => {
     { listkey: "supplier", type: "text", label: "Supplier" },
     {
       listkey: "voc",
-      type: "number",
+      type: "text",
       label: "Voc",
       unit: "V",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "imp",
-      type: "number",
+      type: "text",
       label: "Imp",
       unit: "A",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "vmp",
-      type: "number",
+      type: "text",
       label: "Vmp",
       unit: "V",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "isc",
-      type: "number",
+      type: "text",
       label: "Isc",
       unit: "A",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "price",
-      type: "number",
+      type: "text",
       label: "Price",
       unit: "Php",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },

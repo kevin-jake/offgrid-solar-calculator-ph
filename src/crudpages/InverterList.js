@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { LOVContext } from "../homepage/context/lov-context";
-import { VALIDATOR_REQUIRE } from "../shared/util/validators";
+import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import AddItem from "./form/AddItem";
 import InverterItems from "./InverterItems";
@@ -51,10 +51,10 @@ const InverterList = () => {
     },
     {
       listkey: "efficiency",
-      type: "number",
+      type: "text",
       label: "Efficiency",
       unit: "%",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     {
       listkey: "wattage",
@@ -65,10 +65,10 @@ const InverterList = () => {
     },
     {
       listkey: "price",
-      type: "number",
+      type: "text",
       label: "Price",
       unit: "Php",
-      validator: [VALIDATOR_REQUIRE()],
+      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
     { listkey: "link", type: "text", label: "Link" },
