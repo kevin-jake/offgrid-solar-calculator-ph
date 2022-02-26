@@ -30,7 +30,6 @@ const TabCalc = () => {
   } = useContext(HomeContext);
   const {
     voltage,
-    solarpanel,
     scc,
     totalbattcapacity,
     overallprice,
@@ -43,6 +42,7 @@ const TabCalc = () => {
 
   useEffect(() => {
     setSCCGlobal(scctab);
+    // eslint-disable-next-line
   }, [scctab]);
 
   useEffect(() => {
@@ -52,6 +52,7 @@ const TabCalc = () => {
       invertertab
     );
     setDOD(dodTabletoSet);
+    // eslint-disable-next-line
   }, [voltage, loadtab.overalls.totalwatts, invertertab.id]);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const TabCalc = () => {
     const spToSet = seriesParallelBattCompute(batterytab, dodTable, voltage);
     setBatteryCap(battcap);
     setSP(spToSet);
+    // eslint-disable-next-line
   }, [batterytab.id, voltage, dodTable]);
 
   useEffect(() => {
@@ -67,12 +69,14 @@ const TabCalc = () => {
     batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
     batterytoSet.totalprice = seriesParallelTable.totalprice;
     setBattery(batterytoSet);
+    // eslint-disable-next-line
   }, [batterytab.id, voltage, seriesParallelTable]);
 
   useEffect(() => {
     const pvdata = pvcomputation(totalbattcapacity, solarpanelstab);
     setSolarPanel(pvdata.pvinfo);
     setPVState(pvdata.pvtable);
+    // eslint-disable-next-line
   }, [totalbattcapacity, loadtab, solarpanelstab, solarpanelstab.sunhours]);
 
   useEffect(() => {
@@ -108,6 +112,7 @@ const TabCalc = () => {
       loadtab.overalls
     );
     setOverallPrice(tp);
+    // eslint-disable-next-line
   }, [
     solarpanelstab.price,
     scc.price,

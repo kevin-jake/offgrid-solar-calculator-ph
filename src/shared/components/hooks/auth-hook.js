@@ -30,6 +30,7 @@ export const useAuth = () => {
         expiration: tokenExpirationDate.toISOString(),
       })
     );
+    // eslint-disable-next-line
   }, []);
 
   const logout = useCallback(() => {
@@ -40,6 +41,7 @@ export const useAuth = () => {
     setName(null);
     setRole(null);
     localStorage.removeItem("userData");
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -50,6 +52,7 @@ export const useAuth = () => {
     } else {
       clearTimeout(logoutTimer);
     }
+    // eslint-disable-next-line
   }, [token, logout, tokenExpirationDate]);
 
   useEffect(() => {
@@ -68,6 +71,7 @@ export const useAuth = () => {
         new Date(storedData.expiration)
       );
     }
+    // eslint-disable-next-line
   }, [login]);
 
   return { token, login, logout, userId, name, email, role };

@@ -26,6 +26,7 @@ const SolarPanelList = () => {
       } catch (err) {}
     };
     fetchPV();
+    // eslint-disable-next-line
   }, [sendRequest, refresh]);
 
   const formInputs = [

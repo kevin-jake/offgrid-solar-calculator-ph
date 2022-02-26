@@ -43,6 +43,7 @@ const EditItemOverlay = ({
 
   useEffect(() => {
     setContent(renderContent());
+    // eslint-disable-next-line
   }, [validState, dataState, selectedState]);
 
   useEffect(() => {
@@ -56,10 +57,12 @@ const EditItemOverlay = ({
       }
     });
     setValidator(setValid);
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     setDataState(dataState);
+    // eslint-disable-next-line
   }, []);
   const validateGeneral = (validator, label, value, objkey) => {
     let returnObj = {};
@@ -226,6 +229,8 @@ const EditItemOverlay = ({
         }
         break;
       }
+      default:
+        return null;
     }
     setContent(renderContent());
   };

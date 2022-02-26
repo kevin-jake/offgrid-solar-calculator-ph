@@ -49,6 +49,7 @@ export const useHttpClient = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
+    // eslint-disable-next-line
   }, []);
   return { isLoading, error, sendRequest, clearError };
 };

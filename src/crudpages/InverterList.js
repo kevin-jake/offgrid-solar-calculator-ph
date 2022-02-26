@@ -26,6 +26,7 @@ const InverterList = () => {
       } catch (err) {}
     };
     fetchInverter();
+    // eslint-disable-next-line
   }, [sendRequest, refresh]);
 
   const formInputs = [

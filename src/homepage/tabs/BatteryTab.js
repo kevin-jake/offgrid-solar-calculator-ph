@@ -28,6 +28,7 @@ const BatteryTab = ({ battdata, doddata }) => {
       } catch (err) {}
     };
     fetchBattery();
+    // eslint-disable-next-line
   }, [sendRequest]);
 
   const filterOptions = (inputValue, array) => {

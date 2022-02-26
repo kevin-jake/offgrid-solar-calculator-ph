@@ -23,6 +23,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
 
   useEffect(() => {
     setContent(renderContent());
+    // eslint-disable-next-line
   }, [setContent]);
 
   const deleteToBackend = async (idToDel, title) => {

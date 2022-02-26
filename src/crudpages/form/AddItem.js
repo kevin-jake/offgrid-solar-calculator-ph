@@ -36,6 +36,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
 
   useEffect(() => {
     setContent(renderContent());
+    // eslint-disable-next-line
   }, [validState, dataState, selectedState]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       }
     });
     setValidator(setValid);
+    // eslint-disable-next-line
   }, []);
 
   const validateGeneral = (validator, label, value, objkey) => {
@@ -212,6 +214,8 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         }
         break;
       }
+      default:
+        return null;
     }
     setContent(renderContent());
   };

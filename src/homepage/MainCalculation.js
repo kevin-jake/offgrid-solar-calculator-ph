@@ -60,14 +60,17 @@ const MainCalculation = () => {
     if (userId) {
       fetchUser();
     }
+    // eslint-disable-next-line
   }, [sendRequest, userId]);
 
   useEffect(() => {
     setOverallPrice(overallprice);
+    // eslint-disable-next-line
   }, [overallprice]);
 
   useEffect(() => {
     inverterValid(voltage, invertertab.inputVoltage);
+    // eslint-disable-next-line
   }, [invertertab.inputVoltage, voltage]);
 
   useEffect(() => {
@@ -80,6 +83,7 @@ const MainCalculation = () => {
       solarpanelstab.isc,
       solarpanel.pvparallel
     );
+    // eslint-disable-next-line
   }, [
     scctab.type,
     scctab.amprating,

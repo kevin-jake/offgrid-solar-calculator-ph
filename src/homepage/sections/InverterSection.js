@@ -5,10 +5,7 @@ import { HomeContext } from "../context/home-context";
 
 const InverterSection = ({ errormsg }) => {
   const { invertertab } = useContext(HomeContext);
-  // const { textcolor, setColor } = useContext("");
-  // useEffect(() => {
-  //   errormsg ? setColor("text-white") : setColor("");
-  // }, [errormsg]);
+
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center text-inherit">

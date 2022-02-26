@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import bat from "../resources/bat.png";
 import { HomeContext } from "../context/home-context";
-import { GlobalContext } from "../context/global-context";
 
 const BatterySection = () => {
   const { batterytab, seriesParallelTable } = useContext(HomeContext);

@@ -6,5 +6,7 @@ export const getErrorMessage = (errorType, label) => {
     case "NUMBER": {
       return "Enter a valid number for " + label;
     }
+    default:
+      return "";
   }
 };

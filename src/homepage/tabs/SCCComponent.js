@@ -31,6 +31,7 @@ const SCCComponent = () => {
       } catch (err) {}
     };
     fetchSCC();
+    // eslint-disable-next-line
   }, [sendRequest]);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const SCCComponent = () => {
       price: itemState.price,
     };
     setSCCGlobal(sccinfo);
+    // eslint-disable-next-line
   }, [itemState]);
 
   const filterOptions = (inputValue, array) => {

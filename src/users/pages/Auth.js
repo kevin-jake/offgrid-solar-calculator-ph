@@ -16,7 +16,7 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const [formstate, inputHandler, setFormData] = useForm(
+  const [formstate, inputHandler] = useForm(
     {
       email: {
         value: "",
@@ -166,25 +166,23 @@ const Auth = () => {
             <span className="text-sm text-gray-600 dark:text-gray-200">
               {" "}
               New here? Please{" "}
-              <a
-                href="#"
+              <button
                 className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline"
                 onClick={registerHandler}
               >
                 Register
-              </a>
+              </button>
             </span>
           ) : (
             <span className="text-sm text-gray-600 dark:text-gray-200">
               {" "}
               Already have an account? Please{" "}
-              <a
-                href="#"
+              <button
                 className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline"
                 onClick={registerHandler}
               >
                 Sign-in
-              </a>
+              </button>
             </span>
           )}
         </div>

@@ -28,20 +28,8 @@ const InverterTab = (props) => {
       } catch (err) {}
     };
     fetchInverter();
+    // eslint-disable-next-line
   }, [sendRequest]);
-
-  // useEffect(() => {
-  //   let i = 0;
-  //   let arrvar = optionState;
-  //   arrvar.shift();
-  //   for (i; i < inverters.length; i++) {
-  //     arrvar.push({
-  //       value: inverters[i].id,
-  //       label: inverters[i].inverterName,
-  //     });
-  //   }
-  //   setOptions(arrvar);
-  // }, [optionState, inverters]);
 
   const filterOptions = (inputValue, array) => {
     return array.filter((i) =>

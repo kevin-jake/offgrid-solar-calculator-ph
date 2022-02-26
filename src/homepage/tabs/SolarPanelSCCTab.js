@@ -31,6 +31,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
       } catch (err) {}
     };
     fetchPV();
+    // eslint-disable-next-line
   }, [sendRequest]);
 
   const filterOptions = (inputValue, array) => {

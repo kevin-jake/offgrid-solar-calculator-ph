@@ -32,6 +32,7 @@ const Input = (props) => {
 
   useEffect(() => {
     onInput(id, value, isValid);
+    // eslint-disable-next-line
   }, [id, isValid, value, onInput]);
 
   const changeHandler = (event) => {

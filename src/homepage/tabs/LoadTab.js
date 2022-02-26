@@ -10,11 +10,13 @@ const LoadTab = () => {
     setItemState(itemState);
     setOveralls(overalls);
     setLoad({ itemState, overalls });
+    // eslint-disable-next-line
   }, [itemState, overalls]);
 
   useEffect(() => {
     setItemState(loadtab.itemState);
     setOveralls(loadtab.overalls);
+    // eslint-disable-next-line
   }, [loadtab.itemState, loadtab.overalls]);
 
   const handleClick = () => {

@@ -26,6 +26,7 @@ const BatteryList = () => {
       } catch (err) {}
     };
     fetchBattery();
+    // eslint-disable-next-line
   }, [sendRequest, refresh]);
 
   const formInputs = [

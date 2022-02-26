@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useHttpClient } from "../hooks/http-hook";
 
 const AlertModal = (props) => {
   const [msg, setMsg] = useState(props.error);
 
   useEffect(() => {
     notify(props.type, msg);
+    // eslint-disable-next-line
   }, [msg, props.type]);
 
   const notify = (type, message) => {

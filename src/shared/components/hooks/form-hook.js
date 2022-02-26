@@ -47,6 +47,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
       isValid: isValid,
       inputId: id,
     });
+    // eslint-disable-next-line
   }, []);
 
   const setFormData = useCallback((inputData, formVaildity) => {
@@ -55,6 +56,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
       inputs: inputData,
       formisValid: formVaildity,
     });
+    // eslint-disable-next-line
   }, []);
   return [formstate, inputHandler, setFormData];
 };
