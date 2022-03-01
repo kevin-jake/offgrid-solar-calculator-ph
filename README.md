@@ -2,6 +2,8 @@
 
 Solar calculator ph is an web app designed to compute for the solar materials needed for a solar energy system setup. The objective of this app is to display the total price of the list of materials and how much quantity of those materials needed to build a complete solar energy setup.
 
+Website: https://solar-calculator-ph.web.app/
+
 ![image](https://user-images.githubusercontent.com/51266760/156152894-6abbd7b4-f503-491e-9fe8-bfeab1fb53b8.png)
 
 ## Usage
