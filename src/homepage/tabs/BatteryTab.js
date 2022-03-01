@@ -8,7 +8,7 @@ const BatteryTab = ({ battdata, doddata }) => {
   const { batterytab, setBattery } = useContext(HomeContext);
   const [itemState, setItemState] = useState(batterytab);
   const [batterylist, setBattList] = useState([]);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
 
   // const { batterylist } = useContext(LOVContext);
   const [optionState, setOptions] = useState();
@@ -70,6 +70,7 @@ const BatteryTab = ({ battdata, doddata }) => {
             defaultOptions={optionState}
             onChange={handleItemChanged}
             loadOptions={fetchBattery}
+            isLoading={isLoading}
           />
           <div className="grid grid-cols-1 gap-8  md:grid-cols-2 xl:grid-cols-2">
             <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
