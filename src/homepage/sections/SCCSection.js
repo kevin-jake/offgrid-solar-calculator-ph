@@ -8,7 +8,12 @@ const SCCSection = ({ errormsg }) => {
   return (
     <>
       <div className="container-lg p-6 mx-auto lg:flex lg:justify-between lg:items-center text-inherit">
-        <h1 className="text-2xl font-semibold text-gray-700 capitalize dark:text-white text-inherit">
+        <h1
+          className={
+            "text-2xl font-semibold capitalize dark:text-white text-inherit"
+          }
+        >
+          {" "}
           Solar Charge Controller
         </h1>
         <span className="inline text-blue-500 dark:text-blue-400">
@@ -19,7 +24,7 @@ const SCCSection = ({ errormsg }) => {
           />
         </span>
       </div>
-      <ul className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-inherit">
+      <ul className="w-full text-sm font-medium bg-inherit rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-inherit">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
           SCC Name: {scc.sccname}
         </li>
