@@ -1,4 +1,4 @@
-# offgrid-solar-calculator-ph
+# Solar Calculator PH
 
 Solar calculator ph is an web app designed to compute for the solar materials needed for a solar energy system setup. The objective of this app is to display the total price of the list of materials and how much quantity of those materials needed to build a complete solar energy setup.
 
