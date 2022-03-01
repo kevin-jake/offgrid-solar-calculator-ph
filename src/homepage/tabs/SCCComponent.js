@@ -12,7 +12,7 @@ const SCCComponent = () => {
   const { setSCCGlobal } = useContext(GlobalContext);
   // const { scclist } = useContext(LOVContext);
   const [scclist, setSCCList] = useState([]);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
 
   const [optionState, setOptions] = useState();
 
@@ -93,6 +93,7 @@ const SCCComponent = () => {
           defaultOptions={optionState}
           onChange={handleItemChanged}
           loadOptions={fetchSCC}
+          isLoading={isLoading}
         />
         <div className="grid grid-cols-1 my-10 gap-8 md:grid-cols-2 xl:grid-cols-2">
           <div>

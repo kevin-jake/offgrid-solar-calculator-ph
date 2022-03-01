@@ -12,7 +12,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   const [sunhourstate, setshState] = useState(solarpanelstab.sunhours);
   // const { pvlist } = useContext(LOVContext);
   const [pvlist, setPVList] = useState([]);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
 
   const [optionState, setOptions] = useState();
 
@@ -99,6 +99,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     defaultOptions={optionState}
                     onChange={handleItemChanged}
                     loadOptions={fetchPV}
+                    isLoading={isLoading}
                   />
                 </div>
                 <div className="mt-2.5">

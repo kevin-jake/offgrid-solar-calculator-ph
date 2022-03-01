@@ -10,7 +10,7 @@ const InverterTab = (props) => {
   // const { inverters, setInvLOV } = useContext(LOVContext);
   const [inverters, setInverters] = useState([]);
   const [itemState, setItemState] = useState(invertertab);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
   const [optionState, setOptions] = useState();
 
   useEffect(() => {
@@ -71,6 +71,7 @@ const InverterTab = (props) => {
           defaultOptions={optionState}
           onChange={handleItemChanged}
           loadOptions={fetchInverter}
+          isLoading={isLoading}
         />
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
