@@ -54,6 +54,7 @@ const MainCalculation = () => {
           setBattery(responseData.user.data.battery);
           setInverter(responseData.user.data.inverter);
           setPV(responseData.user.data.solarpanel);
+          setVoltage(responseData.user.data.voltage_system);
         }
       } catch (err) {}
     };
