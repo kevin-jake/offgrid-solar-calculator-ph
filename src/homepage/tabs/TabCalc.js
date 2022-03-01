@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 import BatteryTab from "./BatteryTab";
 import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
@@ -180,42 +178,6 @@ const TabCalc = () => {
   };
 
   return (
-    // <>
-    // <Tabs selectedTabClassName="tab--selected">
-    //   <TabList className="tab-list">
-    //     <Tab className="tab-style">Load</Tab>
-    //     <Tab className="tab-style">Inverter</Tab>
-    //     <Tab className="tab-style">Battery</Tab>
-    //     <Tab className="tab-style">Solar Panel and SCC</Tab>
-    //   </TabList>
-
-    //   <TabPanel>
-    // <div>
-    //   <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">Load</h2>
-    //   <LoadTab />
-    // </div>
-    //   </TabPanel>
-    //   <TabPanel>
-    //     <div>
-    //       <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
-    //         Inverter
-    //       </h2>
-    //       <InverterTab />
-    //     </div>
-    //   </TabPanel>
-    //   <TabPanel>
-    //     <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
-    //       Battery
-    //     </h2>
-    //     <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
-    //   </TabPanel>
-    //   <TabPanel>
-    //     <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
-    //       Solar Panel and SCC
-    //     </h2>
-    //     <SolarPanelSCCTab pvdata={pvState} />
-    //   </TabPanel>
-    // </Tabs>
     <>
       <div className="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
         <button
