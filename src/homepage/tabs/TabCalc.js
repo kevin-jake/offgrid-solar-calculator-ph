@@ -39,6 +39,12 @@ const TabCalc = () => {
     setOverallPrice,
   } = useContext(GlobalContext);
   const [pvState, setPVState] = useState({});
+  const [openTab, setOpenTab] = useState(1);
+  const [tabpanel, setTabPanel] = useState();
+
+  useEffect(() => {
+    handleSelectedTab(openTab);
+  }, []);
 
   useEffect(() => {
     setSCCGlobal(scctab);
@@ -120,43 +126,151 @@ const TabCalc = () => {
     invertertab.price,
   ]);
 
+  const handleSelectedTab = (selected) => {
+    switch (selected) {
+      case 1: {
+        setOpenTab(1);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Load
+            </h2>
+            <LoadTab />
+          </div>
+        );
+        break;
+      }
+      case 2: {
+        setOpenTab(2);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Inverter
+            </h2>
+            <InverterTab />
+          </div>
+        );
+        break;
+      }
+      case 3: {
+        setOpenTab(3);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Battery
+            </h2>
+            <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
+          </div>
+        );
+        break;
+      }
+      case 4: {
+        setOpenTab(4);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Solar Panel and SCC
+            </h2>
+            <SolarPanelSCCTab pvdata={pvState} />
+          </div>
+        );
+        break;
+      }
+    }
+  };
+
   return (
     // <>
-    <Tabs selectedTabClassName="tab--selected">
-      <TabList className="tab-list">
-        <Tab className="tab-style">Load</Tab>
-        <Tab className="tab-style">Inverter</Tab>
-        <Tab className="tab-style">Battery</Tab>
-        <Tab className="tab-style">Solar Panel and SCC</Tab>
-      </TabList>
+    // <Tabs selectedTabClassName="tab--selected">
+    //   <TabList className="tab-list">
+    //     <Tab className="tab-style">Load</Tab>
+    //     <Tab className="tab-style">Inverter</Tab>
+    //     <Tab className="tab-style">Battery</Tab>
+    //     <Tab className="tab-style">Solar Panel and SCC</Tab>
+    //   </TabList>
 
-      <TabPanel>
-        <div>
-          <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">Load</h2>
-          <LoadTab />
-        </div>
-      </TabPanel>
-      <TabPanel>
-        <div>
-          <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
-            Inverter
-          </h2>
-          <InverterTab />
-        </div>
-      </TabPanel>
-      <TabPanel>
-        <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+    //   <TabPanel>
+    // <div>
+    //   <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">Load</h2>
+    //   <LoadTab />
+    // </div>
+    //   </TabPanel>
+    //   <TabPanel>
+    //     <div>
+    //       <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+    //         Inverter
+    //       </h2>
+    //       <InverterTab />
+    //     </div>
+    //   </TabPanel>
+    //   <TabPanel>
+    //     <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+    //       Battery
+    //     </h2>
+    //     <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
+    //   </TabPanel>
+    //   <TabPanel>
+    //     <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+    //       Solar Panel and SCC
+    //     </h2>
+    //     <SolarPanelSCCTab pvdata={pvState} />
+    //   </TabPanel>
+    // </Tabs>
+    <>
+      <div className="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
+        <button
+          onClick={() => {
+            handleSelectedTab(1);
+          }}
+          className={
+            openTab === 1
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
+          Load
+        </button>
+
+        <button
+          onClick={() => {
+            handleSelectedTab(2);
+          }}
+          className={
+            openTab === 2
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
+          Inverter
+        </button>
+
+        <button
+          onClick={() => {
+            handleSelectedTab(3);
+          }}
+          className={
+            openTab === 3
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
           Battery
-        </h2>
-        <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
-      </TabPanel>
-      <TabPanel>
-        <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+        </button>
+        <button
+          onClick={() => {
+            handleSelectedTab(4);
+          }}
+          className={
+            openTab === 4
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
           Solar Panel and SCC
-        </h2>
-        <SolarPanelSCCTab pvdata={pvState} />
-      </TabPanel>
-    </Tabs>
+        </button>
+      </div>
+      <div className="block">{tabpanel}</div>
+    </>
   );
 };
 

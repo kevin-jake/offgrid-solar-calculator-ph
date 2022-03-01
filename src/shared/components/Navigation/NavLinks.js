@@ -46,7 +46,7 @@ const NavLinks = () => {
       )}
       {!isLoggedIn && (
         <p className="block px-5 py-2 mt-4 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto">
-          <NavLink to="/auth">ATHENTICATE</NavLink>
+          <NavLink to="/auth">Login or Sign-Up</NavLink>
         </p>
       )}
       {isLoggedIn && (
