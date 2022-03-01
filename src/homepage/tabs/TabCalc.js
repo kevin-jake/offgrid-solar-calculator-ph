@@ -57,7 +57,12 @@ const TabCalc = () => {
     );
     setDOD(dodTabletoSet);
     // eslint-disable-next-line
-  }, [voltage, loadtab.overalls.totalwatts, invertertab.id]);
+  }, [
+    voltage,
+    loadtab.overalls.totalwatts,
+    loadtab.overalls.watthours,
+    invertertab.id,
+  ]);
 
   useEffect(() => {
     const battcap = batterycomputation(batterytab, dodTable, voltage);
@@ -65,7 +70,7 @@ const TabCalc = () => {
     setBatteryCap(battcap);
     setSP(spToSet);
     // eslint-disable-next-line
-  }, [batterytab.id, voltage, dodTable]);
+  }, [batterytab.id, voltage, loadtab.overalls.totalwatts, dodTable]);
 
   useEffect(() => {
     const batterytoSet = batterytab;
@@ -157,7 +162,7 @@ const TabCalc = () => {
             <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
               Battery
             </h2>
-            <BatteryTab battdata={seriesParallelTable} doddata={dodTable} />
+            <BatteryTab />
           </div>
         );
         break;

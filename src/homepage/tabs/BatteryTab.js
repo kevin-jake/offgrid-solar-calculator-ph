@@ -4,8 +4,9 @@ import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
 
-const BatteryTab = ({ battdata, doddata }) => {
-  const { batterytab, setBattery } = useContext(HomeContext);
+const BatteryTab = () => {
+  const { batterytab, setBattery, seriesParallelTable, dodTable } =
+    useContext(HomeContext);
   const [itemState, setItemState] = useState(batterytab);
   const [batterylist, setBattList] = useState([]);
   const { sendRequest, isLoading } = useHttpClient();
@@ -30,6 +31,11 @@ const BatteryTab = ({ battdata, doddata }) => {
     fetchBattery();
     // eslint-disable-next-line
   }, [sendRequest]);
+
+  useEffect(() => {
+    setItemState(batterytab);
+    // eslint-disable-next-line
+  }, [batterytab]);
 
   const filterOptions = (inputValue, array) => {
     return array.filter((i) =>
@@ -56,7 +62,7 @@ const BatteryTab = ({ battdata, doddata }) => {
     setItemState(batterylist[index]);
     setBattery(batterylist[index]);
   };
-  // console.log(battdata);
+  // console.log(seriesParallelTable);
   return (
     <>
       <div className="container-lg px-6 py-4 mx-4">
@@ -178,7 +184,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                   disabled={true}
-                  value={battdata.series}
+                  value={seriesParallelTable.series}
                 />
               </div>
               <div>
@@ -193,7 +199,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                   disabled={true}
-                  value={battdata.parallel}
+                  value={seriesParallelTable.parallel}
                 />
               </div>
               <div>
@@ -208,7 +214,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                   disabled={true}
-                  value={battdata.totalnumber}
+                  value={seriesParallelTable.totalnumber}
                 />
               </div>
               <div>
@@ -223,7 +229,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                   disabled={true}
-                  value={battdata.totalcapacity}
+                  value={seriesParallelTable.totalcapacity}
                 />
               </div>
               <div>
@@ -239,7 +245,8 @@ const BatteryTab = ({ battdata, doddata }) => {
                   className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                   disabled={true}
                   value={
-                    "Php " + numberWithCommas(battdata.totalprice.toFixed(2))
+                    "Php " +
+                    numberWithCommas(seriesParallelTable.totalprice.toFixed(2))
                   }
                 />
               </div>
@@ -297,7 +304,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               50%
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.leadacid.dodbattcap + " Ah"}
+                              {dodTable.leadacid.dodbattcap + " Ah"}
                             </td>
                           </tr>
                           <tr className="bg-white border-b">
@@ -308,7 +315,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               88%
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.lion.dodbattcap + " Ah"}
+                              {dodTable.lion.dodbattcap + " Ah"}
                             </td>
                           </tr>
                           <tr className="bg-white border-b">
@@ -319,7 +326,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               90%
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.lifepo.dodbattcap + " Ah"}
+                              {dodTable.lifepo.dodbattcap + " Ah"}
                             </td>
                           </tr>
                           <tr className="bg-white border-b">
@@ -332,7 +339,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               </h4>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.leadacid.battcapacity + " Ah"}
+                              {dodTable.leadacid.battcapacity + " Ah"}
                             </td>
                           </tr>
                           <tr className="bg-white border-b">
@@ -346,7 +353,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               </h4>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.lifepo.totalCurrentLoad + " A"}
+                              {dodTable.lifepo.totalCurrentLoad + " A"}
                             </td>
                           </tr>
                           <tr className="bg-white border-b">
@@ -360,7 +367,7 @@ const BatteryTab = ({ battdata, doddata }) => {
                               </h4>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {doddata.lifepo.totalDCPower + " W"}
+                              {dodTable.lifepo.totalDCPower + " W"}
                             </td>
                           </tr>
                         </tbody>
