@@ -215,7 +215,7 @@ const MainCalculation = () => {
             {" "}
             Voltage System{" "}
           </h1>
-          <div className="flex border-b border-gray-200 dark:border-gray-700">
+          <div className="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
             <button
               onClick={() => {
                 setVoltage(12);
