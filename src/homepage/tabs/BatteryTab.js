@@ -6,7 +6,7 @@ import { HomeContext } from "../context/home-context";
 
 const BatteryTab = ({ battdata, doddata }) => {
   const { batterytab, setBattery } = useContext(HomeContext);
-  const [itemState, setItemState] = useState(batterytab);
+  const [itemState, setItemState] = useState();
   const [batterylist, setBattList] = useState([]);
   const { sendRequest, isLoading } = useHttpClient();
 
@@ -30,6 +30,11 @@ const BatteryTab = ({ battdata, doddata }) => {
     fetchBattery();
     // eslint-disable-next-line
   }, [sendRequest]);
+
+  useEffect(() => {
+    setItemState(batterytab);
+    // eslint-disable-next-line
+  }, [batterytab]);
 
   const filterOptions = (inputValue, array) => {
     return array.filter((i) =>
