@@ -81,24 +81,22 @@ const BatteryItems = ({ battlist, formInputs, onUpdate }) => {
           </td>
         )}
       </tr>
+      <EditItem
+        show={showEditModal}
+        onCancel={closeEdit}
+        formInputs={formInputs}
+        initialValue={battlist}
+        onUpdate={update}
+        title="Battery"
+      />
       {role === "Admin" && (
-        <>
-          <EditItem
-            show={showEditModal}
-            onCancel={closeEdit}
-            formInputs={formInputs}
-            initialValue={battlist}
-            onUpdate={update}
-            title="Battery"
-          />
-          <DeleteItem
-            show={showDeleteModal}
-            onCancel={closeDelete}
-            idToDelete={battlist.id}
-            onUpdate={update}
-            title="Battery"
-          />
-        </>
+        <DeleteItem
+          show={showDeleteModal}
+          onCancel={closeDelete}
+          idToDelete={battlist.id}
+          onUpdate={update}
+          title="Battery"
+        />
       )}
     </>
   );

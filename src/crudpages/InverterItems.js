@@ -80,16 +80,16 @@ const InverterItems = ({ invlist, formInputs, onUpdate }) => {
           </td>
         )}
       </tr>
+      <EditItem
+        show={showEditModal}
+        onCancel={closeEdit}
+        formInputs={formInputs}
+        initialValue={invlist}
+        onUpdate={update}
+        title="Inverter"
+      />
       {role === "Admin" && (
         <>
-          <EditItem
-            show={showEditModal}
-            onCancel={closeEdit}
-            formInputs={formInputs}
-            initialValue={invlist}
-            onUpdate={update}
-            title="Inverter"
-          />
           <DeleteItem
             show={showDeleteModal}
             onCancel={closeDelete}

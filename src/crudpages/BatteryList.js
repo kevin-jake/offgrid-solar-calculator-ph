@@ -166,9 +166,9 @@ const BatteryList = () => {
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                       Link
                     </th>
-                    {role === "Admin" && (
-                      <th className="px-6 py-3 border-b-2 border-gray-300"></th>
-                    )}
+                    {/* {role === "Admin" && ( */}
+                    <th className="px-6 py-3 border-b-2 border-gray-300"></th>
+                    {/* )} */}
                   </tr>
                 </thead>
                 <tbody className="bg-white">
@@ -183,24 +183,24 @@ const BatteryList = () => {
                 </tbody>
               </table>
             </div>
-            {role === "Admin" && (
-              <button
-                className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
-                onClick={setModal}
-              >
-                Add Item
-              </button>
-            )}
+            {/* {role === "Admin" && ( */}
+            <button
+              className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
+              onClick={setModal}
+            >
+              Add Item
+            </button>
+            {/* )} */}
           </div>
-          {role === "Admin" && (
-            <AddItem
-              show={showModal}
-              onCancel={cancelModal}
-              onUpdate={onUpdate}
-              formInputs={formInputs}
-              title="Battery"
-            />
-          )}
+          {/* {role === "Admin" && ( */}
+          <AddItem
+            show={showModal}
+            onCancel={cancelModal}
+            onUpdate={onUpdate}
+            formInputs={formInputs}
+            title="Battery"
+          />
+          {/* )} */}
         </>
       );
     }

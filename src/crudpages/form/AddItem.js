@@ -165,6 +165,9 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
+    auth.role === "User"
+      ? (api_suffix = api_suffix + "/request")
+      : (api_suffix = api_suffix);
     try {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/" + api_suffix,
