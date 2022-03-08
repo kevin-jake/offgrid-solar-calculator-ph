@@ -36,12 +36,12 @@ const EditItemOverlay = ({
 
   const [dataState, setDataState] = useState(defaultData);
   const [validState, setValidState] = useState(state);
-  const [errorMsg, setErrorMsg] = useState({});
   const [validatorState, setValidator] = useState({});
   const [selectedState, setSelectedState] = useState({
     value: "",
     label: "",
   });
+  const [errorMsg, setErrorMsg] = useState({});
 
   useEffect(() => {
     setContent(renderContent());
@@ -173,15 +173,17 @@ const EditItemOverlay = ({
   const patchToBackend = async (data, title) => {
     let datatoPush = {};
     let api_suffix;
+    let method = "PATCH";
     for (const key in data) {
       datatoPush[key] = data[key].dataval;
     }
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
-    auth.role === "User"
-      ? (api_suffix = api_suffix + "/request")
-      : (api_suffix = api_suffix);
+    if (auth.role === "User") {
+      api_suffix = api_suffix + "/request";
+      method = "POST";
+    }
     try {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL +
@@ -189,7 +191,7 @@ const EditItemOverlay = ({
           api_suffix +
           "/" +
           datatoPush.id,
-        "PATCH",
+        method,
         JSON.stringify(datatoPush),
         {
           Authorization: "Bearer " + auth.token,
@@ -197,7 +199,7 @@ const EditItemOverlay = ({
         }
       );
       onCancel();
-      onUpdate();
+      onUpdate(true, "EDIT");
       // history.push('/');
     } catch (err) {}
   };

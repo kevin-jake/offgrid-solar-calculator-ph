@@ -98,11 +98,20 @@ const BatteryList = () => {
 
   const onUpdate = (success, operation) => {
     setRefresh(!refresh);
-    if (success && operation === "ADD") {
-      setMsg("Battery added successfully");
-    }
-    if (success && operation === "Edited") {
-      setMsg("Battery modified successfully");
+    if (role === "Admin") {
+      if (success && operation === "ADD") {
+        setMsg("Battery added successfully");
+      }
+      if (success && operation === "EDIT") {
+        setMsg("Battery modified successfully");
+      }
+    } else {
+      if (success && operation === "ADD") {
+        setMsg("Battery record addition request sent successfully");
+      }
+      if (success && operation === "EDIT") {
+        setMsg("Battery record modification request sent successfully");
+      }
     }
   };
   const toRender = (list) => {
@@ -201,6 +210,7 @@ const BatteryList = () => {
             title="Battery"
           />
           {/* )} */}
+          {msg && <AlertModal msg={msg} type={"SUCCESS"} />}
         </>
       );
     }
