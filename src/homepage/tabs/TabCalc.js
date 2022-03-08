@@ -18,7 +18,6 @@ const TabCalc = () => {
     loadtab,
     invertertab,
     batterytab,
-    setBattery,
     scctab,
     solarpanelstab,
     dodTable,
@@ -77,7 +76,7 @@ const TabCalc = () => {
     batterytoSet.totalqty = seriesParallelTable.totalnumber;
     batterytoSet.totalcapacity = seriesParallelTable.totalcapacity;
     batterytoSet.totalprice = seriesParallelTable.totalprice;
-    setBattery(batterytoSet);
+    // setBattery(batterytoSet);
     // eslint-disable-next-line
   }, [batterytab.id, voltage, seriesParallelTable]);
 
@@ -86,7 +85,13 @@ const TabCalc = () => {
     setSolarPanel(pvdata.pvinfo);
     setPVState(pvdata.pvtable);
     // eslint-disable-next-line
-  }, [totalbattcapacity, loadtab, solarpanelstab, solarpanelstab.sunhours]);
+  }, [
+    totalbattcapacity,
+    loadtab,
+    solarpanelstab,
+    voltage,
+    solarpanelstab.sunhours,
+  ]);
 
   useEffect(() => {
     const tp = overallprice;
