@@ -97,22 +97,23 @@ const BatteryList = () => {
   };
 
   const onUpdate = (success, operation) => {
-    setRefresh(!refresh);
+    console.log(operation);
     if (role === "Admin") {
       if (success && operation === "ADD") {
-        setMsg("Battery added successfully");
+        setMsg(" Battery added successfully");
       }
       if (success && operation === "EDIT") {
-        setMsg("Battery modified successfully");
+        setMsg(" Battery modified successfully");
       }
     } else {
       if (success && operation === "ADD") {
-        setMsg("Battery record addition request sent successfully");
+        setMsg(" Battery record addition request sent successfully");
       }
       if (success && operation === "EDIT") {
-        setMsg("Battery record modification request sent successfully");
+        setMsg(" Battery record modification request sent successfully");
       }
     }
+    setRefresh(!refresh);
   };
   const toRender = (list) => {
     if (list.length === 0) {

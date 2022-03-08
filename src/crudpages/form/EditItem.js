@@ -199,7 +199,7 @@ const EditItemOverlay = ({
         }
       );
       onCancel();
-      onUpdate(true, "EDIT");
+      onUpdate();
       // history.push('/');
     } catch (err) {}
   };

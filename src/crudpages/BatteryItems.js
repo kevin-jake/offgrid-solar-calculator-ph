@@ -26,7 +26,7 @@ const BatteryItems = ({ battlist, formInputs, onUpdate }) => {
   };
 
   const update = () => {
-    onUpdate();
+    onUpdate(true, "EDIT");
   };
 
   return (
