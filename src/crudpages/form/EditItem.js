@@ -162,12 +162,10 @@ const EditItemOverlay = ({
       setValidState(valid.stateSet);
       setDataState(data);
       setContent(renderContent());
-      // console.log(dataState);
     } else {
       setDataState(data);
       setContent(renderContent());
     }
-    // console.log(dataState);
   };
 
   const patchToBackend = async (data, title) => {
@@ -282,7 +280,7 @@ const EditItemOverlay = ({
                   : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
                 : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
             }`}
-            value={
+            defaultValue={
               selectedState.value === "" ? obj.options[index] : selectedState
             }
             onChange={(e) =>
@@ -321,7 +319,7 @@ const EditItemOverlay = ({
             <div className="grid grid-cols-2 gap-2 justify-items-start place-items-center">
               <input
                 id={obj.listkey}
-                value={data[obj.listkey].dataval}
+                defaultValue={data[obj.listkey].dataval}
                 type={obj.type}
                 onChange={(e) =>
                   handleInputChange(
@@ -369,7 +367,7 @@ const EditItemOverlay = ({
                 <input
                   id={obj.listkey}
                   type={obj.type}
-                  value={data[obj.listkey].dataval}
+                  defaultValue={data[obj.listkey].dataval}
                   onChange={(e) =>
                     handleInputChange(
                       e.target.value,
@@ -415,7 +413,7 @@ const EditItemOverlay = ({
         </label>
         <input
           id={obj.listkey}
-          value={data[obj.listkey].dataval}
+          defaultValue={data[obj.listkey].dataval}
           onChange={(e) =>
             handleInputChange(
               e.target.value,
