@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { LOVContext } from "../homepage/context/lov-context";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
+import AlertModal from "../shared/components/UIElements/AlertModal";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../shared/context/auth-context";
 import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
@@ -8,12 +8,12 @@ import AddItem from "./form/AddItem";
 import SCCItems from "./SCCItems";
 
 const SCCList = () => {
-  // const { scclist } = useContext(LOVContext);
   const [scclist, setSCCList] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const { role } = useContext(AuthContext);
+  const [msg, setMsg] = useState();
 
   useEffect(() => {
     const fetchSCC = async () => {
@@ -75,36 +75,57 @@ const SCCList = () => {
     setShowModal(false);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (success, operation) => {
+    setMsg("");
+    if (role === "Admin") {
+      if (success && operation === "ADD") {
+        setMsg(" SCC added successfully");
+      }
+      if (success && operation === "EDIT") {
+        setMsg(" SCC modified successfully");
+      }
+    } else {
+      if (success && operation === "ADD") {
+        setMsg(" SCC record addition request sent successfully");
+      }
+      if (success && operation === "EDIT") {
+        setMsg(" SCC record modification request sent successfully");
+      }
+    }
     setRefresh(!refresh);
   };
 
   const toRender = (list) => {
     if (list.length === 0) {
       return (
-        <div className="bg-white overflow-hidden sm:rounded-lg pb-8">
-          <div className="border-t border-gray-200 text-center pt-8">
-            <h1 className="text-6xl font-bold text-gray-400">Empty List</h1>
-            <h1 className="text-xl font-medium py-8">No SCC found</h1>
-            {role === "Admin" && (
-              <>
-                <button
-                  className="px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
-                  onClick={setModal}
-                >
-                  Add Item
-                </button>
-                <AddItem
-                  show={showModal}
-                  onCancel={cancelModal}
-                  onUpdate={onUpdate}
-                  formInputs={formInputs}
-                  title="SCC"
-                />
-              </>
-            )}
+        <>
+          {isLoading && <LoadingSpinner />}
+          <div className="bg-white overflow-hidden sm:rounded-lg pb-8">
+            <div className="border-t border-gray-200 text-center pt-8">
+              <h1 className="text-6xl font-bold text-gray-400">Empty List</h1>
+              <h1 className="text-xl font-medium py-8">No SCC found</h1>
+              {role === "Admin" && (
+                <>
+                  <button
+                    className="px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                    onClick={setModal}
+                  >
+                    Add Item
+                  </button>
+                  <AddItem
+                    show={showModal}
+                    onCancel={cancelModal}
+                    onUpdate={onUpdate}
+                    formInputs={formInputs}
+                    title="SCC"
+                  />
+                </>
+              )}
+            </div>
           </div>
-        </div>
+          {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
+          {msg && !isLoading && <AlertModal msg={msg} type={"SUCCESS"} />}
+        </>
       );
     } else {
       return (
@@ -135,9 +156,9 @@ const SCCList = () => {
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                       Link
                     </th>
-                    {role === "Admin" && (
-                      <th className="px-6 py-3 border-b-2 border-gray-300"></th>
-                    )}
+                    {/* {role === "Admin" && ( */}
+                    <th className="px-6 py-3 border-b-2 border-gray-300"></th>
+                    {/* )} */}
                   </tr>
                 </thead>
                 <tbody className="bg-white">
@@ -152,24 +173,25 @@ const SCCList = () => {
                 </tbody>
               </table>
             </div>
-            {role === "Admin" && (
-              <button
-                className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
-                onClick={setModal}
-              >
-                Add Item
-              </button>
-            )}
+            {/* {role === "Admin" && ( */}
+            <button
+              className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
+              onClick={setModal}
+            >
+              Add Item
+            </button>
+            {/* )} */}
           </div>
-          {role === "Admin" && (
-            <AddItem
-              show={showModal}
-              onCancel={cancelModal}
-              onUpdate={onUpdate}
-              formInputs={formInputs}
-              title="SCC"
-            />
-          )}
+          {/* {role === "Admin" && ( */}
+          <AddItem
+            show={showModal}
+            onCancel={cancelModal}
+            onUpdate={onUpdate}
+            formInputs={formInputs}
+            title="SCC"
+          />
+          {/* )} */}
+          {msg && <AlertModal msg={msg} type={"SUCCESS"} />}
         </>
       );
     }

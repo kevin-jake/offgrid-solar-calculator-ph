@@ -85,7 +85,6 @@ const InverterList = () => {
   };
 
   const onUpdate = (success, operation) => {
-    console.log(operation);
     setMsg("");
     if (role === "Admin") {
       if (success && operation === "ADD") {
