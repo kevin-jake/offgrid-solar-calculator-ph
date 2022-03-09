@@ -84,9 +84,6 @@ const MainCalculation = () => {
   }, [overallprice]);
 
   useEffect(() => {
-    console.log(invertertab.inputVoltage);
-    console.log(voltage);
-
     inverterValid(voltage, invertertab.inputVoltage);
     // eslint-disable-next-line
   }, [invertertab.inputVoltage, voltage]);
