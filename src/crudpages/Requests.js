@@ -2,208 +2,208 @@ import React, { useEffect, useState } from "react";
 import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
 import RequestList from "./RequestList";
 
+const inverterFields = [
+  {
+    listkey: "id",
+    type: "text",
+    label: "ID",
+  },
+  {
+    listkey: "inverterName",
+    type: "text",
+    label: "Name",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  { listkey: "type", type: "text", label: "Type" },
+  {
+    listkey: "inputVoltage",
+    type: "number",
+    label: "Input Voltage",
+    unit: "V",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  {
+    listkey: "efficiency",
+    type: "text",
+    label: "Efficiency",
+    unit: "%",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "wattage",
+    type: "number",
+    label: "Wattage",
+    unit: "W",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  {
+    listkey: "price",
+    type: "text",
+    label: "Price",
+    unit: "Php",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  // { listkey: "img", type: "text", label: "Image" },
+  { listkey: "link", type: "text", label: "Link" },
+];
+const batteryfields = [
+  {
+    listkey: "id",
+    type: "text",
+    label: "ID",
+  },
+  {
+    listkey: "battname",
+    type: "text",
+    label: "Name",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  {
+    listkey: "batttype",
+    type: "select",
+    label: "Battery Type",
+    options: [
+      {
+        value: "Lead Acid",
+        label: "Lead Acid",
+      },
+      {
+        value: "Lithium Ion",
+        label: "Lithium Ion",
+      },
+      {
+        value: "LiFePo4",
+        label: "LiFePo4",
+      },
+    ],
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  { listkey: "battmodel", type: "text", label: "Model" },
+  {
+    listkey: "voltage",
+    type: "text",
+    label: "Voltage",
+    unit: "V",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "battcapacity",
+    type: "text",
+    label: "Capacity",
+    unit: "Ah",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "priceperpc",
+    type: "text",
+    label: "Price per pc.",
+    unit: "Php",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  // { listkey: "img", type: "text", label: "Image" },
+  { listkey: "link", type: "text", label: "Link" },
+];
+const sccFields = [
+  {
+    listkey: "id",
+    type: "text",
+    label: "ID",
+  },
+  {
+    listkey: "sccname",
+    type: "text",
+    label: "Name",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  {
+    listkey: "type",
+    type: "text",
+    label: "Type",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  { listkey: "brand", type: "text", label: "Brand" },
+  { listkey: "supplier", type: "text", label: "Supplier" },
+  {
+    listkey: "amprating",
+    type: "text",
+    label: "Ampere Rating",
+    unit: "A",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "price",
+    type: "text",
+    label: "Price",
+    unit: "Php",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  // { listkey: "img", type: "text", label: "Image" },
+  { listkey: "link", type: "text", label: "Link" },
+];
+const pvFields = [
+  {
+    listkey: "id",
+    type: "text",
+    label: "ID",
+  },
+  {
+    listkey: "pvname",
+    type: "text",
+    label: "Name",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  {
+    listkey: "wattage",
+    type: "number",
+    label: "Wattage",
+    unit: "W",
+    validator: [VALIDATOR_REQUIRE()],
+  },
+  { listkey: "brand", type: "text", label: "Brand" },
+  { listkey: "supplier", type: "text", label: "Supplier" },
+  {
+    listkey: "voc",
+    type: "text",
+    label: "Voc",
+    unit: "V",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "imp",
+    type: "text",
+    label: "Imp",
+    unit: "A",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "vmp",
+    type: "text",
+    label: "Vmp",
+    unit: "V",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "isc",
+    type: "text",
+    label: "Isc",
+    unit: "A",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  {
+    listkey: "price",
+    type: "text",
+    label: "Price",
+    unit: "Php",
+    validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
+  },
+  // { listkey: "img", type: "text", label: "Image" },
+  { listkey: "link", type: "text", label: "Link" },
+];
+
 const Requests = () => {
   const [openTab, setOpenTab] = useState(1);
   const [tabpanel, setTabPanel] = useState();
   const [requestType, setRequestType] = useState("ADD");
-
-  const inverterFields = [
-    {
-      listkey: "id",
-      type: "text",
-      label: "ID",
-    },
-    {
-      listkey: "inverterName",
-      type: "text",
-      label: "Name",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    { listkey: "type", type: "text", label: "Type" },
-    {
-      listkey: "inputVoltage",
-      type: "number",
-      label: "Input Voltage",
-      unit: "V",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    {
-      listkey: "efficiency",
-      type: "text",
-      label: "Efficiency",
-      unit: "%",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "wattage",
-      type: "number",
-      label: "Wattage",
-      unit: "W",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    {
-      listkey: "price",
-      type: "text",
-      label: "Price",
-      unit: "Php",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
-  ];
-  const batteryfields = [
-    {
-      listkey: "id",
-      type: "text",
-      label: "ID",
-    },
-    {
-      listkey: "battname",
-      type: "text",
-      label: "Name",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    {
-      listkey: "batttype",
-      type: "select",
-      label: "Battery Type",
-      options: [
-        {
-          value: "Lead Acid",
-          label: "Lead Acid",
-        },
-        {
-          value: "Lithium Ion",
-          label: "Lithium Ion",
-        },
-        {
-          value: "LiFePo4",
-          label: "LiFePo4",
-        },
-      ],
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    { listkey: "battmodel", type: "text", label: "Model" },
-    {
-      listkey: "voltage",
-      type: "text",
-      label: "Voltage",
-      unit: "V",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "battcapacity",
-      type: "text",
-      label: "Capacity",
-      unit: "Ah",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "priceperpc",
-      type: "text",
-      label: "Price per pc.",
-      unit: "Php",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
-  ];
-  const sccFields = [
-    {
-      listkey: "id",
-      type: "text",
-      label: "ID",
-    },
-    {
-      listkey: "sccname",
-      type: "text",
-      label: "Name",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    {
-      listkey: "type",
-      type: "text",
-      label: "Type",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    { listkey: "brand", type: "text", label: "Brand" },
-    { listkey: "supplier", type: "text", label: "Supplier" },
-    {
-      listkey: "amprating",
-      type: "text",
-      label: "Ampere Rating",
-      unit: "A",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "price",
-      type: "text",
-      label: "Price",
-      unit: "Php",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
-  ];
-  const pvFields = [
-    {
-      listkey: "id",
-      type: "text",
-      label: "ID",
-    },
-    {
-      listkey: "pvname",
-      type: "text",
-      label: "Name",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    {
-      listkey: "wattage",
-      type: "number",
-      label: "Wattage",
-      unit: "W",
-      validator: [VALIDATOR_REQUIRE()],
-    },
-    { listkey: "brand", type: "text", label: "Brand" },
-    { listkey: "supplier", type: "text", label: "Supplier" },
-    {
-      listkey: "voc",
-      type: "text",
-      label: "Voc",
-      unit: "V",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "imp",
-      type: "text",
-      label: "Imp",
-      unit: "A",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "vmp",
-      type: "text",
-      label: "Vmp",
-      unit: "V",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "isc",
-      type: "text",
-      label: "Isc",
-      unit: "A",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    {
-      listkey: "price",
-      type: "text",
-      label: "Price",
-      unit: "Php",
-      validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
-    },
-    // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
-  ];
 
   useEffect(() => {
     handleSelectedTab(openTab);

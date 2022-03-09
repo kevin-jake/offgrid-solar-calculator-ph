@@ -6,7 +6,7 @@ import AlertModal from "../shared/components/UIElements/AlertModal";
 import RequestItems from "./RequestItems";
 
 const RequestList = ({ fields, title, fetch }) => {
-  const [requestList, setRequestList] = useState();
+  const [requestList, setRequestList] = useState([]);
   const { isLoading, error, sendRequest } = useHttpClient();
   const [refresh, setRefresh] = useState(true);
   const { role, token } = useContext(AuthContext);
@@ -35,7 +35,7 @@ const RequestList = ({ fields, title, fetch }) => {
     };
     fetchRequests();
     // eslint-disable-next-line
-  }, [sendRequest, refresh]);
+  }, [sendRequest, title, refresh]);
 
   const onUpdate = (success, operation, title) => {
     setMsg("");
@@ -61,7 +61,7 @@ const RequestList = ({ fields, title, fetch }) => {
   };
 
   const toRender = (requestlist, fields, title, fetch) => {
-    let list;
+    let list = [];
     let header = fields.map((item) => {
       return item.label;
     });
