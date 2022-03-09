@@ -8,6 +8,8 @@ import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import AlertModal from "../../shared/components/UIElements/AlertModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const EditItemOverlay = ({
   onCancel,
@@ -29,17 +31,17 @@ const EditItemOverlay = ({
   //   setSCCLOV,
   // } = useContext(LOVContext);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
   const [dataState, setDataState] = useState(defaultData);
   const [validState, setValidState] = useState(state);
-  const [errorMsg, setErrorMsg] = useState({});
   const [validatorState, setValidator] = useState({});
   const [selectedState, setSelectedState] = useState({
     value: "",
     label: "",
   });
+  const [errorMsg, setErrorMsg] = useState({});
 
   useEffect(() => {
     setContent(renderContent());
@@ -171,12 +173,17 @@ const EditItemOverlay = ({
   const patchToBackend = async (data, title) => {
     let datatoPush = {};
     let api_suffix;
+    let method = "PATCH";
     for (const key in data) {
       datatoPush[key] = data[key].dataval;
     }
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
+    if (auth.role === "User") {
+      api_suffix = api_suffix + "/request";
+      method = "POST";
+    }
     try {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL +
@@ -184,7 +191,7 @@ const EditItemOverlay = ({
           api_suffix +
           "/" +
           datatoPush.id,
-        "PATCH",
+        method,
         JSON.stringify(datatoPush),
         {
           Authorization: "Bearer " + auth.token,
@@ -436,56 +443,60 @@ const EditItemOverlay = ({
   };
   const renderContent = () => {
     return (
-      <div
-        id="authentication-modal"
-        className="fixed right-0 left-0 top-4 bottom-4 z-50 justify-center items-center h-modal md:h-full md:inset-0 flex"
-        aria-modal="true"
-        role="dialog"
-      >
-        <div className="relative px-4 w-full max-w-4xl h-full md:h-auto overflow-y-auto max-h-screen">
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div className="flex justify-end p-2">
-              <button
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                onClick={onCancel}
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+      <>
+        {isLoading && <LoadingSpinner />}
+        <div
+          id="authentication-modal"
+          className="fixed right-0 left-0 top-4 bottom-4 z-50 justify-center items-center h-modal md:h-full md:inset-0 flex"
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className="relative px-4 w-full max-w-4xl h-full md:h-auto overflow-y-auto max-h-screen">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex justify-end p-2">
+                <button
+                  type="button"
+                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                  onClick={onCancel}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-              <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                Edit {title} Data ({dataState.id.dataval})
-              </h2>
-
-              <form onSubmit={(e) => handleSave(e, dataState, title)}>
-                <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                  {formInputs.map((obj) => renderInputs(obj, dataState))}
-                </div>
-                <div className="flex justify-end mt-6">
-                  <button
-                    type="submit"
-                    className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                  <svg
+                    className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </section>
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+                <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+                  Edit {title} Data ({dataState.id.dataval})
+                </h2>
+
+                <form onSubmit={(e) => handleSave(e, dataState, title)}>
+                  <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                    {formInputs.map((obj) => renderInputs(obj, dataState))}
+                  </div>
+                  <div className="flex justify-end mt-6">
+                    <button
+                      type="submit"
+                      className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
+        {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
+      </>
     );
   };
   // console.log(dataState);

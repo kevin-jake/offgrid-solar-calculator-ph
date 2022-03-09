@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { HomeContext } from "../../../homepage/context/home-context";
 import { AuthContext } from "../../context/auth-context";
@@ -7,38 +7,92 @@ import ProfileCard from "./ProfileCard";
 const NavLinks = () => {
   const { isLoggedIn, logout, email, name, role } = useContext(AuthContext);
   const { reset } = useContext(HomeContext);
+  const [active, setActive] = useState(1);
 
   const handleLogout = () => {
     logout();
     reset();
   };
 
+  const handleActive = (option) => {
+    setActive(option);
+  };
   return (
     <>
-      <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
-        <NavLink to="/" exact>
+      <p
+        className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+          active === 1 ? "text-blue-500 font-bold" : "text-gray-700"
+        }`}
+      >
+        <NavLink
+          to="/"
+          exact
+          onClick={() => {
+            handleActive(1);
+          }}
+        >
           Calculation
         </NavLink>
       </p>
       {isLoggedIn && (
         <>
-          <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
-            <NavLink to="/inverters" exact>
+          <p
+            className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+              active === 2 ? "text-blue-500 font-bold" : "text-gray-700"
+            }`}
+          >
+            <NavLink
+              to="/inverters"
+              exact
+              onClick={() => {
+                handleActive(2);
+              }}
+            >
               Inverter List
             </NavLink>
           </p>
-          <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
-            <NavLink to="/batteries" exact>
+          <p
+            className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+              active === 3 ? "text-blue-500 font-bold" : "text-gray-700"
+            }`}
+          >
+            <NavLink
+              to="/batteries"
+              exact
+              onClick={() => {
+                handleActive(3);
+              }}
+            >
               Battery List
             </NavLink>
           </p>
-          <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
-            <NavLink to="/solarpanels" exact>
+          <p
+            className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+              active === 4 ? "text-blue-500 font-bold" : "text-gray-700"
+            }`}
+          >
+            <NavLink
+              to="/solarpanels"
+              exact
+              onClick={() => {
+                handleActive(4);
+              }}
+            >
               Solar Panel List
             </NavLink>
           </p>
-          <p className="mx-8 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500">
-            <NavLink to="/sccs" exact>
+          <p
+            className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+              active === 5 ? "text-blue-500 font-bold" : "text-gray-700"
+            }`}
+          >
+            <NavLink
+              to="/sccs"
+              exact
+              onClick={() => {
+                handleActive(5);
+              }}
+            >
               SCC List
             </NavLink>
           </p>{" "}
