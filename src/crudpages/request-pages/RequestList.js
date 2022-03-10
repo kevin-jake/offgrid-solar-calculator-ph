@@ -51,13 +51,14 @@ const RequestList = ({ fields, title, fetch }) => {
     setRefresh(!refresh);
   };
 
-  const th = (head) => {
+  const th = (head, index) => {
     return (
-      <>
-        <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-          {head}
-        </th>
-      </>
+      <th
+        key={index}
+        className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"
+      >
+        {head}
+      </th>
     );
   };
 
@@ -94,20 +95,31 @@ const RequestList = ({ fields, title, fetch }) => {
                 <thead>
                   <tr>
                     {fetch === "EDIT" && (
-                      <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                      <th
+                        key="toedit"
+                        className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"
+                      >
                         ID to Edit
                       </th>
                     )}
-                    {header.map((head) => th(head))}
-                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                    {header.map((head, index) => th(head, index))}
+                    <th
+                      key="rqst"
+                      className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"
+                    >
                       Requestor
                     </th>
-                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
+                    <th
+                      key="btn"
+                      className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"
+                    ></th>
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {list.map((item) => (
+                  {list.map((item, index) => (
                     <RequestItems
+                      key={index}
+                      keyIndex={index}
                       formInputs={fields}
                       title={title}
                       data={item}

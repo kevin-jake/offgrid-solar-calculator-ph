@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../shared/context/auth-context";
 import { numberWithCommas } from "../../shared/util/format";
-import DeleteItem from "../form/DeleteItem";
-import EditItem from "../form/EditItem";
 import ReviewItem from "./Review";
 
-const RequestItems = ({ formInputs, title, data, fetchType }) => {
+const RequestItems = ({ formInputs, title, data, fetchType, keyIndex }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { role } = useContext(AuthContext);
@@ -30,7 +28,6 @@ const RequestItems = ({ formInputs, title, data, fetchType }) => {
   };
 
   const tds = (items, columns) => {
-    let returntds = [<></>];
     const objkey = items.listkey;
     let unit;
     items.unit ? (unit = items.unit) : (unit = "");
@@ -39,14 +36,20 @@ const RequestItems = ({ formInputs, title, data, fetchType }) => {
         return null;
       }
       if (unit === "Php") {
-        returntds.push(
-          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+        return (
+          <td
+            key={objkey}
+            className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5"
+          >
             {"Php " + numberWithCommas(columns[objkey].toFixed(2))}
           </td>
         );
       } else if (objkey === "link") {
-        returntds.push(
-          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+        return (
+          <td
+            key={objkey}
+            className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5"
+          >
             <a
               className=" px-4 py-2 mt-2 text-blue-600 visited:text-purple-600"
               target="_blank"
@@ -58,36 +61,40 @@ const RequestItems = ({ formInputs, title, data, fetchType }) => {
           </td>
         );
       } else {
-        returntds.push(
-          <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+        return (
+          <td
+            key={objkey}
+            className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5"
+          >
             {columns[objkey] + " " + unit}
           </td>
         );
       }
     }
-    return returntds;
-  };
-
-  const rendertds = (formInputs, data) => {
-    let mapArr = formInputs;
-    return mapArr.map((items) => {
-      return <>{tds(items, data)}</>;
-    });
   };
 
   return (
     <>
-      <tr>
+      <tr key={keyIndex}>
         {fetchType === "EDIT" && (
-          <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+          <td
+            key="edit"
+            className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5"
+          >
             {data.id_to_edit}
           </td>
         )}
-        {rendertds(formInputs, data, fetchType)}
-        <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+        {formInputs.map((items) => tds(items, data))}
+        <td
+          key="creator"
+          className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5"
+        >
           {data.creator}
         </td>
-        <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+        <td
+          key="btns"
+          className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"
+        >
           <div
             className={`grid lg:grid-row  gap-4 sm:grid-row md:grid-row ${
               role === "Admin" ? "xl:grid-row" : ""
