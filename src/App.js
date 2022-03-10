@@ -26,7 +26,7 @@ const InverterList = React.lazy(() => import("./crudpages/InverterList"));
 const BatteryList = React.lazy(() => import("./crudpages/BatteryList"));
 const SolarPanelList = React.lazy(() => import("./crudpages/SolarPanelList"));
 const SCCList = React.lazy(() => import("./crudpages/SCCList"));
-const Requests = React.lazy(() => import("./crudpages/Requests"));
+const Requests = React.lazy(() => import("./crudpages/request-pages/Requests"));
 
 const App = () => {
   const { token, login, logout, userId, email, name, role } = useAuth();

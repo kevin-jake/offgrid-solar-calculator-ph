@@ -7,22 +7,32 @@ import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import AlertModal from "../../shared/components/UIElements/AlertModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
+const ReviewItemOverlay = ({
+  onCancel,
+  formInputs,
+  title,
+  state,
+  defaultData,
+  onUpdate,
+  reviewType,
+}) => {
   const [content, setContent] = useState(<></>);
   const { isLoading, error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
+  const [dataState, setDataState] = useState(defaultData);
+  const [oldData, setOldData] = useState();
+  const [validState, setValidState] = useState(state);
+  const [validatorState, setValidator] = useState({});
   const [selectedState, setSelectedState] = useState({
     value: "",
     label: "",
   });
-  const [dataState, setDataState] = useState({});
-  const [validState, setValidState] = useState(state);
   const [errorMsg, setErrorMsg] = useState({});
-  const [validatorState, setValidator] = useState({});
+
   useEffect(() => {
     setContent(renderContent());
     // eslint-disable-next-line
@@ -42,6 +52,10 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    setDataState(dataState);
+    // eslint-disable-next-line
+  }, []);
   const validateGeneral = (validator, label, value, objkey) => {
     let returnObj = {};
     const errorObj = errorMsg;
@@ -144,22 +158,28 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     }
   };
 
-  const postToBackend = async (data, title) => {
+  const patchToBackend = async (data, title) => {
     let datatoPush = {};
     let api_suffix;
+    let method = "PATCH";
     for (const key in data) {
       datatoPush[key] = data[key].dataval;
     }
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
-    auth.role === "User"
-      ? (api_suffix = api_suffix + "/request")
-      : (api_suffix = api_suffix);
+    if (auth.role === "User") {
+      api_suffix = api_suffix + "/request";
+      method = "POST";
+    }
     try {
       await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix,
-        "POST",
+        process.env.REACT_APP_BACKEND_URL +
+          "/" +
+          api_suffix +
+          "/" +
+          datatoPush.id,
+        method,
         JSON.stringify(datatoPush),
         {
           Authorization: "Bearer " + auth.token,
@@ -167,14 +187,32 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         }
       );
       onCancel();
-      onUpdate(true, "ADD");
+      onUpdate();
       // history.push('/');
+    } catch (err) {}
+  };
+
+  const fetchIdtoEdit = async (title, id_to_edit) => {
+    let api_suffix;
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
+    try {
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix + "/" + id_to_edit,
+        "GET",
+        null,
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      setOldData(responseData[api_suffix]);
     } catch (err) {}
   };
 
   const handleSave = (event, data, title) => {
     event.preventDefault();
-    // console.log(title);
     switch (title) {
       case "Battery": {
         let validatingFields = saveValidation(formInputs, data);
@@ -183,7 +221,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          postToBackend(data, title);
+          patchToBackend(data, title);
         }
         break;
       }
@@ -194,7 +232,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          postToBackend(data, title);
+          patchToBackend(data, title);
         }
         break;
       }
@@ -205,7 +243,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          postToBackend(data, title);
+          patchToBackend(data, title);
         }
         break;
       }
@@ -216,7 +254,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          postToBackend(data, title);
+          patchToBackend(data, title);
         }
         break;
       }
@@ -226,8 +264,14 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
     setContent(renderContent());
   };
 
-  const renderInputs = (obj) => {
+  const renderInputs = (obj, data) => {
+    // console.log(obj);
+    // console.log(data);
     if (obj.type === "select") {
+      const index = obj.options.findIndex(
+        (x) => x.value === data[obj.listkey].dataval
+      );
+      // console.log(obj.options[index]);
       return (
         <div key={obj.listkey}>
           <label
@@ -245,7 +289,9 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
                   : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
                 : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
             }`}
-            value={selectedState}
+            defaultValue={
+              selectedState.value === "" ? obj.options[index] : selectedState
+            }
             onChange={(e) =>
               handleItemChanged(
                 e,
@@ -282,6 +328,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
             <div className="grid grid-cols-2 gap-2 justify-items-start place-items-center">
               <input
                 id={obj.listkey}
+                defaultValue={data[obj.listkey].dataval}
                 type={obj.type}
                 onChange={(e) =>
                   handleInputChange(
@@ -329,6 +376,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
                 <input
                   id={obj.listkey}
                   type={obj.type}
+                  defaultValue={data[obj.listkey].dataval}
                   onChange={(e) =>
                     handleInputChange(
                       e.target.value,
@@ -374,6 +422,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
         </label>
         <input
           id={obj.listkey}
+          defaultValue={data[obj.listkey].dataval}
           onChange={(e) =>
             handleInputChange(
               e.target.value,
@@ -399,12 +448,204 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       </div>
     );
   };
+
+  const renderInputsEdit = (obj, data, title) => {
+    fetchIdtoEdit(title, data.id_to_edit.dataval);
+    if (obj.type === "select") {
+      const index = obj.options.findIndex(
+        (x) => x.value === data[obj.listkey].dataval
+      );
+      // console.log(obj.options[index]);
+      return (
+        <div key={obj.listkey}>
+          <label
+            className="text-gray-700 dark:text-gray-200"
+            htmlFor={obj.listkey}
+          >
+            {obj.label}
+            {obj.validator && "*"}
+          </label>
+          <Select
+            className={`block w-full px-4 py-2 mt-2 ${
+              validState.hasOwnProperty(obj.listkey)
+                ? validState[obj.listkey]
+                  ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+            }`}
+            defaultValue={
+              selectedState.value === "" ? obj.options[index] : selectedState
+            }
+            onChange={(e) =>
+              handleItemChanged(
+                e,
+                obj.listkey,
+                dataState,
+                obj.validator,
+                obj.label
+              )
+            }
+            options={obj.options}
+          />
+          <input
+            id={obj.listkey}
+            type="text"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+            disabled={true}
+            value={oldData[obj.listkey]}
+          />
+          <p className="text-red-700 text-xs">
+            {errorMsg.hasOwnProperty(obj.listkey) &&
+              errorMsg[obj.listkey].message}
+          </p>
+        </div>
+      );
+    }
+    if (obj.hasOwnProperty("unit")) {
+      if (obj.unit !== "Php") {
+        return (
+          <div key={obj.listkey}>
+            <label
+              className="text-gray-700 dark:text-gray-200"
+              htmlFor={obj.listkey}
+            >
+              <span>
+                {obj.label}{" "}
+                <p className="inline-block text-red-700 text-sm font-bold">
+                  {obj.validator && " *"}
+                </p>
+              </span>
+            </label>
+            <div className="grid grid-cols-2 gap-2 justify-items-start place-items-center">
+              <input
+                id={obj.listkey}
+                defaultValue={data[obj.listkey].dataval}
+                type={obj.type}
+                onChange={(e) =>
+                  handleInputChange(
+                    e.target.value,
+                    obj.listkey,
+                    dataState,
+                    obj.validator,
+                    obj.label
+                  )
+                }
+                className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                  validState.hasOwnProperty(obj.listkey)
+                    ? validState[obj.listkey]
+                      ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                      : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                    : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                }`}
+              />{" "}
+              {obj.unit}
+            </div>
+            <p className="text-red-700 text-xs">
+              {errorMsg.hasOwnProperty(obj.listkey) &&
+                errorMsg[obj.listkey].message}
+            </p>
+          </div>
+        );
+      } else {
+        return (
+          <div key={obj.listkey}>
+            <label
+              className="text-gray-700 dark:text-gray-200"
+              htmlFor={obj.listkey}
+            >
+              <span>
+                {obj.label}{" "}
+                <p className="inline-block text-red-700 text-sm font-bold">
+                  {obj.validator && " *"}
+                </p>
+              </span>
+            </label>
+            <div className="justify-items-start place-items-center">
+              <span>
+                {" "}
+                {obj.unit}
+                <input
+                  id={obj.listkey}
+                  type={obj.type}
+                  defaultValue={data[obj.listkey].dataval}
+                  onChange={(e) =>
+                    handleInputChange(
+                      e.target.value,
+                      obj.listkey,
+                      dataState,
+                      obj.validator,
+                      obj.label
+                    )
+                  }
+                  className={`inline-block w-3/5 mx-2 px-4 py-2 mt-2 border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                    validState.hasOwnProperty(obj.listkey)
+                      ? validState[obj.listkey]
+                        ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                        : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                      : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  }`}
+                />
+              </span>
+              <p className="text-red-700 text-xs">
+                {errorMsg.hasOwnProperty(obj.listkey) &&
+                  errorMsg[obj.listkey].message}
+              </p>
+            </div>
+          </div>
+        );
+      }
+    }
+    if (obj.listkey === "id") {
+      return <></>;
+    }
+    return (
+      <div key={obj.listkey}>
+        <label
+          className="text-gray-700 dark:text-gray-200"
+          htmlFor={obj.listkey}
+        >
+          <span>
+            {obj.label}{" "}
+            <p className="inline-block text-red-700 text-sm font-bold">
+              {obj.validator && " *"}
+            </p>
+          </span>
+        </label>
+        <input
+          id={obj.listkey}
+          defaultValue={data[obj.listkey].dataval}
+          onChange={(e) =>
+            handleInputChange(
+              e.target.value,
+              obj.listkey,
+              dataState,
+              obj.validator,
+              obj.label
+            )
+          }
+          type="text"
+          className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+            validState.hasOwnProperty(obj.listkey)
+              ? validState[obj.listkey]
+                ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+              : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+          }`}
+        />
+        <p className="text-red-700 text-xs">
+          {errorMsg.hasOwnProperty(obj.listkey) &&
+            errorMsg[obj.listkey].message}
+        </p>
+      </div>
+    );
+  };
+
   const renderContent = () => {
     return (
       <>
         {isLoading && <LoadingSpinner />}
         <div
-          id="childcontent"
+          id="authentication-modal"
           className="fixed right-0 left-0 top-4 bottom-4 z-50 justify-center items-center h-modal md:h-full md:inset-0 flex"
           aria-modal="true"
           role="dialog"
@@ -433,12 +674,22 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
               </div>
               <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
                 <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                  Add New {title}
+                  {reviewType === "ADD"
+                    ? "Add " + title + " Review"
+                    : "Edit " +
+                      title +
+                      " Review (ID to Edit: " +
+                      dataState.id.dataval +
+                      ")"}
                 </h2>
 
                 <form onSubmit={(e) => handleSave(e, dataState, title)}>
                   <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                    {formInputs.map((obj) => renderInputs(obj))}
+                    {reviewType === "ADD"
+                      ? formInputs.map((obj) => renderInputs(obj, dataState))
+                      : formInputs.map((obj) =>
+                          renderInputsEdit(obj, dataState, title)
+                        )}
                   </div>
                   <div className="flex justify-end mt-6">
                     <button
@@ -457,16 +708,32 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       </>
     );
   };
+  // console.log(dataState);
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));
 };
 
-const AddItem = (props) => {
+const ReviewItem = (props) => {
   let state = {};
+
+  let datatoSet = {};
+  for (const key in props.initialValue) {
+    let labelset = "";
+    props.formInputs.forEach((i) => {
+      if (i.listkey === key) labelset = i.label;
+    });
+    datatoSet[key] = {
+      dataval: props.initialValue[key],
+      label: labelset,
+    };
+  }
   props.formInputs.forEach((item) => {
     if (item.hasOwnProperty("validator")) {
       state[item.listkey] = true;
     }
   });
+  delete datatoSet.__v;
+  delete datatoSet._id;
+  // console.log(datatoSet);
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
@@ -477,10 +744,10 @@ const AddItem = (props) => {
         timeout={200}
         classNames="modal"
       >
-        <AddItemOverlay {...props} state={state} />
+        <ReviewItemOverlay {...props} state={state} defaultData={datatoSet} />
       </CSSTransition>
     </React.Fragment>
   );
 };
 
-export default AddItem;
+export default ReviewItem;

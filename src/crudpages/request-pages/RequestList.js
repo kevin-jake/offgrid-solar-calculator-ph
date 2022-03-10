@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHttpClient } from "../shared/components/hooks/http-hook";
-import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../shared/context/auth-context";
-import AlertModal from "../shared/components/UIElements/AlertModal";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import AlertModal from "../../shared/components/UIElements/AlertModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { AuthContext } from "../../shared/context/auth-context";
+
 import RequestItems from "./RequestItems";
 
 const RequestList = ({ fields, title, fetch }) => {
@@ -71,7 +72,6 @@ const RequestList = ({ fields, title, fetch }) => {
     } else {
       list = requestlist.filter((items) => !items.hasOwnProperty("id_to_edit"));
     }
-    console.log(list);
     if (list.length === 0) {
       return (
         <>
@@ -99,6 +99,9 @@ const RequestList = ({ fields, title, fetch }) => {
                       </th>
                     )}
                     {header.map((head) => th(head))}
+                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                      Requestor
+                    </th>
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
                   </tr>
                 </thead>

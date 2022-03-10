@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { VALIDATOR_NUMBER, VALIDATOR_REQUIRE } from "../shared/util/validators";
+import {
+  VALIDATOR_NUMBER,
+  VALIDATOR_REQUIRE,
+} from "../../shared/util/validators";
 import RequestList from "./RequestList";
 
 const inverterFields = [
