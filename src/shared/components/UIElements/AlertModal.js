@@ -116,7 +116,7 @@ const AlertModal = ({ msg, type }) => {
           { duration: 3000 }
         );
       default:
-        return <></>;
+        return null;
     }
   };
 

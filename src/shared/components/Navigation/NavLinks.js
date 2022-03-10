@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { HomeContext } from "../../../homepage/context/home-context";
 import { AuthContext } from "../../context/auth-context";
@@ -9,7 +9,12 @@ const NavLinks = () => {
   const { reset } = useContext(HomeContext);
   const [active, setActive] = useState(1);
 
+  useEffect(() => {
+    setActive(1);
+  }, [isLoggedIn]);
+
   const handleLogout = () => {
+    handleActive(1);
     logout();
     reset();
   };
@@ -95,7 +100,24 @@ const NavLinks = () => {
             >
               SCC List
             </NavLink>
-          </p>{" "}
+          </p>
+          {role === "Admin" && (
+            <p
+              className={`mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 ${
+                active === 6 ? "text-blue-500 font-bold" : "text-gray-700"
+              }`}
+            >
+              <NavLink
+                to="/requests"
+                exact
+                onClick={() => {
+                  handleActive(6);
+                }}
+              >
+                Requests
+              </NavLink>
+            </p>
+          )}
         </>
       )}
       {!isLoggedIn && (

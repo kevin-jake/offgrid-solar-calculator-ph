@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
 import Select from "react-select";
-// import { LOVContext } from "../../homepage/context/lov-context";
 import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
@@ -11,30 +10,21 @@ import { AuthContext } from "../../shared/context/auth-context";
 import AlertModal from "../../shared/components/UIElements/AlertModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const EditItemOverlay = ({
+const ReviewItemOverlay = ({
   onCancel,
   formInputs,
   title,
   state,
   defaultData,
   onUpdate,
+  reviewType,
 }) => {
   const [content, setContent] = useState(<></>);
-  // const {
-  //   inverters,
-  //   batterylist,
-  //   pvlist,
-  //   scclist,
-  //   setInvLOV,
-  //   setBatteryLOV,
-  //   setPVLOV,
-  //   setSCCLOV,
-  // } = useContext(LOVContext);
-
   const { isLoading, error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
   const [dataState, setDataState] = useState(defaultData);
+  const [oldData, setOldData] = useState({});
   const [validState, setValidState] = useState(state);
   const [validatorState, setValidator] = useState({});
   const [selectedState, setSelectedState] = useState({
@@ -46,7 +36,7 @@ const EditItemOverlay = ({
   useEffect(() => {
     setContent(renderContent());
     // eslint-disable-next-line
-  }, [validState, dataState, selectedState]);
+  }, [validState, dataState, selectedState, oldData]);
 
   useEffect(() => {
     const setValid = validatorState;
@@ -66,6 +56,11 @@ const EditItemOverlay = ({
     setDataState(dataState);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (dataState.hasOwnProperty("id_to_edit"))
+      fetchIdtoEdit(title, dataState.id_to_edit.dataval);
+  }, [dataState]);
   const validateGeneral = (validator, label, value, objkey) => {
     let returnObj = {};
     const errorObj = errorMsg;
@@ -202,6 +197,25 @@ const EditItemOverlay = ({
     } catch (err) {}
   };
 
+  const fetchIdtoEdit = async (title, id_to_edit) => {
+    let api_suffix;
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
+    try {
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix + "/" + id_to_edit,
+        "GET",
+        null,
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      setOldData(responseData[api_suffix]);
+    } catch (err) {}
+  };
+
   const handleSave = (event, data, title) => {
     event.preventDefault();
     switch (title) {
@@ -255,9 +269,8 @@ const EditItemOverlay = ({
     setContent(renderContent());
   };
 
+  //rendering fields for ADD reviews
   const renderInputs = (obj, data) => {
-    // console.log(obj);
-    // console.log(data);
     if (obj.type === "select") {
       const index = obj.options.findIndex(
         (x) => x.value === data[obj.listkey].dataval
@@ -439,6 +452,230 @@ const EditItemOverlay = ({
       </div>
     );
   };
+
+  //rendering fields for EDIT reviews
+  const renderInputsEdit = (obj, data) => {
+    if (oldData) {
+      if (obj.type === "select") {
+        const index = obj.options.findIndex(
+          (x) => x.value === data[obj.listkey].dataval
+        );
+        // console.log(obj.options[index]);
+        return (
+          <div key={obj.listkey}>
+            <label
+              className="text-gray-700 dark:text-gray-200"
+              htmlFor={obj.listkey}
+            >
+              {obj.label}
+              {obj.validator && "*"}
+            </label>
+            <Select
+              className={`block w-full px-4 py-2 mt-2 ${
+                validState.hasOwnProperty(obj.listkey)
+                  ? validState[obj.listkey]
+                    ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                    : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                  : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+              }`}
+              defaultValue={
+                selectedState.value === "" ? obj.options[index] : selectedState
+              }
+              onChange={(e) =>
+                handleItemChanged(
+                  e,
+                  obj.listkey,
+                  dataState,
+                  obj.validator,
+                  obj.label
+                )
+              }
+              options={obj.options}
+            />
+            <p className="text-red-700 text-xs">
+              {errorMsg.hasOwnProperty(obj.listkey) &&
+                errorMsg[obj.listkey].message}
+            </p>
+            <p className=" inline-block text-gray-700 dark:text-gray-200 font-light text-sm">
+              Old value:
+            </p>
+            <p className="inline-block w-full px-2 py-1 mt-2 text-gray-700 rounded-md bg-blue-50 font-light text-sm break-words">
+              {oldData[obj.listkey]}
+            </p>
+          </div>
+        );
+      }
+      if (obj.hasOwnProperty("unit")) {
+        if (obj.unit !== "Php") {
+          return (
+            <div key={obj.listkey}>
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor={obj.listkey}
+              >
+                <span>
+                  {obj.label}{" "}
+                  <p className="inline-block text-red-700 text-sm font-bold">
+                    {obj.validator && " *"}
+                  </p>
+                </span>
+              </label>
+              <div className="grid grid-cols-2 gap-2 justify-items-start place-items-center">
+                <input
+                  id={obj.listkey}
+                  defaultValue={data[obj.listkey].dataval}
+                  type={obj.type}
+                  onChange={(e) =>
+                    handleInputChange(
+                      e.target.value,
+                      obj.listkey,
+                      dataState,
+                      obj.validator,
+                      obj.label
+                    )
+                  }
+                  className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                    validState.hasOwnProperty(obj.listkey)
+                      ? validState[obj.listkey]
+                        ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                        : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                      : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  }`}
+                />{" "}
+                {obj.unit}
+              </div>
+              <p className="text-red-700 text-xs">
+                {errorMsg.hasOwnProperty(obj.listkey) &&
+                  errorMsg[obj.listkey].message}
+              </p>
+              <p className=" inline-block text-gray-700 dark:text-gray-200 font-light text-sm">
+                Old value:
+              </p>
+              <div className="inline-block grid grid-cols-3 gap-2 justify-items-start place-items-center">
+                <p className="inline-block w-full px-2 py-1 mt-2 text-gray-700 rounded-md bg-blue-50 font-light text-sm break-words">
+                  {oldData[obj.listkey]}
+                </p>
+                <p className="inline-block ml-2 text-gray-700 dark:text-gray-200 font-normal text-sm">
+                  {obj.unit}
+                </p>
+              </div>
+            </div>
+          );
+        } else {
+          return (
+            <div key={obj.listkey}>
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor={obj.listkey}
+              >
+                <span>
+                  {obj.label}{" "}
+                  <p className="inline-block text-red-700 text-sm font-bold">
+                    {obj.validator && " *"}
+                  </p>
+                </span>
+              </label>
+              <div className="justify-items-start place-items-center">
+                <span>
+                  {" "}
+                  {obj.unit}
+                  <input
+                    id={obj.listkey}
+                    type={obj.type}
+                    defaultValue={data[obj.listkey].dataval}
+                    onChange={(e) =>
+                      handleInputChange(
+                        e.target.value,
+                        obj.listkey,
+                        dataState,
+                        obj.validator,
+                        obj.label
+                      )
+                    }
+                    className={`inline-block w-3/5 mx-2 px-4 py-2 mt-2 border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+                      validState.hasOwnProperty(obj.listkey)
+                        ? validState[obj.listkey]
+                          ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                          : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                        : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                    }`}
+                  />
+                </span>
+                <div>
+                  <p className="text-red-700 text-xs">
+                    {errorMsg.hasOwnProperty(obj.listkey) &&
+                      errorMsg[obj.listkey].message}
+                  </p>
+                  <p className=" inline-block text-gray-700 dark:text-gray-200 font-light text-sm">
+                    Old value:
+                  </p>
+                  <div>
+                    <p className="inline-block mr-2 text-gray-700 dark:text-gray-200 font-normal text-sm">
+                      {" "}
+                      {obj.unit}
+                    </p>
+                    <p className="inline-block w-3/5 px-2 py-1 mt-2 text-gray-700 rounded-md bg-blue-50 font-light text-sm ">
+                      {oldData[obj.listkey]}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      }
+      if (obj.listkey === "id") {
+        return null;
+      }
+      return (
+        <div key={obj.listkey}>
+          <label
+            className="text-gray-700 dark:text-gray-200"
+            htmlFor={obj.listkey}
+          >
+            <span>
+              {obj.label}{" "}
+              <p className="inline-block text-red-700 text-sm font-bold">
+                {obj.validator && " *"}
+              </p>
+            </span>
+          </label>
+          <input
+            id={obj.listkey}
+            defaultValue={data[obj.listkey].dataval}
+            onChange={(e) =>
+              handleInputChange(
+                e.target.value,
+                obj.listkey,
+                dataState,
+                obj.validator,
+                obj.label
+              )
+            }
+            type="text"
+            className={`block w-full px-4 py-2 mt-2  border rounded-md focus:ring-opacity-40 focus:outline-none focus:ring ${
+              validState.hasOwnProperty(obj.listkey)
+                ? validState[obj.listkey]
+                  ? "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+                  : "text-red-700 bg-red-50 dark:bg-red-800 border-red-200 dark:text-red-300 dark:border-red-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300"
+                : "text-gray-700 bg-white dark:bg-gray-800 border-gray-200 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300"
+            }`}
+          />
+          <p className="text-red-700 text-xs">
+            {errorMsg.hasOwnProperty(obj.listkey) &&
+              errorMsg[obj.listkey].message}
+          </p>
+          <p className=" inline-block text-gray-700 dark:text-gray-200 font-light text-sm">
+            Old value:
+          </p>
+          <p className="inline-block w-full px-2 py-1 mt-2 text-gray-700 rounded-md bg-blue-50 font-light text-sm break-words">
+            {oldData[obj.listkey]}
+          </p>
+        </div>
+      );
+    }
+  };
+
   const renderContent = () => {
     return (
       <>
@@ -473,12 +710,48 @@ const EditItemOverlay = ({
               </div>
               <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
                 <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                  Edit {title} Data ({dataState.id.dataval})
+                  {reviewType === "ADD"
+                    ? "Add " + title + " Review"
+                    : "Edit " +
+                      title +
+                      " Review (ID to Edit: " +
+                      dataState.id_to_edit.dataval +
+                      ")"}
                 </h2>
 
                 <form onSubmit={(e) => handleSave(e, dataState, title)}>
                   <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                    {formInputs.map((obj) => renderInputs(obj, dataState))}
+                    <div>
+                      <label
+                        className="text-gray-700 dark:text-gray-200"
+                        htmlFor="creator"
+                      >
+                        Requestor
+                      </label>
+                      <input
+                        id="creator"
+                        className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                        defaultValue={dataState.creator.dataval}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-gray-700 dark:text-gray-200"
+                        htmlFor="created_at"
+                      >
+                        Date Requested
+                      </label>
+                      <input
+                        id="created_at"
+                        className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
+                        defaultValue={new Date(dataState.created_at.dataval)}
+                      />
+                    </div>
+                    {reviewType === "ADD"
+                      ? formInputs.map((obj) => renderInputs(obj, dataState))
+                      : formInputs.map((obj) =>
+                          renderInputsEdit(obj, dataState, title)
+                        )}
                   </div>
                   <div className="flex justify-end mt-6">
                     <button
@@ -501,7 +774,7 @@ const EditItemOverlay = ({
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));
 };
 
-const EditItem = (props) => {
+const ReviewItem = (props) => {
   let state = {};
 
   let datatoSet = {};
@@ -520,7 +793,6 @@ const EditItem = (props) => {
       state[item.listkey] = true;
     }
   });
-  delete datatoSet.creator;
   delete datatoSet.__v;
   delete datatoSet._id;
   // console.log(datatoSet);
@@ -534,10 +806,10 @@ const EditItem = (props) => {
         timeout={200}
         classNames="modal"
       >
-        <EditItemOverlay {...props} state={state} defaultData={datatoSet} />
+        <ReviewItemOverlay {...props} state={state} defaultData={datatoSet} />
       </CSSTransition>
     </React.Fragment>
   );
 };
 
-export default EditItem;
+export default ReviewItem;

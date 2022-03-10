@@ -44,7 +44,6 @@ export const validate = (value, validators) => {
       isValid = isValid && /^\S+@\S+\.\S+$/.test(value);
     }
     if (validator.type === VALIDATOR_TYPE_NUMBER) {
-      console.log(value);
       if (/^[A-Za-z]+$/.test(value)) {
         isValid = false;
       } else {

@@ -55,6 +55,20 @@ const MainCalculation = () => {
           setInverter(responseData.user.data.inverter);
           setPV(responseData.user.data.solarpanel);
           setVoltage(responseData.user.data.voltage_system);
+          switch (responseData.user.data.voltage_system) {
+            case 12:
+              setOpenTab(1);
+              break;
+            case 24:
+              setOpenTab(2);
+              break;
+            case 48:
+              setOpenTab(3);
+              break;
+            default:
+              setOpenTab(1);
+              break;
+          }
         }
       } catch (err) {}
     };

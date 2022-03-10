@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import Backdrop from "../../shared/components/UIElements/Backdrop";
 import Select from "react-select";
-// import { LOVContext } from "../../homepage/context/lov-context";
 import { validate } from "../../shared/util/validators";
 import { getErrorMessage } from "../../shared/util/errorMessages";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
@@ -13,17 +12,6 @@ import AlertModal from "../../shared/components/UIElements/AlertModal";
 
 const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   const [content, setContent] = useState(<></>);
-  // const {
-  //   inverters,
-  //   batterylist,
-  //   pvlist,
-  //   scclist,
-  //   setInvLOV,
-  //   setBatteryLOV,
-  //   setPVLOV,
-  //   setSCCLOV,
-  // } = useContext(LOVContext);
-
   const { isLoading, error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
@@ -239,6 +227,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   };
 
   const renderInputs = (obj) => {
+    console.log(obj.listkey);
     if (obj.type === "select") {
       return (
         <div key={obj.listkey}>
@@ -369,7 +358,7 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
       }
     }
     if (obj.listkey === "id") {
-      return <></>;
+      return null;
     }
     return (
       <div key={obj.listkey}>
