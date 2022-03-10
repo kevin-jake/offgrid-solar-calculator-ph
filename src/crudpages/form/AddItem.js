@@ -227,7 +227,6 @@ const AddItemOverlay = ({ onCancel, onUpdate, formInputs, title, state }) => {
   };
 
   const renderInputs = (obj) => {
-    console.log(obj.listkey);
     if (obj.type === "select") {
       return (
         <div key={obj.listkey}>
