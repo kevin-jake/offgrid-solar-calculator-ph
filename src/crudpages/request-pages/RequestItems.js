@@ -36,7 +36,7 @@ const RequestItems = ({ formInputs, title, data, fetchType }) => {
     items.unit ? (unit = items.unit) : (unit = "");
     if (columns.hasOwnProperty(objkey)) {
       if (objkey === "id") {
-        return <></>;
+        return null;
       }
       if (unit === "Php") {
         returntds.push(

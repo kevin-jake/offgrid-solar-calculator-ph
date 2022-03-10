@@ -396,7 +396,7 @@ const EditItemOverlay = ({
       }
     }
     if (obj.listkey === "id") {
-      return <></>;
+      return null;
     }
     return (
       <div key={obj.listkey}>
