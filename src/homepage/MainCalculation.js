@@ -134,39 +134,41 @@ const MainCalculation = () => {
     pvIsc,
     pvinParallel
   ) => {
-    let state = validState;
-    const totalVoltage = batteryVoltage * batteryInSeries;
-    const mpptInputAmps = solarTotalWattage / totalVoltage;
-    const pwminput = pvIsc * pvinParallel * 1.25;
-    if (scctype === "") {
-      state.scc.valid = true;
-      state.scc.message = "";
-      setValidState(state);
-      setValid(state);
-    } else if (scctype === "MPPT") {
-      if (Math.ceil(mpptInputAmps / 10) * 10 <= sccAmpRating) {
+    if (batteryInSeries && solarTotalWattage && pvinParallel && pvIsc) {
+      let state = validState;
+      const totalVoltage = batteryVoltage * batteryInSeries;
+      const mpptInputAmps = solarTotalWattage / totalVoltage;
+      const pwminput = pvIsc * pvinParallel * 1.25;
+      if (scctype === "") {
         state.scc.valid = true;
         state.scc.message = "";
-      } else {
-        state.scc.valid = false;
-        state.scc.message =
-          "The SCC Ampere Rating is not enough for the panel it needs at least: " +
-          Math.ceil(mpptInputAmps / 10) * 10;
+        setValidState(state);
+        setValid(state);
+      } else if (scctype === "MPPT") {
+        if (Math.ceil(mpptInputAmps / 10) * 10 <= sccAmpRating) {
+          state.scc.valid = true;
+          state.scc.message = "";
+        } else {
+          state.scc.valid = false;
+          state.scc.message =
+            "The SCC Ampere Rating is not enough for the panel it needs at least: " +
+            Math.ceil(mpptInputAmps / 10) * 10;
+        }
+        setValidState(state);
+        setValid(state);
+      } else if (scctype === "PWM") {
+        if (Math.ceil(pwminput / 10) * 10 <= sccAmpRating) {
+          state.scc.valid = true;
+          state.scc.message = "";
+        } else {
+          state.scc.valid = false;
+          state.scc.message =
+            "The SCC Ampere Rating is not enough for the panel it needs at least: " +
+            Math.ceil(pwminput / 10) * 10;
+        }
+        setValidState(state);
+        setValid(state);
       }
-      setValidState(state);
-      setValid(state);
-    } else if (scctype === "PWM") {
-      if (Math.ceil(pwminput / 10) * 10 <= sccAmpRating) {
-        state.scc.valid = true;
-        state.scc.message = "";
-      } else {
-        state.scc.valid = false;
-        state.scc.message =
-          "The SCC Ampere Rating is not enough for the panel it needs at least: " +
-          Math.ceil(pwminput / 10) * 10;
-      }
-      setValidState(state);
-      setValid(state);
     }
   };
 
@@ -230,7 +232,7 @@ const MainCalculation = () => {
             {" "}
             Voltage System{" "}
           </h1>
-          <div className="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
+          <div className=" voltage-system flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
             <button
               onClick={() => {
                 setVoltage(12);
