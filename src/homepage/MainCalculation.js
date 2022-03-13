@@ -11,6 +11,8 @@ import { AuthContext } from "../shared/context/auth-context";
 import { useHttpClient } from "../shared/components/hooks/http-hook";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import AlertModal from "../shared/components/UIElements/AlertModal";
+import { Steps } from "intro.js-react";
+import "intro.js/introjs.css";
 
 const MainCalculation = () => {
   const {
@@ -41,6 +43,7 @@ const MainCalculation = () => {
   const [openTab, setOpenTab] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState();
+  const [tutEnabled, setTutEnabled] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -223,15 +226,59 @@ const MainCalculation = () => {
     }
   };
 
+  const steps = [
+    {
+      title: "Tutorial",
+      element: ".body",
+      intro:
+        "<span> Visit this link for the demo: <a href='https://www.loom.com/share/e5d73e0e25c247eaa3b3327e78f8ee75' class=' px-4 py-2 mt-2 text-blue-600 visited:text-purple-600' target='_blank' rel='noopener noreferrer' >Click here </a></span>",
+    },
+  ];
+
+  const onExit = () => {
+    setTutEnabled(false);
+  };
+
+  const handletutbtn = () => {
+    setTutEnabled(true);
+  };
+
+  const handleClearAll = () => {
+    // setTutEnabled(true);
+  };
+
   return (
     <>
       {isLoading && !isSaving && <LoadingSpinner />}
       <section className="bg-white mt-2 dark:bg-gray-900">
         <div className="container-lg px-6 py-8 mx-4 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-          <h1 className="text-2xl my-4 font-semibold text-gray-700 capitalize dark:text-white">
-            {" "}
-            Voltage System{" "}
-          </h1>
+          <Steps
+            enabled={tutEnabled}
+            steps={steps}
+            initialStep={0}
+            onExit={onExit}
+            options={{ showBullets: false, showButtons: false }}
+          />
+          <div className="grid grid-row xl:grid-cols-2 lg:grid-cols-2 gap-4 relative">
+            <h1 className="text-2xl my-4 sm:mb-2 xs:mb-2 font-semibold text-gray-700 capitalize dark:text-white">
+              {" "}
+              Voltage System{" "}
+            </h1>
+            <div className="grid grid-row xl:grid-cols-2 lg:grid-cols-2 gap-4 relative px-5 py-2 lg:w-auto lg:absolute lg:bottom-2 lg:right-6 xl:bottom-2 xl:right-6">
+              <button
+                className="block px-5 py-2 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                onClick={handletutbtn}
+              >
+                Start Tutorial
+              </button>
+              <button
+                className="block px-5 py-2 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
+                onClick={handleClearAll}
+              >
+                Clear all
+              </button>
+            </div>
+          </div>
           <div className=" voltage-system flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-700">
             <button
               onClick={() => {

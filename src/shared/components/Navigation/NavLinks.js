@@ -120,6 +120,19 @@ const NavLinks = () => {
           )}
         </>
       )}
+      <p
+        className={
+          "mx-8 transition-colors duration-200 transform dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500 text-gray-700"
+        }
+      >
+        <a
+          href="https://m.me/jevinkake"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact me
+        </a>
+      </p>
       {!isLoggedIn && (
         <p className="block px-5 py-2 mt-4 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto">
           <NavLink to="/auth">Login or Sign-Up</NavLink>
