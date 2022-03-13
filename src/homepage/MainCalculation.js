@@ -36,6 +36,7 @@ const MainCalculation = () => {
     setBattery,
     setInverter,
     setPV,
+    reset,
   } = useContext(HomeContext);
   const { isLoggedIn, token, userId } = useContext(AuthContext);
   const { isLoading, sendRequest, error, clearError } = useHttpClient();
@@ -245,6 +246,7 @@ const MainCalculation = () => {
 
   const handleClearAll = () => {
     // setTutEnabled(true);
+    reset();
   };
 
   return (
