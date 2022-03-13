@@ -175,7 +175,7 @@ const SCCList = () => {
             </div>
             {/* {role === "Admin" && ( */}
             <button
-              className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
+              className="sticky lg:float-right xl:float-right block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto left-64 bottom-2 lg:right-6 xl:right-6 2xl:right-6"
               onClick={setModal}
             >
               Add Item

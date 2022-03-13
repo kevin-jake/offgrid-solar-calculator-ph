@@ -136,8 +136,26 @@ const HomeReducer = (state, action) => {
         seriesParallelTable: action.seriesParallelTable,
       };
     case "reset":
-      // console.log(action.initState);
-      return action.initState;
+      const stateSet = action.initState;
+      stateSet.loadtab = {
+        itemState: {
+          items: [
+            {
+              loadname: "",
+              userqty: 0,
+              wattage: 0,
+              totalwatts: 0,
+              ophours: 0,
+              watthours: 0,
+            },
+          ],
+        },
+        overalls: {
+          totalwatts: 0,
+          watthours: 0,
+        },
+      };
+      return stateSet;
     default:
       return state;
   }

@@ -140,7 +140,7 @@ const InverterList = () => {
       return (
         <>
           <div className="my-2 mx-2 py-6 pb-8 overflow-x-auto border-2 border-blue-400 dark:border-blue-300 rounded-xl relative">
-            <div className="align-middle mb-5 inline-block min-w-full overflow-hidden bg-white  px-8 pt-3 rounded-bl-lg rounded-br-lg">
+            <div className="relative align-middle mb-5 inline-block min-w-full overflow-hidden bg-white  px-8 pt-3 rounded-bl-lg rounded-br-lg">
               <table className="min-w-full">
                 <thead>
                   <tr>
@@ -184,7 +184,7 @@ const InverterList = () => {
             </div>
             {/* {role === "Admin" && ( */}
             <button
-              className="block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto absolute bottom-2 right-6"
+              className="sticky lg:float-right xl:float-right block px-5 py-2 mt-5 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto left-64 bottom-2 lg:right-6 xl:right-6 2xl:right-6"
               onClick={setModal}
             >
               Add Item
