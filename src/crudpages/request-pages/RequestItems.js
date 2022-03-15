@@ -1,12 +1,22 @@
 import React, { useContext, useState } from "react";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import { numberWithCommas } from "../../shared/util/format";
+import RejectModal from "./RejectModal";
 import ReviewItem from "./Review";
 
-const RequestItems = ({ formInputs, title, data, fetchType, keyIndex }) => {
+const RequestItems = ({
+  formInputs,
+  title,
+  data,
+  fetchType,
+  keyIndex,
+  onUpdate,
+}) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { role } = useContext(AuthContext);
+  const { role, token } = useContext(AuthContext);
+  const { sendRequest } = useHttpClient();
 
   delete data.__v;
   delete data._id;
@@ -25,6 +35,73 @@ const RequestItems = ({ formInputs, title, data, fetchType, keyIndex }) => {
 
   const closeDelete = () => {
     setShowDeleteModal(false);
+  };
+
+  const onApprove = async (data, title, fetchType) => {
+    let datatoPush = data;
+    let api_suffix;
+
+    datatoPush.status = "Approved";
+    title === "Solar Panel"
+      ? (api_suffix = "pv")
+      : (api_suffix = title.toLowerCase());
+    if (fetchType === "ADD") {
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/" + api_suffix,
+          "POST",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/request/" +
+            datatoPush.id,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+        onUpdate(true, fetchType, title);
+      } catch (err) {}
+    } else if (fetchType === "EDIT") {
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/" +
+            datatoPush.id_to_edit,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/request/" +
+            datatoPush.id,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+        onUpdate(true, fetchType, title);
+      } catch (err) {}
+    }
   };
 
   const tds = (items, columns) => {
@@ -122,7 +199,7 @@ const RequestItems = ({ formInputs, title, data, fetchType, keyIndex }) => {
             </button>
             <button
               className="inline-flex w-32 items-center border-blue-400 border h-10 px-5 text-blue-700 transition-colors duration-150 bg-white rounded-lg focus:shadow-outline hover:bg-blue-800 hover:text-white"
-              // onClick={openEdit}
+              onClick={(e) => onApprove(data, title, fetchType)}
             >
               <span className="font-normal mr-3">Approve</span>
               <svg
@@ -169,7 +246,12 @@ const RequestItems = ({ formInputs, title, data, fetchType, keyIndex }) => {
         formInputs={formInputs}
         initialValue={data}
         reviewType={fetchType}
-        // onUpdate={update}
+        title={title}
+      />
+      <RejectModal
+        show={showDeleteModal}
+        onCancel={closeDelete}
+        data={data}
         title={title}
       />
     </>
