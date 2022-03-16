@@ -113,7 +113,7 @@ const RejectOverlay = ({ onCancel, data, title, onUpdate }) => {
                 </svg>
                 <h2 className="text-xl font-bold py-4 ">Are you sure?</h2>
                 <p className="text-sm text-gray-500 px-8">
-                  Do you really want to delete your this row?
+                  Do you really want to reject this request?
                 </p>
               </div>
               <div className="p-3 grid gap-4 mt-2 grid-cols-2 sm:grid-row">
@@ -129,7 +129,7 @@ const RejectOverlay = ({ onCancel, data, title, onUpdate }) => {
                   onClick={(e) => handleDelete(e, data, title)}
                 >
                   {" "}
-                  Delete
+                  Reject
                 </button>
               </div>
             </section>

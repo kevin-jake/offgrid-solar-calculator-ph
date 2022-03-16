@@ -37,6 +37,10 @@ const RequestItems = ({
     setShowDeleteModal(false);
   };
 
+  const update = (success, operation, title) => {
+    onUpdate(success, operation, title);
+  };
+
   const onApprove = async (data, title, fetchType) => {
     let datatoPush = data;
     let api_suffix;
@@ -243,6 +247,7 @@ const RequestItems = ({
       <ReviewItem
         show={showEditModal}
         onCancel={closeEdit}
+        onUpdate={update}
         formInputs={formInputs}
         initialValue={data}
         reviewType={fetchType}
@@ -251,6 +256,7 @@ const RequestItems = ({
       <RejectModal
         show={showDeleteModal}
         onCancel={closeDelete}
+        onUpdate={update}
         data={data}
         title={title}
       />

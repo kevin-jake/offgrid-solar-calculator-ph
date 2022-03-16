@@ -163,38 +163,79 @@ const ReviewItemOverlay = ({
     }
   };
 
-  const patchToBackend = async (data, title) => {
+  const patchToBackend = async (data, title, fetchType) => {
     let datatoPush = {};
     let api_suffix;
-    let method = "PATCH";
     for (const key in data) {
       datatoPush[key] = data[key].dataval;
     }
+    datatoPush.status = "Approved";
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
     if (auth.role === "User") {
       api_suffix = api_suffix + "/request";
-      method = "POST";
     }
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL +
-          "/" +
-          api_suffix +
-          "/" +
-          datatoPush.id,
-        method,
-        JSON.stringify(datatoPush),
-        {
-          Authorization: "Bearer " + auth.token,
-          "Content-Type": "application/json",
-        }
-      );
-      onCancel();
-      onUpdate();
-      // history.push('/');
-    } catch (err) {}
+    if (fetchType === "ADD") {
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/" + api_suffix,
+          "POST",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + auth.token,
+            "Content-Type": "application/json",
+          }
+        );
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/request/" +
+            datatoPush.id,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + auth.token,
+            "Content-Type": "application/json",
+          }
+        );
+        onCancel();
+        onUpdate(true, fetchType, title);
+      } catch (err) {}
+    } else if (fetchType === "EDIT") {
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/" +
+            datatoPush.id_to_edit,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + auth.token,
+            "Content-Type": "application/json",
+          }
+        );
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL +
+            "/" +
+            api_suffix +
+            "/request/" +
+            datatoPush.id,
+          "PATCH",
+          JSON.stringify(datatoPush),
+          {
+            Authorization: "Bearer " + auth.token,
+            "Content-Type": "application/json",
+          }
+        );
+        onCancel();
+        onUpdate(true, fetchType, title);
+        // history.push('/');
+      } catch (err) {}
+    }
   };
 
   const fetchIdtoEdit = async (title, id_to_edit) => {
@@ -216,7 +257,7 @@ const ReviewItemOverlay = ({
     } catch (err) {}
   };
 
-  const handleSave = (event, data, title) => {
+  const handleSave = (event, data, title, fetchType) => {
     event.preventDefault();
     switch (title) {
       case "Battery": {
@@ -226,7 +267,7 @@ const ReviewItemOverlay = ({
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          patchToBackend(data, title);
+          patchToBackend(data, title, fetchType);
         }
         break;
       }
@@ -237,7 +278,7 @@ const ReviewItemOverlay = ({
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          patchToBackend(data, title);
+          patchToBackend(data, title, fetchType);
         }
         break;
       }
@@ -248,7 +289,7 @@ const ReviewItemOverlay = ({
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          patchToBackend(data, title);
+          patchToBackend(data, title, fetchType);
         }
         break;
       }
@@ -259,7 +300,7 @@ const ReviewItemOverlay = ({
           saveValid = saveValid && validatingFields[key].stateSet[key];
         }
         if (saveValid) {
-          patchToBackend(data, title);
+          patchToBackend(data, title, fetchType);
         }
         break;
       }
@@ -719,7 +760,9 @@ const ReviewItemOverlay = ({
                       ")"}
                 </h2>
 
-                <form onSubmit={(e) => handleSave(e, dataState, title)}>
+                <form
+                  onSubmit={(e) => handleSave(e, dataState, title, reviewType)}
+                >
                   <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                     <div>
                       <label

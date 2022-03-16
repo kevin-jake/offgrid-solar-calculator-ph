@@ -52,7 +52,7 @@ const RequestList = ({ fields, title, fetch }) => {
         setMsg(" " + title + " modified successfully");
       }
       if (success && operation === "DELETE") {
-        setMsg(" " + title + " deleted successfully");
+        setMsg(" " + title + " rejected successfully");
       }
     }
     setRefresh(!refresh);
