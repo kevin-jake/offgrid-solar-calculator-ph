@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { numberWithCommas } from "../../shared/util/format";
+import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
 // import { LOVContext } from "../context/lov-context";
 import SCCComponent from "./SCCComponent";
 
-const SolarPanelSCCTab = ({ pvdata }) => {
+const SolarPanelSCCTab = () => {
+  const { solarpanel } = useContext(GlobalContext);
   const { solarpanelstab, setPV } = useContext(HomeContext);
   const [itemState, setItemState] = useState(solarpanelstab);
   const [sunhourstate, setshState] = useState(solarpanelstab.sunhours);
@@ -73,15 +75,14 @@ const SolarPanelSCCTab = ({ pvdata }) => {
   };
 
   const handleSHChange = (value) => {
+    setshState(value);
     let setstate = itemState;
     setstate.sunhours = 1 * value;
-    setshState(value);
     setItemState(setstate);
-    // console.log(itemState);
     setPV(setstate);
+    // console.log(itemState);
   };
 
-  // console.log(pvdata);
   return (
     <>
       <div className="container-lg px-6 py-4 mx-4">
@@ -161,7 +162,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
-                    value={(pvdata.pvseries = pvdata.pvseries || "")}
+                    value={(solarpanel.pvseries = solarpanel.pvseries || "")}
                   />
                 </div>
                 <div>
@@ -176,7 +177,9 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
-                    value={(pvdata.pvparallel = pvdata.pvparallel || "")}
+                    value={
+                      (solarpanel.pvparallel = solarpanel.pvparallel || "")
+                    }
                   />
                 </div>
                 <div>
@@ -191,7 +194,7 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
-                    value={pvdata.totalwattage + " W"}
+                    value={solarpanel.totalwattage + " W"}
                   />
                 </div>
                 <div>
@@ -206,7 +209,10 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
-                    value={(pvdata.totalpv = pvdata.totalpv || "")}
+                    value={
+                      (solarpanel.totalnumberpv =
+                        solarpanel.totalnumberpv || "")
+                    }
                   />
                 </div>
                 <div>
@@ -239,9 +245,9 @@ const SolarPanelSCCTab = ({ pvdata }) => {
                     className="block w-full px-4 py-2 mt-2 text-gray-700 rounded-md bg-blue-50 font-medium"
                     disabled={true}
                     value={
-                      pvdata.totalprice
+                      solarpanel.totalprice
                         ? "Php " +
-                          numberWithCommas(pvdata.totalprice.toFixed(2))
+                          numberWithCommas(solarpanel.totalprice.toFixed(2))
                         : "Php 0.00"
                     }
                   />
