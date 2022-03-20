@@ -21,22 +21,57 @@ const SolarPanelSection = () => {
       </div>
       <ul className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-          Solar Panel Name: {solarpanel.pvname}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">
+              Solar Panel Name:
+            </p>
+            <p className=" dark:text-white font-bold">{solarpanel.pvname}</p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          No. of Panels in Parallel: {solarpanel.pvparallel}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">
+              Parallel Panels:
+            </p>
+            <p className=" dark:text-white font-bold">
+              {solarpanel.pvparallel}
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          No. of Panels in Series: {solarpanel.pvseries}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Series Panels:</p>
+            <p className=" dark:text-white font-bold"> {solarpanel.pvseries}</p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Total Wattage: {kiloformat(solarpanel.totalwattage) + "W"}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Total Wattage:</p>
+            <p className=" dark:text-white font-bold">
+              {" "}
+              {kiloformat(solarpanel.totalwattage) + "W"}
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Total No. of Panels: {solarpanel.totalnumberpv}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">
+              Total No. of Panels:
+            </p>
+            <p className=" dark:text-white font-bold">
+              {solarpanel.totalnumberpv}
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Total Price: Php {numberWithCommas(solarpanel.totalprice.toFixed(2))}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">
+              Total Price: Php
+            </p>
+            <p className=" dark:text-white font-bold">
+              Php {numberWithCommas(solarpanel.totalprice.toFixed(2))}
+            </p>
+          </div>
         </li>
       </ul>
     </>
