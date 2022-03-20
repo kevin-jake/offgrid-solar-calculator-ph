@@ -89,12 +89,19 @@ const SCCList = () => {
       if (success && operation === "EDIT") {
         setMsg(" SCC modified successfully");
       }
+      if (success && operation === "DELETE") {
+        setMsg(" SCC deleted successfully");
+      }
     } else {
       if (success && operation === "ADD") {
-        setMsg(" SCC record addition request sent successfully");
+        setMsg(
+          " SCC record addition request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
       if (success && operation === "EDIT") {
-        setMsg(" SCC record modification request sent successfully");
+        setMsg(
+          " SCC record modification request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
     }
     setRefresh(!refresh);

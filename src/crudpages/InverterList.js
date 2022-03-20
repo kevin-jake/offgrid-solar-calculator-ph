@@ -98,12 +98,19 @@ const InverterList = () => {
       if (success && operation === "EDIT") {
         setMsg(" Inverter modified successfully");
       }
+      if (success && operation === "DELETE") {
+        setMsg(" Inverter deleted successfully");
+      }
     } else {
       if (success && operation === "ADD") {
-        setMsg(" Inverter record addition request sent successfully");
+        setMsg(
+          " Inverter record addition request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
       if (success && operation === "EDIT") {
-        setMsg(" Inverter record modification request sent successfully");
+        setMsg(
+          " Inverter record modification request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
     }
     setRefresh(!refresh);
