@@ -179,7 +179,7 @@ const TabCalc = () => {
             <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
               Solar Panel and SCC
             </h2>
-            <SolarPanelSCCTab pvdata={pvState} />
+            <SolarPanelSCCTab />
           </div>
         );
         break;
