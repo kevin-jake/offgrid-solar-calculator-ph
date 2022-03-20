@@ -197,7 +197,7 @@ const EditItemOverlay = ({
         }
       );
       onCancel();
-      onUpdate();
+      onUpdate("EDIT");
       // history.push('/');
     } catch (err) {}
   };

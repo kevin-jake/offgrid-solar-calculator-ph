@@ -5,9 +5,9 @@ import Backdrop from "../../shared/components/UIElements/Backdrop";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
-const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
+const RejectOverlay = ({ onCancel, data, title, onUpdate }) => {
   const [content, setContent] = useState(<></>);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
   useEffect(() => {
@@ -15,23 +15,29 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
     // eslint-disable-next-line
   }, [setContent]);
 
-  const deleteToBackend = async (idToDel, title) => {
+  const deleteToBackend = async (data, title) => {
+    let datatoPush = data;
     let api_suffix;
     title === "Solar Panel"
       ? (api_suffix = "pv")
       : (api_suffix = title.toLowerCase());
+    datatoPush.status = "Rejected";
     try {
       await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + "/" + api_suffix + "/" + idToDel,
-        "DELETE",
-        null,
+        process.env.REACT_APP_BACKEND_URL +
+          "/" +
+          api_suffix +
+          "/request/" +
+          datatoPush.id,
+        "PATCH",
+        JSON.stringify(datatoPush),
         {
           Authorization: "Bearer " + auth.token,
           "Content-Type": "application/json",
         }
       );
       onCancel();
-      onUpdate();
+      onUpdate(true, "DELETE", title);
       // history.push('/');
     } catch (err) {}
   };
@@ -40,21 +46,21 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
     event.preventDefault();
     switch (title) {
       case "Battery": {
-        deleteToBackend(idToDelete, title);
+        deleteToBackend(data, title);
         break;
       }
       case "Inverter": {
-        deleteToBackend(idToDelete, title);
+        deleteToBackend(data, title);
 
         break;
       }
       case "Solar Panel": {
-        deleteToBackend(idToDelete, title);
+        deleteToBackend(data, title);
 
         break;
       }
       case "SCC": {
-        deleteToBackend(idToDelete, title);
+        deleteToBackend(data, title);
         break;
       }
     }
@@ -107,7 +113,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
                 </svg>
                 <h2 className="text-xl font-bold py-4 ">Are you sure?</h2>
                 <p className="text-sm text-gray-500 px-8">
-                  Do you really want to delete your this row?
+                  Do you really want to reject this request?
                 </p>
               </div>
               <div className="p-3 grid gap-4 mt-2 grid-cols-2 sm:grid-row">
@@ -120,10 +126,10 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
                 </button>
                 <button
                   className="px-5 py-2 font-medium text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto tracking-wider"
-                  onClick={(e) => handleDelete(e, idToDelete, title)}
+                  onClick={(e) => handleDelete(e, data, title)}
                 >
                   {" "}
-                  Delete
+                  Reject
                 </button>
               </div>
             </section>
@@ -135,7 +141,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));
 };
 
-const DeleteItem = (props) => {
+const RejectModal = (props) => {
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
@@ -146,10 +152,10 @@ const DeleteItem = (props) => {
         timeout={200}
         classNames="modal"
       >
-        <DeleteItemOverlay {...props} />
+        <RejectOverlay {...props} />
       </CSSTransition>
     </React.Fragment>
   );
 };
 
-export default DeleteItem;
+export default RejectModal;

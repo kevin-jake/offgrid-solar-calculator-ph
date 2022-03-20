@@ -42,7 +42,7 @@ const DeleteItemOverlay = ({ onCancel, idToDelete, title, onUpdate }) => {
         }
       );
       onCancel();
-      onUpdate();
+      onUpdate("DELETE");
       // history.push('/');
     } catch (err) {}
   };

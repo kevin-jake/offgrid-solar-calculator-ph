@@ -25,8 +25,8 @@ const BatteryItems = ({ battlist, formInputs, onUpdate }) => {
     setShowDeleteModal(false);
   };
 
-  const update = () => {
-    onUpdate(true, "EDIT");
+  const update = (operation) => {
+    onUpdate(true, operation);
   };
 
   return (

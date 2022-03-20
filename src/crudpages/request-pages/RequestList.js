@@ -12,7 +12,7 @@ const RequestList = ({ fields, title, fetch }) => {
   const [refresh, setRefresh] = useState(true);
   const { role, token } = useContext(AuthContext);
   const [msg, setMsg] = useState();
-  const [selectedRequest, setSelectedRequest] = useState([]);
+  // const [selectedRequest, setSelectedRequest] = useState([]);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -38,6 +38,10 @@ const RequestList = ({ fields, title, fetch }) => {
     // eslint-disable-next-line
   }, [sendRequest, title, refresh]);
 
+  useEffect(() => {
+    setMsg("");
+  }, [title]);
+
   const onUpdate = (success, operation, title) => {
     setMsg("");
     if (role === "Admin") {
@@ -46,6 +50,9 @@ const RequestList = ({ fields, title, fetch }) => {
       }
       if (success && operation === "EDIT") {
         setMsg(" " + title + " modified successfully");
+      }
+      if (success && operation === "DELETE") {
+        setMsg(" " + title + " rejected successfully");
       }
     }
     setRefresh(!refresh);
@@ -69,9 +76,15 @@ const RequestList = ({ fields, title, fetch }) => {
     });
     header = header.filter((item) => item !== "ID");
     if (fetch === "EDIT") {
-      list = requestlist.filter((items) => items.hasOwnProperty("id_to_edit"));
+      list = requestlist.filter(
+        (items) =>
+          items.hasOwnProperty("id_to_edit") && items.status === "Request"
+      );
     } else {
-      list = requestlist.filter((items) => !items.hasOwnProperty("id_to_edit"));
+      list = requestlist.filter(
+        (items) =>
+          !items.hasOwnProperty("id_to_edit") && items.status === "Request"
+      );
     }
     if (list.length === 0) {
       return (
@@ -124,8 +137,7 @@ const RequestList = ({ fields, title, fetch }) => {
                       title={title}
                       data={item}
                       fetchType={fetch}
-                      //   onUpdate={onUpdate}
-                      //   onAdd={onAdd}
+                      onUpdate={onUpdate}
                     />
                   ))}
                 </tbody>

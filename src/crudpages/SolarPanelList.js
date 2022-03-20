@@ -88,7 +88,12 @@ const SolarPanelList = () => {
       validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
+    {
+      listkey: "link",
+      type: "text",
+      label: "Link",
+      validator: [VALIDATOR_REQUIRE()],
+    },
   ];
 
   const setModal = () => {
@@ -108,12 +113,19 @@ const SolarPanelList = () => {
       if (success && operation === "EDIT") {
         setMsg(" Solar Panel modified successfully");
       }
+      if (success && operation === "DELETE") {
+        setMsg(" Solar Panel deleted successfully");
+      }
     } else {
       if (success && operation === "ADD") {
-        setMsg(" Solar Panel record addition request sent successfully");
+        setMsg(
+          " Solar Panel record addition request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
       if (success && operation === "EDIT") {
-        setMsg(" Solar Panel record modification request sent successfully");
+        setMsg(
+          " Solar Panel record modification request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
     }
     setRefresh(!refresh);

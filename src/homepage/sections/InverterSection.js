@@ -26,19 +26,42 @@ const InverterSection = ({ errormsg }) => {
       </div>
       <ul className="w-full text-sm font-medium bg-inherit rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-inherit">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-          Inverter Name: {invertertab.inverterName}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Inverter Name:</p>
+            <p className=" dark:text-white font-bold">
+              {invertertab.inverterName}
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Inverter Type: {invertertab.type}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Inverter Type:</p>
+            <p className=" dark:text-white font-bold">{invertertab.type}</p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Input Voltage: {invertertab.inputVoltage} V
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Input Voltage:</p>
+            <p className=" dark:text-white font-bold">
+              {invertertab.inputVoltage} V
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Wattage: {invertertab.wattage} W
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Wattage:</p>
+            <p className=" dark:text-white font-bold">
+              {invertertab.wattage} W
+            </p>
+          </div>
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-          Price: Php {numberWithCommas(invertertab.price.toFixed(2))}
+          <div className="grid grid-cols-2">
+            <p className="text-blue-700 dark:text-blue-400 ">Price: </p>
+            <p className=" dark:text-white font-bold">
+              Php {numberWithCommas(invertertab.price.toFixed(2))}
+            </p>
+          </div>
         </li>
       </ul>
       {errormsg && (

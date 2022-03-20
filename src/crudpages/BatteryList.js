@@ -86,7 +86,12 @@ const BatteryList = () => {
       validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
+    {
+      listkey: "link",
+      type: "text",
+      label: "Link",
+      validator: [VALIDATOR_REQUIRE()],
+    },
   ];
   const setModal = () => {
     setShowModal(true);
@@ -105,12 +110,19 @@ const BatteryList = () => {
       if (success && operation === "EDIT") {
         setMsg(" Battery modified successfully");
       }
+      if (success && operation === "DELETE") {
+        setMsg(" Battery deleted successfully");
+      }
     } else {
       if (success && operation === "ADD") {
-        setMsg(" Battery record addition request sent successfully");
+        setMsg(
+          " Battery record addition request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
       if (success && operation === "EDIT") {
-        setMsg(" Battery record modification request sent successfully");
+        setMsg(
+          " Battery record modification request sent successfully. Request is being processed and will be updated after 1 - 5 days."
+        );
       }
     }
     setRefresh(!refresh);
