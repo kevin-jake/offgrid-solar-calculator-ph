@@ -88,7 +88,12 @@ const SolarPanelList = () => {
       validator: [VALIDATOR_REQUIRE(), VALIDATOR_NUMBER()],
     },
     // { listkey: "img", type: "text", label: "Image" },
-    { listkey: "link", type: "text", label: "Link" },
+    {
+      listkey: "link",
+      type: "text",
+      label: "Link",
+      validator: [VALIDATOR_REQUIRE()],
+    },
   ];
 
   const setModal = () => {
