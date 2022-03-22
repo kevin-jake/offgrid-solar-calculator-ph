@@ -232,7 +232,7 @@ const MainCalculation = () => {
       title: "Tutorial",
       element: ".body",
       intro:
-        "<span> Visit this link for the demo: <a href='https://www.loom.com/share/e5d73e0e25c247eaa3b3327e78f8ee75' class=' px-4 py-2 mt-2 text-blue-600 visited:text-purple-600' target='_blank' rel='noopener noreferrer' >Click here </a></span>",
+        "<span> Visit this link for the demo: <a href='https://www.youtube.com/playlist?list=PLW80z4AhKKkfnp5FDuXaMSluTkCWiGqUz' class=' px-4 py-2 mt-2 text-blue-600 visited:text-purple-600' target='_blank' rel='noopener noreferrer' >Click here </a></span>",
     },
   ];
 
