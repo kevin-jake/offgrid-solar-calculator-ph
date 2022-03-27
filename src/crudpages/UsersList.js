@@ -105,6 +105,7 @@ const UserList = () => {
               </table>
             </div>
           </div>
+          {error && !isLoading && <AlertModal msg={error} type={"ERROR"} />}
           {msg && <AlertModal msg={msg} type={"SUCCESS"} />}
         </>
       );
