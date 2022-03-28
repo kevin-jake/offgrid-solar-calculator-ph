@@ -12,6 +12,7 @@ import {
   pvcomputation,
   totalPriceCompute,
 } from "../Caculations";
+import WireSizingTab from "./WireSizingTab";
 
 const TabCalc = () => {
   const {
@@ -184,6 +185,18 @@ const TabCalc = () => {
         );
         break;
       }
+      case 5: {
+        setOpenTab(5);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Wire Sizing
+            </h2>
+            <WireSizingTab />
+          </div>
+        );
+        break;
+      }
     }
   };
 
@@ -239,6 +252,18 @@ const TabCalc = () => {
           }
         >
           Solar Panel and SCC
+        </button>
+        <button
+          onClick={() => {
+            handleSelectedTab(5);
+          }}
+          className={
+            openTab === 5
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
+          Wire Sizing
         </button>
       </div>
       <div className="block">{tabpanel}</div>

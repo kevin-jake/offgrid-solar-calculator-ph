@@ -96,6 +96,12 @@ const initialState = {
     totalnumber: 0,
     totalprice: 0,
   },
+  wiresize: {
+    pv_to_scc: { wiretype: "", price_per_meter: 0, length: 0 },
+    scc_to_battery: { wiretype: "", price_per_meter: 0, length: 0 },
+    battery_to_inverter: { wiretype: "", price_per_meter: 0, length: 0 },
+    inverter_to_load: { wiretype: "", price_per_meter: 0, length: 0 },
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -134,6 +140,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         seriesParallelTable: action.seriesParallelTable,
+      };
+    case "WIRE":
+      return {
+        ...state,
+        wiresize: action.wiresize,
       };
     case "reset":
       const stateSet = action.initState;
@@ -215,6 +226,13 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setWireSize = (wiresize) => {
+    dispatch({
+      type: "WIRE",
+      wiresize: wiresize,
+    });
+  };
+
   const reset = () => {
     dispatch({
       type: "reset",
@@ -230,7 +248,9 @@ export const HomeProvider = (props) => {
     scctab: state.scctab,
     seriesParallelTable: state.seriesParallelTable,
     dodTable: state.dodTable,
+    wiresize: state.wiresize,
     reset,
+    setWireSize,
     setDOD,
     setSP,
     setSCC,
