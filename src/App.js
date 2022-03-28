@@ -34,7 +34,7 @@ const App = () => {
 
   let routes;
 
-  if (token) {
+  if (token && role === "Admin") {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -52,13 +52,34 @@ const App = () => {
         <Route path="/sccs" exact>
           <SCCList />
         </Route>
-        <Route path="/requests" exact>
-          <Requests />
-        </Route>
         <Route path="/users" exact>
           <Users />
         </Route>
+        <Route path="/requests" exact>
+          <Requests />
+        </Route>
         <Redirect to="/requests" />
+      </Switch>
+    );
+  } else if (token) {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/inverters" exact>
+          <InverterList />
+        </Route>
+        <Route path="/batteries" exact>
+          <BatteryList />
+        </Route>
+        <Route path="/solarpanels" exact>
+          <SolarPanelList />
+        </Route>
+        <Route path="/sccs" exact>
+          <SCCList />
+        </Route>
+        <Redirect to="/" />
       </Switch>
     );
   } else {
