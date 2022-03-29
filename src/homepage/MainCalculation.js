@@ -93,6 +93,11 @@ const MainCalculation = () => {
   }, [invertertab.inputVoltage, voltage]);
 
   useEffect(() => {
+    batteryValid(voltage, batterytab.voltage);
+    // eslint-disable-next-line
+  }, [batterytab.voltage, voltage]);
+
+  useEffect(() => {
     sccValid(
       scctab.type,
       scctab.amprating,
@@ -124,6 +129,22 @@ const MainCalculation = () => {
       state.inverter.valid = false;
       state.inverter.message =
         "The inverter voltage is not compatible with voltage system.";
+      setValidState(state);
+      setValid(state);
+    }
+  };
+
+  const batteryValid = (global_voltage, battery_voltage) => {
+    let state = validState;
+    if (global_voltage >= battery_voltage || battery_voltage === 0) {
+      state.battery.valid = true;
+      state.battery.message = "";
+      setValidState(state);
+      setValid(state);
+    } else {
+      state.battery.valid = false;
+      state.battery.message =
+        "The battery voltage is not compatible with voltage system.";
       setValidState(state);
       setValid(state);
     }
@@ -395,8 +416,14 @@ const MainCalculation = () => {
               <InverterSection errormsg={validState.inverter.message} />
             </div>
 
-            <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
-              <BatterySection />
+            <div
+              className={
+                validState.battery.valid
+                  ? "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
+                  : "transition ease-in-out p-8 space-y-3 border-2 border-red-400 dark:border-red-300 bg-red-300 rounded-xl text-red-800"
+              }
+            >
+              <BatterySection errormsg={validState.battery.message} />
             </div>
 
             <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
