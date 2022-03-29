@@ -61,7 +61,7 @@ const App = () => {
         <Redirect to="/requests" />
       </Switch>
     );
-  } else if (token) {
+  } else if (token && role === "User") {
     routes = (
       <Switch>
         <Route path="/" exact>
