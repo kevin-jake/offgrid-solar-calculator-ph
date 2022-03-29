@@ -13,6 +13,8 @@ import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import AlertModal from "../shared/components/UIElements/AlertModal";
 import { Steps } from "intro.js-react";
 import "intro.js/introjs.css";
+import OthersSection from "./sections/OthersSection";
+import { useMediaQuery } from "react-responsive";
 
 const MainCalculation = () => {
   const {
@@ -45,6 +47,7 @@ const MainCalculation = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState();
   const [tutEnabled, setTutEnabled] = useState(false);
+  const isMobile = useMediaQuery({ query: `(max-width: 1588px)` });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -403,7 +406,13 @@ const MainCalculation = () => {
         </div>
 
         <div className="container-lg px-6 pb-10 mx-4">
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-3 xl:grid-cols-5 ">
+          <div
+            className={
+              !isMobile
+                ? "grid gap-8 mt-8 xl:mt-12 xl:gap-12  xl:grid-cols-5"
+                : "grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-3 lg:grid-cols-3"
+            }
+          >
             <div className="p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl">
               <LoadSection />
             </div>
@@ -438,6 +447,15 @@ const MainCalculation = () => {
               }
             >
               <SCCSection errormsg={validState.scc.message} />
+            </div>
+            <div
+              className={
+                !isMobile
+                  ? "transition xl:col-span-3 lg:col-span-3 ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl "
+                  : "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
+              }
+            >
+              <OthersSection />
             </div>
           </div>
         </div>

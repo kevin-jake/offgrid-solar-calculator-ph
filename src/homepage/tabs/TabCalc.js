@@ -6,6 +6,8 @@ import InverterTab from "./InverterTab";
 import LoadTab from "./LoadTab";
 import SolarPanelSCCTab from "./SolarPanelSCCTab";
 import {
+  wireCalculation,
+  wireTotalPrice,
   dodComputation,
   seriesParallelBattCompute,
   batterycomputation,
@@ -21,14 +23,17 @@ const TabCalc = () => {
     batterytab,
     scctab,
     solarpanelstab,
+    wiresize,
     dodTable,
     seriesParallelTable,
+    setWireSize,
     setDOD,
     setSP,
   } = useContext(HomeContext);
   const {
     voltage,
     scc,
+    solarpanel,
     totalbattcapacity,
     overallprice,
     setSCCGlobal,
@@ -133,6 +138,32 @@ const TabCalc = () => {
     scc.price,
     batterytab.totalprice,
     invertertab.price,
+  ]);
+
+  useEffect(() => {
+    let newVal = wiresize;
+    newVal.wireDetails.map((obj, index) => {
+      let computed = wireCalculation(
+        obj,
+        solarpanelstab,
+        solarpanel,
+        totalbattcapacity,
+        invertertab
+      );
+      newVal.wireDetails[index].suggestedAWG = computed.suggestedAWG;
+      newVal.wireDetails[index].totalprice = computed.totalprice;
+      newVal.wireDetails[index].computedVdi = computed.computeVDI;
+    });
+
+    newVal.wireSizingPrice = wireTotalPrice(newVal.wireDetails);
+    console.log(newVal);
+    setWireSize(newVal);
+    // eslint-disable-next-line
+  }, [
+    solarpanel.pvname,
+    totalbattcapacity.totalcapacity,
+    invertertab.wattage,
+    wiresize.wireDetails,
   ]);
 
   const handleSelectedTab = (selected) => {

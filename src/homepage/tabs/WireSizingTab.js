@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
 import { wireCalculation, wireTotalPrice } from "../Caculations";
@@ -8,32 +8,6 @@ const WireSizingTab = () => {
   const { wiresize, setWireSize, solarpanelstab, invertertab } =
     useContext(HomeContext);
   const { totalbattcapacity, solarpanel } = useContext(GlobalContext);
-
-  useEffect(() => {
-    let newVal = wiresize;
-    newVal.wireDetails.map((obj, index) => {
-      let computed = wireCalculation(
-        obj,
-        solarpanelstab,
-        solarpanel,
-        totalbattcapacity,
-        invertertab
-      );
-      newVal.wireDetails[index].suggestedAWG = computed.suggestedAWG;
-      newVal.wireDetails[index].totalprice = computed.totalprice;
-      newVal.wireDetails[index].computedVdi = computed.computeVDI;
-    });
-
-    newVal.wireSizingPrice = wireTotalPrice(newVal.wireDetails);
-    console.log(newVal);
-    setWireSize(newVal);
-    // eslint-disable-next-line
-  }, [
-    solarpanel.pvname,
-    totalbattcapacity.totalcapacity,
-    invertertab.wattage,
-    wiresize.wireDetails,
-  ]);
 
   const handleItemChanged = (event, index, key) => {
     let items_var = wiresize;
