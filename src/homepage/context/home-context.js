@@ -49,6 +49,7 @@ const initialState = {
     wattage: 0,
     brand: "",
     voc: 0,
+    vmp: 0,
     imp: 0,
     isc: 0,
     price: 0,
@@ -96,6 +97,51 @@ const initialState = {
     totalnumber: 0,
     totalprice: 0,
   },
+  wiresize: {
+    wireDetails: [
+      {
+        label: "Solar Panel to SCC",
+        wiretype: "DC",
+        price_per_meter: 0,
+        length: 0,
+        computedVdi: 0,
+        suggestedAWG: "",
+        totalprice: 0,
+        awgAccepted: [],
+      },
+      {
+        label: "SCC to Battery",
+        wiretype: "DC",
+        price_per_meter: 0,
+        length: 0,
+        computedVdi: 0,
+        suggestedAWG: "",
+        totalprice: 0,
+        awgAccepted: [],
+      },
+      {
+        label: "Battery to Inverter",
+        wiretype: "DC",
+        price_per_meter: 0,
+        length: 0,
+        computedVdi: 0,
+        suggestedAWG: "",
+        totalprice: 0,
+        awgAccepted: [],
+      },
+      {
+        label: "Inverter to Load",
+        wiretype: "AC",
+        price_per_meter: 0,
+        length: 0,
+        computedVdi: 0,
+        suggestedAWG: "",
+        totalprice: 0,
+        awgAccepted: [],
+      },
+    ],
+    wireSizingPrice: 0,
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -135,6 +181,11 @@ const HomeReducer = (state, action) => {
         ...state,
         seriesParallelTable: action.seriesParallelTable,
       };
+    case "WIRE":
+      return {
+        ...state,
+        wiresize: action.wiresize,
+      };
     case "reset":
       const stateSet = action.initState;
       stateSet.loadtab = {
@@ -155,6 +206,7 @@ const HomeReducer = (state, action) => {
           watthours: 0,
         },
       };
+      // stateSet.wiresize = {};
       return stateSet;
     default:
       return state;
@@ -215,6 +267,13 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setWireSize = (wiresize) => {
+    dispatch({
+      type: "WIRE",
+      wiresize: wiresize,
+    });
+  };
+
   const reset = () => {
     dispatch({
       type: "reset",
@@ -230,7 +289,9 @@ export const HomeProvider = (props) => {
     scctab: state.scctab,
     seriesParallelTable: state.seriesParallelTable,
     dodTable: state.dodTable,
+    wiresize: state.wiresize,
     reset,
+    setWireSize,
     setDOD,
     setSP,
     setSCC,

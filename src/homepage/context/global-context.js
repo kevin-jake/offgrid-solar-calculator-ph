@@ -45,6 +45,10 @@ const initState = {
       valid: true,
       message: "",
     },
+    battery: {
+      valid: true,
+      message: "",
+    },
   },
 };
 

@@ -192,12 +192,12 @@ const pvcomputation = (totalbattcapacity, solarpanelstab) => {
 const totalPriceCompute = (
   voltage,
   batterytab,
-  dodTable,
   totalbattcapacity,
   solarpanelstab,
   sccprice = 0,
   invertertab,
   load = 0,
+  wirePrice = 0,
   others = 0
 ) => {
   const dodtable = dodComputation(voltage, load, invertertab);
@@ -206,9 +206,114 @@ const totalPriceCompute = (
   const pvprice = pvdata.pvinfo.totalprice;
   const batteryprice = battcap.totalprice;
   let totalPrice = Math.round(
-    pvprice + sccprice + batteryprice + invertertab.price + others
+    pvprice + sccprice + batteryprice + invertertab.price + others + wirePrice
   );
+  if (!totalPrice) totalPrice = 0;
   return totalPrice;
+};
+
+const wireCalculation = (
+  wireObj,
+  solarpanelstab,
+  solarpanel,
+  totalbattcapacity,
+  invertertab
+) => {
+  const pvCurrent = solarpanel.pvparallel * solarpanelstab.imp;
+  const pvVoltage = solarpanel.pvseries * solarpanelstab.vmp;
+  const totalbattVolts =
+    totalbattcapacity.battinseries * totalbattcapacity.battvoltage;
+  const sccToBattCurrent = solarpanel.totalwattage / totalbattVolts;
+  const battToInvCurrent = invertertab.wattage / totalbattVolts;
+  const invToLoadCurrent = invertertab.wattage / 220;
+
+  switch (wireObj.label) {
+    case "Solar Panel to SCC": {
+      const ftlength = parseFloat(wireObj.length) * 3.28084;
+      const pvToSCC_VDI = Math.ceil((pvCurrent * ftlength) / (2 * pvVoltage));
+      return computeVDI(
+        parseFloat(wireObj.length),
+        pvToSCC_VDI,
+        parseFloat(wireObj.price_per_meter)
+      );
+    }
+    case "SCC to Battery": {
+      const ftlength = parseFloat(wireObj.length) * 3.28084;
+      const sccToBatt = Math.ceil(
+        (sccToBattCurrent * ftlength) / (2 * totalbattVolts)
+      );
+      return computeVDI(
+        parseFloat(wireObj.length),
+        sccToBatt,
+        parseFloat(wireObj.price_per_meter)
+      );
+    }
+    case "Battery to Inverter": {
+      const ftlength = parseFloat(wireObj.length) * 3.28084;
+      const BattToInverter = Math.ceil(
+        (battToInvCurrent * ftlength) / (2 * totalbattVolts)
+      );
+      return computeVDI(
+        parseFloat(wireObj.length),
+        BattToInverter,
+        parseFloat(wireObj.price_per_meter)
+      );
+    }
+    case "Inverter to Load": {
+      const ftlength = parseFloat(wireObj.length) * 3.28084;
+      const invToLoad = Math.ceil(
+        (invToLoadCurrent * ftlength) / (2 * totalbattVolts)
+      );
+      return computeVDI(
+        parseFloat(wireObj.length),
+        invToLoad,
+        parseFloat(wireObj.price_per_meter)
+      );
+    }
+  }
+};
+
+const wireTotalPrice = (wireArray) => {
+  let totalPrice = 0;
+  for (let i = 0; i < wireArray.length; i++) {
+    totalPrice = totalPrice + wireArray[i].totalprice;
+  }
+  return totalPrice;
+};
+
+const computeVDI = (length, vdi = 0, price) => {
+  const VDITable = [
+    { vdi: 1, awg: "16" },
+    { vdi: 2, awg: "14" },
+    { vdi: 3, awg: "12" },
+    { vdi: 5, awg: "10" },
+    { vdi: 8, awg: "8" },
+    { vdi: 12, awg: "6" },
+    { vdi: 20, awg: "4" },
+    { vdi: 34, awg: "2" },
+    { vdi: 49, awg: "1/0" },
+    { vdi: 62, awg: "2/0" },
+    { vdi: 78, awg: "3/0" },
+    { vdi: 99, awg: "4/0" },
+  ];
+  let awg;
+  const TotalPrice = length * price;
+  const awgAccepted = VDITable.filter((table) => {
+    return table.vdi >= vdi;
+  });
+  let suggestedAWG = { vdi: 99, awg: "4/0" };
+  for (let i = 0; i < awgAccepted.length; i++) {
+    if (awgAccepted[i].vdi < suggestedAWG.vdi) {
+      suggestedAWG = awgAccepted[i];
+    }
+  }
+  vdi ? (awg = suggestedAWG.awg) : (awg = "");
+  return {
+    computeVDI: vdi || 0,
+    totalprice: TotalPrice,
+    suggestedAWG: awg,
+    awgAccepted: awgAccepted,
+  };
 };
 
 export {
@@ -220,4 +325,6 @@ export {
   batterycomputation,
   pvcomputation,
   totalPriceCompute,
+  wireCalculation,
+  wireTotalPrice,
 };

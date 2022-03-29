@@ -27,13 +27,14 @@ const BatteryList = React.lazy(() => import("./crudpages/BatteryList"));
 const SolarPanelList = React.lazy(() => import("./crudpages/SolarPanelList"));
 const SCCList = React.lazy(() => import("./crudpages/SCCList"));
 const Requests = React.lazy(() => import("./crudpages/request-pages/Requests"));
+const Users = React.lazy(() => import("./crudpages/UsersList"));
 
 const App = () => {
   const { token, login, logout, userId, email, name, role } = useAuth();
 
   let routes;
 
-  if (token) {
+  if (token && role === "Admin") {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -51,8 +52,32 @@ const App = () => {
         <Route path="/sccs" exact>
           <SCCList />
         </Route>
+        <Route path="/users" exact>
+          <Users />
+        </Route>
         <Route path="/requests" exact>
           <Requests />
+        </Route>
+        <Redirect to="/requests" />
+      </Switch>
+    );
+  } else if (token && role === "User") {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/inverters" exact>
+          <InverterList />
+        </Route>
+        <Route path="/batteries" exact>
+          <BatteryList />
+        </Route>
+        <Route path="/solarpanels" exact>
+          <SolarPanelList />
+        </Route>
+        <Route path="/sccs" exact>
+          <SCCList />
         </Route>
         <Redirect to="/" />
       </Switch>

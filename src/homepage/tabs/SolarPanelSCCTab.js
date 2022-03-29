@@ -64,6 +64,7 @@ const SolarPanelSCCTab = () => {
       wattage: pvlist[index].wattage,
       brand: pvlist[index].brand,
       voc: pvlist[index].voc,
+      vmp: pvlist[index].vmp,
       imp: pvlist[index].imp,
       isc: pvlist[index].isc,
       price: pvlist[index].price,

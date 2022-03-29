@@ -6,12 +6,15 @@ import InverterTab from "./InverterTab";
 import LoadTab from "./LoadTab";
 import SolarPanelSCCTab from "./SolarPanelSCCTab";
 import {
+  wireCalculation,
+  wireTotalPrice,
   dodComputation,
   seriesParallelBattCompute,
   batterycomputation,
   pvcomputation,
   totalPriceCompute,
 } from "../Caculations";
+import WireSizingTab from "./WireSizingTab";
 
 const TabCalc = () => {
   const {
@@ -20,14 +23,17 @@ const TabCalc = () => {
     batterytab,
     scctab,
     solarpanelstab,
+    wiresize,
     dodTable,
     seriesParallelTable,
+    setWireSize,
     setDOD,
     setSP,
   } = useContext(HomeContext);
   const {
     voltage,
     scc,
+    solarpanel,
     totalbattcapacity,
     overallprice,
     setSCCGlobal,
@@ -103,7 +109,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     tp.twentyfourV = totalPriceCompute(
       24,
@@ -113,7 +120,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     tp.fortyeightV = totalPriceCompute(
       48,
@@ -123,7 +131,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     setOverallPrice(tp);
     // eslint-disable-next-line
@@ -132,6 +141,34 @@ const TabCalc = () => {
     scc.price,
     batterytab.totalprice,
     invertertab.price,
+    wiresize.wireSizingPrice,
+  ]);
+
+  useEffect(() => {
+    let newVal = wiresize;
+    newVal.wireDetails.map((obj, index) => {
+      let computed = wireCalculation(
+        obj,
+        solarpanelstab,
+        solarpanel,
+        totalbattcapacity,
+        invertertab
+      );
+      newVal.wireDetails[index].suggestedAWG = computed.suggestedAWG;
+      newVal.wireDetails[index].totalprice = computed.totalprice;
+      newVal.wireDetails[index].computedVdi = computed.computeVDI;
+    });
+
+    newVal.wireSizingPrice = wireTotalPrice(newVal.wireDetails);
+    console.log(newVal);
+    setWireSize(newVal);
+    // eslint-disable-next-line
+  }, [
+    solarpanel.pvname,
+    solarpanelstab.sunhours,
+    totalbattcapacity.totalcapacity,
+    invertertab.wattage,
+    wiresize.wireDetails,
   ]);
 
   const handleSelectedTab = (selected) => {
@@ -180,6 +217,18 @@ const TabCalc = () => {
               Solar Panel and SCC
             </h2>
             <SolarPanelSCCTab />
+          </div>
+        );
+        break;
+      }
+      case 5: {
+        setOpenTab(5);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Wire Sizing
+            </h2>
+            <WireSizingTab />
           </div>
         );
         break;
@@ -239,6 +288,18 @@ const TabCalc = () => {
           }
         >
           Solar Panel and SCC
+        </button>
+        <button
+          onClick={() => {
+            handleSelectedTab(5);
+          }}
+          className={
+            openTab === 5
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
+          Wire Sizing
         </button>
       </div>
       <div className="block">{tabpanel}</div>

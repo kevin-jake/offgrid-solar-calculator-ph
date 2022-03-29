@@ -10,8 +10,6 @@ const BatteryTab = () => {
   const [itemState, setItemState] = useState(batterytab);
   const [batterylist, setBattList] = useState([]);
   const { sendRequest, isLoading } = useHttpClient();
-
-  // const { batterylist } = useContext(LOVContext);
   const [optionState, setOptions] = useState();
 
   useEffect(() => {
