@@ -74,6 +74,9 @@ const UserList = () => {
         <>
           <div className="my-2 mx-2 py-6 pb-8 overflow-x-auto border-2 border-blue-400 dark:border-blue-300 rounded-xl relative">
             <div className="relative align-middle mb-5 inline-block min-w-full overflow-hidden bg-white  px-8 pt-3 rounded-bl-lg rounded-br-lg">
+              <h4 className="text-medium font-bold">
+                Users: {usersList.length}
+              </h4>
               <table className="min-w-full">
                 <thead>
                   <tr>

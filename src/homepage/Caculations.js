@@ -192,7 +192,6 @@ const pvcomputation = (totalbattcapacity, solarpanelstab) => {
 const totalPriceCompute = (
   voltage,
   batterytab,
-  dodTable,
   totalbattcapacity,
   solarpanelstab,
   sccprice = 0,

@@ -59,7 +59,9 @@ const MainCalculation = () => {
         );
         if (responseData.user.data) {
           setLoad(responseData.user.data.loadtab);
-          setWireSize(responseData.user.data.wiring);
+          if (responseData.user.data.wiring) {
+            setWireSize(responseData.user.data.wiring);
+          }
           setSCC(responseData.user.data.scc);
           setBattery(responseData.user.data.battery);
           setInverter(responseData.user.data.inverter);
