@@ -49,6 +49,7 @@ const initialState = {
     wattage: 0,
     brand: "",
     voc: 0,
+    vmp: 0,
     imp: 0,
     isc: 0,
     price: 0,
@@ -105,6 +106,7 @@ const initialState = {
       computedVdi: 0,
       suggestedAWG: "",
       totalprice: 0,
+      awgAccepted: [],
     },
     {
       label: "SCC to Battery",
@@ -112,7 +114,9 @@ const initialState = {
       price_per_meter: 0,
       length: 0,
       computedVdi: 0,
+      suggestedAWG: "",
       totalprice: 0,
+      awgAccepted: [],
     },
     {
       label: "Battery to Inverter",
@@ -122,6 +126,7 @@ const initialState = {
       computedVdi: 0,
       suggestedAWG: "",
       totalprice: 0,
+      awgAccepted: [],
     },
     {
       label: "Inverter to Load",
@@ -131,6 +136,7 @@ const initialState = {
       computedVdi: 0,
       suggestedAWG: "",
       totalprice: 0,
+      awgAccepted: [],
     },
   ],
 };

@@ -1,14 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
-import Select from "react-select";
-import { numberWithCommas } from "../../shared/util/format";
+import React, { useContext, useEffect } from "react";
+import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
+import { wireCalculation } from "../Caculations";
+import { numberWithCommas } from "../../shared/util/format";
 
 const WireSizingTab = () => {
-  const { wiresize, setWireSize } = useContext(HomeContext);
+  const { wiresize, setWireSize, solarpanelstab, invertertab } =
+    useContext(HomeContext);
+  const { totalbattcapacity, solarpanel } = useContext(GlobalContext);
+
+  useEffect(() => {
+    wiresize.map();
+    // eslint-disable-next-line
+  }, [solarpanel, totalbattcapacity, invertertab]);
 
   const handleItemChanged = (event, index, key) => {
     let items_var = wiresize;
     items_var[index][key] = event.target.value;
+    console.log(items_var[index]);
+
+    const computed = wireCalculation(
+      items_var[index],
+      solarpanelstab,
+      solarpanel,
+      totalbattcapacity,
+      invertertab
+    );
+    console.log(computed);
+    items_var[index].suggestedAWG = computed.suggestedAWG;
+    items_var[index].totalprice = computed.totalprice;
+    items_var[index].computedVdi = computed.computeVDI;
     setWireSize(items_var);
   };
 
@@ -25,7 +46,7 @@ const WireSizingTab = () => {
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           <input
-            id="length"
+            id={"length" + index}
             type="number"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             value={obj.length}
@@ -34,27 +55,27 @@ const WireSizingTab = () => {
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           <input
-            id="price"
+            id={"price" + index}
             type="number"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            value={obj.price_per_meter}
+            value={parseFloat(obj.price_per_meter)}
             onChange={(e) => handleItemChanged(e, index, "price_per_meter")}
           />
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        <td className="flex justify-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           {obj.computedVdi}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           <input
-            id="suggestedAWG"
-            type="number"
+            id={"suggestedAWG" + index}
+            type="text"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             value={obj.suggestedAWG}
             onChange={(e) => handleItemChanged(e, index, "suggestedAWG")}
           />
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {obj.totalprice}
+        <td className="flex justify-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+          Php {numberWithCommas(obj.totalprice.toFixed(2))}
         </td>
       </tr>
     );
@@ -215,14 +236,6 @@ const WireSizingTab = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
                           1/0
-                        </td>
-                      </tr>
-                      <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
-                          62
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
-                          2/0
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
