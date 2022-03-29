@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { HomeContext } from "../context/home-context";
 import AsyncSelect from "react-select/async";
-// import { LOVContext } from "../context/lov-context";
 import { numberWithCommas } from "../../shared/util/format";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 
-const InverterTab = (props) => {
+const InverterTab = () => {
   const { invertertab, setInverter } = useContext(HomeContext);
-  // const { inverters, setInvLOV } = useContext(LOVContext);
   const [inverters, setInverters] = useState([]);
   const [itemState, setItemState] = useState(invertertab);
   const { sendRequest, isLoading } = useHttpClient();
@@ -63,7 +61,7 @@ const InverterTab = (props) => {
     <div className="container-lg px-6 py-4 mx-4">
       <div className="grid grid-cols-1 gap-4 xl:mt-12 md:grid-cols-1 xl:grid-cols-1">
         <label className="text-gray-700 text-lg font-medium dark:text-gray-200">
-          Select Inverter:{" "}
+          Select Inverter:
         </label>
         <AsyncSelect
           cacheOptions
