@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/global-context";
 import { HomeContext } from "../context/home-context";
-import { wireCalculation } from "../Caculations";
+import { wireCalculation, wireTotalPrice } from "../Caculations";
 import { numberWithCommas } from "../../shared/util/format";
 
 const WireSizingTab = () => {
@@ -10,27 +10,49 @@ const WireSizingTab = () => {
   const { totalbattcapacity, solarpanel } = useContext(GlobalContext);
 
   useEffect(() => {
-    wiresize.map();
+    let newVal = wiresize;
+    newVal.wireDetails.map((obj, index) => {
+      let computed = wireCalculation(
+        obj,
+        solarpanelstab,
+        solarpanel,
+        totalbattcapacity,
+        invertertab
+      );
+      newVal.wireDetails[index].suggestedAWG = computed.suggestedAWG;
+      newVal.wireDetails[index].totalprice = computed.totalprice;
+      newVal.wireDetails[index].computedVdi = computed.computeVDI;
+    });
+
+    newVal.wireSizingPrice = wireTotalPrice(newVal.wireDetails);
+    console.log(newVal);
+    setWireSize(newVal);
     // eslint-disable-next-line
-  }, [solarpanel, totalbattcapacity, invertertab]);
+  }, [
+    solarpanel.pvname,
+    totalbattcapacity.totalcapacity,
+    invertertab.wattage,
+    wiresize.wireDetails,
+  ]);
 
   const handleItemChanged = (event, index, key) => {
     let items_var = wiresize;
-    items_var[index][key] = event.target.value;
-    console.log(items_var[index]);
+    items_var.wireDetails[index][key] = event.target.value;
 
     const computed = wireCalculation(
-      items_var[index],
+      items_var.wireDetails[index],
       solarpanelstab,
       solarpanel,
       totalbattcapacity,
       invertertab
     );
     console.log(computed);
-    items_var[index].suggestedAWG = computed.suggestedAWG;
-    items_var[index].totalprice = computed.totalprice;
-    items_var[index].computedVdi = computed.computeVDI;
+    items_var.wireDetails[index].suggestedAWG = computed.suggestedAWG;
+    items_var.wireDetails[index].totalprice = computed.totalprice;
+    items_var.wireDetails[index].computedVdi = computed.computeVDI;
+    items_var.wireSizingPrice = wireTotalPrice(items_var.wireDetails);
     setWireSize(items_var);
+    console.log(wiresize);
   };
 
   const handleItemDeleted = () => {};
@@ -135,7 +157,7 @@ const WireSizingTab = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {wiresize.map((obj, index) => {
+                  {wiresize.wireDetails.map((obj, index) => {
                     return renderTR(obj, index);
                   })}
                 </tbody>

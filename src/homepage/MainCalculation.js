@@ -207,6 +207,7 @@ const MainCalculation = () => {
         inverter: invertertab,
         battery: batterytab,
         solarpanel: solarpanelstab,
+        // wiring: wireSize.
         scc: scctab,
         voltage_system: voltage,
       },

@@ -230,7 +230,6 @@ const wireCalculation = (
     case "Solar Panel to SCC": {
       const ftlength = parseFloat(wireObj.length) * 3.28084;
       const pvToSCC_VDI = Math.ceil((pvCurrent * ftlength) / (2 * pvVoltage));
-      console.log(pvToSCC_VDI);
       return computeVDI(
         parseFloat(wireObj.length),
         pvToSCC_VDI,
@@ -242,7 +241,6 @@ const wireCalculation = (
       const sccToBatt = Math.ceil(
         (sccToBattCurrent * ftlength) / (2 * totalbattVolts)
       );
-      console.log(totalbattcapacity.battvoltage);
       return computeVDI(
         parseFloat(wireObj.length),
         sccToBatt,
@@ -274,7 +272,15 @@ const wireCalculation = (
   }
 };
 
-const computeVDI = (length, vdi, price) => {
+const wireTotalPrice = (wireArray) => {
+  let totalPrice = 0;
+  for (let i = 0; i < wireArray.length; i++) {
+    totalPrice = totalPrice + wireArray[i].totalprice;
+  }
+  return totalPrice;
+};
+
+const computeVDI = (length, vdi = 0, price) => {
   const VDITable = [
     { vdi: 1, awg: "16" },
     { vdi: 2, awg: "14" },
@@ -289,6 +295,7 @@ const computeVDI = (length, vdi, price) => {
     { vdi: 78, awg: "3/0" },
     { vdi: 99, awg: "4/0" },
   ];
+  let awg;
   const TotalPrice = length * price;
   const awgAccepted = VDITable.filter((table) => {
     return table.vdi >= vdi;
@@ -299,10 +306,11 @@ const computeVDI = (length, vdi, price) => {
       suggestedAWG = awgAccepted[i];
     }
   }
+  vdi ? (awg = suggestedAWG.awg) : (awg = "");
   return {
-    computeVDI: vdi,
+    computeVDI: vdi || 0,
     totalprice: TotalPrice,
-    suggestedAWG: suggestedAWG.awg,
+    suggestedAWG: awg,
     awgAccepted: awgAccepted,
   };
 };
@@ -317,4 +325,5 @@ export {
   pvcomputation,
   totalPriceCompute,
   wireCalculation,
+  wireTotalPrice,
 };
