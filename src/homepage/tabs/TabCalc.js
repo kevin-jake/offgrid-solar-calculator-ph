@@ -165,6 +165,7 @@ const TabCalc = () => {
     // eslint-disable-next-line
   }, [
     solarpanel.pvname,
+    solarpanelstab.sunhours,
     totalbattcapacity.totalcapacity,
     invertertab.wattage,
     wiresize.wireDetails,
