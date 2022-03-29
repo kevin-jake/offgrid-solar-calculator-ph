@@ -166,9 +166,7 @@ const LoadTab = () => {
                           type="text"
                           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                           value={o.loadname}
-                          onChange={(e, index, id) =>
-                            handleItemChanged(e, i, "loadname")
-                          }
+                          onChange={(e) => handleItemChanged(e, i, "loadname")}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -177,9 +175,7 @@ const LoadTab = () => {
                           type="number"
                           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                           value={o.userqty}
-                          onChange={(e, index, id) =>
-                            handleItemChanged(e, i, "userqty")
-                          }
+                          onChange={(e) => handleItemChanged(e, i, "userqty")}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -188,9 +184,7 @@ const LoadTab = () => {
                           type="number"
                           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                           value={o.wattage}
-                          onChange={(e, index, id) =>
-                            handleItemChanged(e, i, "wattage")
-                          }
+                          onChange={(e) => handleItemChanged(e, i, "wattage")}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -200,7 +194,7 @@ const LoadTab = () => {
                           readOnly
                           className="read-only:bg-inherit focus:outline-none"
                           value={o.totalwatts}
-                          onChange={(e, index, id) =>
+                          onChange={(e) =>
                             handleItemChanged(e, i, "totalwatts")
                           }
                         />
@@ -211,9 +205,7 @@ const LoadTab = () => {
                           type="number"
                           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                           value={o.ophours}
-                          onChange={(e, index, id) =>
-                            handleItemChanged(e, i, "ophours")
-                          }
+                          onChange={(e) => handleItemChanged(e, i, "ophours")}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -223,9 +215,7 @@ const LoadTab = () => {
                           readOnly
                           className="read-only:bg-inherit focus:outline-none"
                           value={o.watthours}
-                          onChange={(e, index, id) =>
-                            handleItemChanged(e, i, "watthours")
-                          }
+                          onChange={(e) => handleItemChanged(e, i, "watthours")}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
