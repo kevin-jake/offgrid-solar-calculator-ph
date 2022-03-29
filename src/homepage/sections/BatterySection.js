@@ -24,7 +24,7 @@ const BatterySection = ({ errormsg }) => {
           />
         </span>
       </div>
-      <ul className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <ul className="w-full text-sm font-medium bg-inherit rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-inherit">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
           <div className="grid grid-cols-2">
             <p className="text-blue-700 dark:text-blue-400 ">Battery Type:</p>
