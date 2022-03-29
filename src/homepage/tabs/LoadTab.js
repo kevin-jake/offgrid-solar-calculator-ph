@@ -14,7 +14,6 @@ const LoadTab = () => {
   }, [itemState, overalls]);
 
   useEffect(() => {
-    console.log(loadtab);
     setItemState(loadtab.itemState);
     setOveralls(loadtab.overalls);
     // eslint-disable-next-line
