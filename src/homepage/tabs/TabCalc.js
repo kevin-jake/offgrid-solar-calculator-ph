@@ -109,7 +109,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     tp.twentyfourV = totalPriceCompute(
       24,
@@ -119,7 +120,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     tp.fortyeightV = totalPriceCompute(
       48,
@@ -129,7 +131,8 @@ const TabCalc = () => {
       solarpanelstab,
       scc.price,
       invertertab,
-      loadtab.overalls
+      loadtab.overalls,
+      wiresize.wireSizingPrice
     );
     setOverallPrice(tp);
     // eslint-disable-next-line
@@ -138,6 +141,7 @@ const TabCalc = () => {
     scc.price,
     batterytab.totalprice,
     invertertab.price,
+    wiresize.wireSizingPrice,
   ]);
 
   useEffect(() => {

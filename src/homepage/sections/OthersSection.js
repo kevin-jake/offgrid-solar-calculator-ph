@@ -69,6 +69,17 @@ const OthersSection = ({ errormsg }) => {
             {wiresize.wireDetails.map((obj, index) => {
               return renderTR(obj, index);
             })}
+            <tr key="total" className="bg-white border-b">
+              <td
+                colSpan="3"
+                className="text-right justify-center px-6 py-2 whitespace-nowrap text-sm font-medium text-blue-700 border border-slate-700"
+              >
+                TOTAL
+              </td>
+              <td className=" px-6 py-2 text-sm font-medium text-gray-900 border border-slate-700">
+                Php {numberWithCommas(wiresize.wireSizingPrice.toFixed(2))}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

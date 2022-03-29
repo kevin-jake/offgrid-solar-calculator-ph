@@ -198,6 +198,7 @@ const totalPriceCompute = (
   sccprice = 0,
   invertertab,
   load = 0,
+  wirePrice = 0,
   others = 0
 ) => {
   const dodtable = dodComputation(voltage, load, invertertab);
@@ -206,7 +207,7 @@ const totalPriceCompute = (
   const pvprice = pvdata.pvinfo.totalprice;
   const batteryprice = battcap.totalprice;
   let totalPrice = Math.round(
-    pvprice + sccprice + batteryprice + invertertab.price + others
+    pvprice + sccprice + batteryprice + invertertab.price + others + wirePrice
   );
   return totalPrice;
 };

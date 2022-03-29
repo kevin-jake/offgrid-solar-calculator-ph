@@ -33,6 +33,8 @@ const MainCalculation = () => {
     batterytab,
     solarpanelstab,
     scctab,
+    wiresize,
+    setWireSize,
     setSCC,
     setLoad,
     setBattery,
@@ -57,6 +59,7 @@ const MainCalculation = () => {
         );
         if (responseData.user.data) {
           setLoad(responseData.user.data.loadtab);
+          setWireSize(responseData.user.data.wiring);
           setSCC(responseData.user.data.scc);
           setBattery(responseData.user.data.battery);
           setInverter(responseData.user.data.inverter);
@@ -210,7 +213,7 @@ const MainCalculation = () => {
         inverter: invertertab,
         battery: batterytab,
         solarpanel: solarpanelstab,
-        // wiring: wireSize.
+        wiring: wiresize,
         scc: scctab,
         voltage_system: voltage,
       },
@@ -451,7 +454,7 @@ const MainCalculation = () => {
             <div
               className={
                 !isMobile
-                  ? "transition xl:col-span-3 lg:col-span-3 ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl "
+                  ? "transition xl:col-span-5 lg:col-span-5 ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl "
                   : "transition ease-in-out p-8 space-y-3 border-2 border-blue-400 dark:border-blue-300 rounded-xl"
               }
             >

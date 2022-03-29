@@ -206,6 +206,7 @@ const HomeReducer = (state, action) => {
           watthours: 0,
         },
       };
+      // stateSet.wiresize = {};
       return stateSet;
     default:
       return state;
