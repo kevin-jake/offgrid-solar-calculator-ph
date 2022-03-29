@@ -96,12 +96,43 @@ const initialState = {
     totalnumber: 0,
     totalprice: 0,
   },
-  wiresize: {
-    pv_to_scc: { wiretype: "", price_per_meter: 0, length: 0 },
-    scc_to_battery: { wiretype: "", price_per_meter: 0, length: 0 },
-    battery_to_inverter: { wiretype: "", price_per_meter: 0, length: 0 },
-    inverter_to_load: { wiretype: "", price_per_meter: 0, length: 0 },
-  },
+  wiresize: [
+    {
+      label: "Solar Panel to SCC",
+      wiretype: "DC",
+      price_per_meter: 0,
+      length: 0,
+      computedVdi: 0,
+      suggestedAWG: "",
+      totalprice: 0,
+    },
+    {
+      label: "SCC to Battery",
+      wiretype: "DC",
+      price_per_meter: 0,
+      length: 0,
+      computedVdi: 0,
+      totalprice: 0,
+    },
+    {
+      label: "Battery to Inverter",
+      wiretype: "DC",
+      price_per_meter: 0,
+      length: 0,
+      computedVdi: 0,
+      suggestedAWG: "",
+      totalprice: 0,
+    },
+    {
+      label: "Inverter to Load",
+      wiretype: "AC",
+      price_per_meter: 0,
+      length: 0,
+      computedVdi: 0,
+      suggestedAWG: "",
+      totalprice: 0,
+    },
+  ],
 };
 
 const HomeReducer = (state, action) => {
