@@ -208,6 +208,7 @@ const totalPriceCompute = (
   let totalPrice = Math.round(
     pvprice + sccprice + batteryprice + invertertab.price + others + wirePrice
   );
+  if (!totalPrice) totalPrice = 0;
   return totalPrice;
 };
 
