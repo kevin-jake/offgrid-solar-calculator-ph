@@ -104,7 +104,6 @@ const TabCalc = () => {
     tp.twelveV = totalPriceCompute(
       12,
       batterytab,
-      dodTable,
       totalbattcapacity,
       solarpanelstab,
       scc.price,
@@ -115,7 +114,6 @@ const TabCalc = () => {
     tp.twentyfourV = totalPriceCompute(
       24,
       batterytab,
-      dodTable,
       totalbattcapacity,
       solarpanelstab,
       scc.price,
@@ -126,7 +124,6 @@ const TabCalc = () => {
     tp.fortyeightV = totalPriceCompute(
       48,
       batterytab,
-      dodTable,
       totalbattcapacity,
       solarpanelstab,
       scc.price,
