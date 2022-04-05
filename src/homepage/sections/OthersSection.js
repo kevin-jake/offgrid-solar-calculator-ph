@@ -1,9 +1,65 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { numberWithCommas } from "../../shared/util/format";
 import { HomeContext } from "../context/home-context";
 
 const OthersSection = ({ errormsg }) => {
-  const { wiresize } = useContext(HomeContext);
+  const { wiresize, circuitBreaker } = useContext(HomeContext);
+  const [rowData, setRowData] = useState([
+    {
+      label: "",
+      wirePrice: 0,
+      breakerPrice: 0,
+      suggestedAWG: 0,
+      legnth: 0,
+      breakerSize: 0,
+    },
+    {
+      label: "",
+      wirePrice: 0,
+      breakerPrice: 0,
+      suggestedAWG: 0,
+      legnth: 0,
+      breakerSize: 0,
+    },
+    {
+      label: "",
+      wirePrice: 0,
+      breakerPrice: 0,
+      suggestedAWG: 0,
+      legnth: 0,
+      breakerSize: 0,
+    },
+    {
+      label: "",
+      wirePrice: 0,
+      breakerPrice: 0,
+      suggestedAWG: 0,
+      legnth: 0,
+      breakerSize: 0,
+    },
+  ]);
+  const [grandTotal, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    let data = rowData;
+    let total = 0;
+    wiresize.wireDetails.map((obj, index) => {
+      data[index].label = obj.label;
+      data[index].legnth = obj.length;
+      data[index].suggestedAWG = obj.suggestedAWG;
+      data[index].wirePrice = obj.totalprice;
+      total += obj.totalprice;
+    });
+    circuitBreaker.data.map((obj, index) => {
+      data[index].breakerSize = obj.breakerSize;
+      data[index].breakerPrice = obj.price;
+      total += obj.price;
+    });
+
+    console.log(total);
+    setRowData(data);
+    setTotalPrice(total);
+  }, []);
 
   const renderTR = (obj, index) => {
     return (
@@ -18,7 +74,16 @@ const OthersSection = ({ errormsg }) => {
           {obj.suggestedAWG}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
-          Php {numberWithCommas(obj.totalprice.toFixed(2))}
+          Php {numberWithCommas(obj.wirePrice.toFixed(2))}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+          {obj.breakerSize}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+          Php {numberWithCommas(obj.breakerPrice.toFixed(2))}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+          Php {numberWithCommas((obj.wirePrice + obj.breakerPrice).toFixed(2))}
         </td>
       </tr>
     );
@@ -61,12 +126,30 @@ const OthersSection = ({ errormsg }) => {
                 scope="col"
                 className=" font-medium text-blue-700 px-6 py-4 text-left border border-slate-600 "
               >
+                Wire Price
+              </th>
+              <th
+                scope="col"
+                className=" font-medium text-blue-700 px-6 py-4 text-left border border-slate-600 "
+              >
+                Breaker
+              </th>
+              <th
+                scope="col"
+                className=" font-medium text-blue-700 px-6 py-4 text-left border border-slate-600 "
+              >
+                Breaker Price
+              </th>
+              <th
+                scope="col"
+                className=" font-medium text-blue-700 px-6 py-4 text-left border border-slate-600 "
+              >
                 Total Price
               </th>
             </tr>
           </thead>
           <tbody>
-            {wiresize.wireDetails.map((obj, index) => {
+            {rowData.map((obj, index) => {
               return renderTR(obj, index);
             })}
             <tr key="total" className="bg-white border-b">
@@ -74,10 +157,19 @@ const OthersSection = ({ errormsg }) => {
                 colSpan="3"
                 className="text-right justify-center px-6 py-2 whitespace-nowrap text-sm font-medium text-blue-700 border border-slate-700"
               >
-                TOTAL
+                Wire TOTAL PRICE
               </td>
               <td className=" px-6 py-2 text-sm font-medium text-gray-900 border border-slate-700">
                 Php {numberWithCommas(wiresize.wireSizingPrice.toFixed(2))}
+              </td>
+              <td
+                colSpan="2"
+                className="text-right justify-center px-6 py-2 whitespace-nowrap text-sm font-medium text-blue-700 border border-slate-700"
+              >
+                TOTAL
+              </td>
+              <td className=" px-6 py-2 text-sm font-medium text-gray-900 border border-slate-700">
+                Php {numberWithCommas(grandTotal.toFixed(2))}
               </td>
             </tr>
           </tbody>
