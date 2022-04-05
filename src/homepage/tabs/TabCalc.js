@@ -15,6 +15,7 @@ import {
   totalPriceCompute,
 } from "../Caculations";
 import WireSizingTab from "./WireSizingTab";
+import CircuitBreakerTab from "./CircuitBreakerTab";
 
 const TabCalc = () => {
   const {
@@ -230,6 +231,18 @@ const TabCalc = () => {
         );
         break;
       }
+      case 6: {
+        setOpenTab(6);
+        setTabPanel(
+          <div>
+            <h2 className="font-medium leading-tight text-2xl mt-4 mb-0">
+              Circuit Breaker
+            </h2>
+            <CircuitBreakerTab />
+          </div>
+        );
+        break;
+      }
     }
   };
 
@@ -297,6 +310,18 @@ const TabCalc = () => {
           }
         >
           Wire Sizing
+        </button>
+        <button
+          onClick={() => {
+            handleSelectedTab(6);
+          }}
+          className={
+            openTab === 6
+              ? "h-10 px-4 py-2 -mb-px text-sm text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none"
+              : "h-10 px-4 py-2 -mb-px text-sm text-center text-gray-700 bg-transparent border-b-2 border-transparent sm:text-base dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400"
+          }
+        >
+          Circuit Breaker
         </button>
       </div>
       <div className="block">{tabpanel}</div>

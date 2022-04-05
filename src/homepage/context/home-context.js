@@ -142,6 +142,35 @@ const initialState = {
     ],
     wireSizingPrice: 0,
   },
+  circuitBreaker: {
+    data: [
+      {
+        label: "Solar Panel to SCC",
+        breakertype: "DC",
+        price: 0,
+        suggestedSize: 0,
+      },
+      {
+        label: "SCC to Battery",
+        breakertype: "DC",
+        price: 0,
+        suggestedSize: 0,
+      },
+      {
+        label: "Battery to Inverter",
+        breakertype: "DC",
+        price: 0,
+        suggestedSize: 0,
+      },
+      {
+        label: "Inverter to Load",
+        breakertype: "DC",
+        price: 0,
+        suggestedSize: 0,
+      },
+    ],
+    totalprice: 0,
+  },
 };
 
 const HomeReducer = (state, action) => {
@@ -185,6 +214,11 @@ const HomeReducer = (state, action) => {
       return {
         ...state,
         wiresize: action.wiresize,
+      };
+    case "CB":
+      return {
+        ...state,
+        circuitBreaker: action.circuitBreaker,
       };
     case "reset":
       const stateSet = action.initState;
@@ -274,6 +308,13 @@ export const HomeProvider = (props) => {
     });
   };
 
+  const setCB = (circuitBreaker) => {
+    dispatch({
+      type: "WIRE",
+      circuitBreaker: circuitBreaker,
+    });
+  };
+
   const reset = () => {
     dispatch({
       type: "reset",
@@ -290,7 +331,9 @@ export const HomeProvider = (props) => {
     seriesParallelTable: state.seriesParallelTable,
     dodTable: state.dodTable,
     wiresize: state.wiresize,
+    circuitBreaker: state.circuitBreaker,
     reset,
+    setCB,
     setWireSize,
     setDOD,
     setSP,
