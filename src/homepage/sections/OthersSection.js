@@ -10,7 +10,7 @@ const OthersSection = ({ errormsg }) => {
       wirePrice: 0,
       breakerPrice: 0,
       suggestedAWG: 0,
-      legnth: 0,
+      legnth: "",
       breakerSize: 0,
     },
     {
@@ -18,7 +18,7 @@ const OthersSection = ({ errormsg }) => {
       wirePrice: 0,
       breakerPrice: 0,
       suggestedAWG: 0,
-      legnth: 0,
+      legnth: "",
       breakerSize: 0,
     },
     {
@@ -26,7 +26,7 @@ const OthersSection = ({ errormsg }) => {
       wirePrice: 0,
       breakerPrice: 0,
       suggestedAWG: 0,
-      legnth: 0,
+      legnth: "",
       breakerSize: 0,
     },
     {
@@ -34,7 +34,7 @@ const OthersSection = ({ errormsg }) => {
       wirePrice: 0,
       breakerPrice: 0,
       suggestedAWG: 0,
-      legnth: 0,
+      legnth: "",
       breakerSize: 0,
     },
   ]);

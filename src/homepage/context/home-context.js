@@ -167,7 +167,7 @@ const initialState = {
       },
       {
         label: "Inverter to Load",
-        breakertype: "DC",
+        breakertype: "AC",
         price: 0,
         computedSize: 0,
         breakerSize: 0,
