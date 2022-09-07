@@ -163,98 +163,98 @@ const WireSizingTab = () => {
                     </thead>
                     <tbody>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           1
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           16
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           2
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           14
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           3
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           12
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           5
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           10
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           8
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           8
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           12
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           6
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           20
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           4
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           34
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           2
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           49
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           1/0
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           62
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           2/0
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           78
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           3/0
                         </td>
                       </tr>
                       <tr className="bg-white border-b">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           99
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
                           4/0
                         </td>
                       </tr>

@@ -8,16 +8,16 @@ const OthersSection = ({ errormsg }) => {
   const renderTR = (obj, index) => {
     return (
       <tr key={"other-" + index} className="bg-white border-b">
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
           {obj.label}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
           {obj.length}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
           {obj.suggestedAWG}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-sm font-medium text-gray-900 border border-slate-700">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-slate-700">
           Php {numberWithCommas(obj.totalprice.toFixed(2))}
         </td>
       </tr>
