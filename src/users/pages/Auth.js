@@ -85,7 +85,6 @@ const Auth = () => {
           responseData.token,
           responseData.email,
           responseData.name,
-          responseData.mobile_num,
           responseData.role
         );
       } catch (err) {}
