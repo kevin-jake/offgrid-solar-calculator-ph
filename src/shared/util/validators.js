@@ -10,6 +10,9 @@ const VALIDATOR_TYPE_NUMBER = "NUMBER";
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
 export const VALIDATOR_NUMBER = () => ({ type: VALIDATOR_TYPE_NUMBER });
+export const VALIDATOR_TYPE_MOBILENUMBER = () => ({
+  type: VALIDATOR_TYPE_MOBILENUMBER,
+});
 export const VALIDATOR_MINLENGTH = (val) => ({
   type: VALIDATOR_TYPE_MINLENGTH,
   val: val,
@@ -48,6 +51,13 @@ export const validate = (value, validators) => {
         isValid = false;
       } else {
         isValid = isValid && /^[1-9]\d*(\.\d+)?$/.test(value);
+      }
+    }
+    if (validator.type === VALIDATOR_TYPE_MOBILENUMBER) {
+      if (/^[A-Za-z]+$/.test(value)) {
+        isValid = false;
+      } else {
+        isValid = isValid && /^(09|\+639)\d{9}$/.test(value);
       }
     }
   }

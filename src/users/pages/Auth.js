@@ -3,8 +3,10 @@ import { useForm } from "../../shared/components/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import {
   VALIDATOR_EMAIL,
+  VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
+  VALIDATOR_TYPE_MOBILENUMBER,
 } from "../../shared/util/validators";
 import Input from "../../shared/components/FormElement/Input";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
@@ -120,7 +122,11 @@ const Auth = () => {
                   id="mobile_num"
                   type="text"
                   label="Mobile"
-                  validators={[VALIDATOR_REQUIRE()]}
+                  validators={[
+                    VALIDATOR_REQUIRE(),
+                    VALIDATOR_MAXLENGTH(13),
+                    VALIDATOR_TYPE_MOBILENUMBER(),
+                  ]}
                   errorText="Please enter a mobile number."
                   onInput={inputHandler}
                 />
