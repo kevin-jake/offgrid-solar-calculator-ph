@@ -35,6 +35,11 @@ const UserList = () => {
       type: "text",
       label: "Email",
     },
+    {
+      listkey: "mobile_num",
+      type: "text",
+      label: "Mobile",
+    },
     { listkey: "role", type: "text", label: "Role" },
     {
       listkey: "data",
@@ -85,6 +90,9 @@ const UserList = () => {
                     </th>
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                       Email
+                    </th>
+                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+                      Mobile
                     </th>
                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                       Role

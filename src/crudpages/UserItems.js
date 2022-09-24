@@ -48,6 +48,9 @@ const UserItems = ({ userlist, formInputs, onUpdate }) => {
           {userlist.email}
         </td>
         <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+          {userlist.mobile_num}
+        </td>
+        <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
           {userlist.role}
         </td>
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">

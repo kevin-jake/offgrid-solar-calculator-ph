@@ -72,6 +72,7 @@ const Auth = () => {
             email: formstate.inputs.email.value,
             password: formstate.inputs.password.value,
             name: formstate.inputs.name.value,
+            mobile_num: formstate.inputs.mobile_num.value,
             role: "User",
           }),
           {
@@ -84,6 +85,7 @@ const Auth = () => {
           responseData.token,
           responseData.email,
           responseData.name,
+          responseData.mobile_num,
           responseData.role
         );
       } catch (err) {}
@@ -104,15 +106,26 @@ const Auth = () => {
           </p>
           <form onSubmit={authSubmitHandler}>
             {!isLoginMode && (
-              <Input
-                element="input"
-                id="name"
-                type="text"
-                label="Name"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a name."
-                onInput={inputHandler}
-              />
+              <>
+                <Input
+                  element="input"
+                  id="name"
+                  type="text"
+                  label="Name"
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText="Please enter a name."
+                  onInput={inputHandler}
+                />
+                <Input
+                  element="input"
+                  id="mobile_num"
+                  type="text"
+                  label="Mobile"
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText="Please enter a mobile number."
+                  onInput={inputHandler}
+                />
+              </>
             )}
             <Input
               id="email"
